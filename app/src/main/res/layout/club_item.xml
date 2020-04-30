@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gcs="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/main_item_shape"
+    android:layout_marginTop="20dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginLeft="30dp"
+            android:id="@+id/act_item_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="动漫社"
+            android:textColor="#565656"
+            android:textStyle="bold"
+            android:textSize="34sp"
+            android:layout_marginTop="90px"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/act_item_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="41dp"
+            android:layout_marginRight="56dp"
+            android:layout_toRightOf="@+id/act_item_text1"
+            android:background="@drawable/text_shape1"
+            android:gravity="center"
+            android:paddingLeft="35px"
+            android:paddingTop="8px"
+            android:paddingRight="35px"
+            android:paddingBottom="8px"
+            android:text="热门社团"
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/act_item_text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/act_item_text1"
+            android:layout_marginTop="1dp"
+            android:text="成员128"
+            android:textSize="20sp"
+            android:layout_marginLeft="30dp"/>
+        <TextView
+            android:id="@+id/act_item_text4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/act_item_text1"
+            android:layout_toRightOf="@id/act_item_text3"
+            android:textSize="20sp"
+
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="20dp"
+            android:text="粉丝1273"/>
+        <TextView
+            android:id="@+id/act_item_text5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/act_item_text3"
+            android:text="动漫"
+            android:textColor="#606060"
+            android:textSize="16sp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/text_shape2"
+            android:paddingLeft="25px"
+            android:paddingRight="25px"
+            android:paddingTop="5px"
+            android:paddingBottom="5px"/>
+        <TextView
+            android:id="@+id/act_item_text6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/act_item_text3"
+            android:text="颜值"
+            android:textColor="#606060"
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/act_item_text5"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/text_shape2"
+            android:paddingLeft="25px"
+            android:paddingRight="25px"
+            android:paddingTop="5px"
+            android:paddingBottom="5px"/>
+        <TextView
+            android:id="@+id/act_item_text7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/act_item_text3"
+            android:text="cosplay"
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/act_item_text6"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="6dp"
+            android:textColor="#606060"
+            android:background="@drawable/text_shape2"
+            android:paddingLeft="25px"
+            android:paddingRight="25px"
+            android:paddingTop="5px"
+            android:paddingBottom="5px"/>
+
+        <clubmanage.ui.CircleImageView
+            android:id="@+id/act_item_img1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginRight="23dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/photo1"
+            gcs:border_width="2dp"
+            gcs:border_color="#BBBBBB"
+            >
+        </clubmanage.ui.CircleImageView>
+        <!--        <ImageView-->
+        <!--            android:id="@+id/act_item_img1"-->
+        <!--            android:layout_width="80dp"-->
+        <!--            android:layout_height="80dp"-->
+        <!--            android:layout_marginRight="40dp"-->
+        <!--            android:layout_alignParentRight="true"-->
+        <!--            android:layout_marginTop="20dp"-->
+        <!--            android:src="@drawable/photo1"/>-->
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/act_item_text8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="100px"
+        android:text="“动漫”这一合称的出现主要是因为日本的动画和漫画产业联系紧密，所以日本动画和漫画在中国传播的过程中，出现了《动漫时代》这样综合了日本动画和漫画咨询的杂志。"
+        android:textSize="17dp" />
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="10dp"-->
+    <!--        android:background="#ff0">-->
+    <!--    </LinearLayout>-->
+</LinearLayout>

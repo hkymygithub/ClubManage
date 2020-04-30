@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="30px"
+    android:background="#FFFFFF">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <clubmanage.ui.CircleImageView
+            android:id="@+id/club_member_head"
+            android:layout_width="150px"
+            android:layout_height="150px"
+            android:src="@mipmap/ic_launcher"
+            android:layout_centerVertical="true"
+            ></clubmanage.ui.CircleImageView>
+        <TextView
+            android:id="@+id/club_member_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="姓名"
+            android:textSize="20dp"
+            android:layout_toRightOf="@+id/club_member_head"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="40px"></TextView>
+        <TextView
+            android:id="@+id/club_member_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#999999"
+            android:text="手机"
+            android:textSize="17dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="20px">
+        </TextView>
+    </RelativeLayout>
+</LinearLayout>

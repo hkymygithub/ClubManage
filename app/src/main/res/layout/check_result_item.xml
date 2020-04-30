@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gcs="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF">
+    <TextView
+        android:id="@+id/act_name"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#606060"
+        android:textSize="60px"
+        android:layout_marginTop="20px"
+        android:layout_marginLeft="11px"
+        android:layout_toRightOf="@id/act_image"></TextView>
+
+    <clubmanage.ui.CircleImageView
+        android:id="@+id/act_image"
+        android:layout_width="175px"
+        android:layout_height="175px"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="20px"
+        android:layout_marginBottom="20px"
+        gcs:border_width="5px"
+        gcs:border_color="#BBBBBB"></clubmanage.ui.CircleImageView>
+
+
+    <ImageView
+        android:id="@+id/if_pass_img"
+        android:layout_width="45px"
+        android:layout_height="45px"
+        android:layout_toLeftOf="@+id/if_pass"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="93px"
+        android:layout_marginTop="4dp"
+        ></ImageView>
+
+    <TextView
+        android:id="@+id/opinion"
+        android:layout_width="450px"
+        android:layout_height="wrap_content"
+        android:textColor="#828282"
+        android:layout_below="@id/act_name"
+        android:layout_toRightOf="@+id/act_image"
+        android:textSize="40px"
+        android:layout_marginTop="10px"
+        android:layout_marginLeft="11px"
+        android:layout_marginBottom="35px"></TextView>
+
+
+    <TextView
+        android:id="@+id/if_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#828282"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:textSize="40px"
+        android:layout_marginRight="50px"></TextView>
+</RelativeLayout>

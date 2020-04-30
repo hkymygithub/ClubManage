@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:gcs="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE">
+    <RelativeLayout
+        android:id="@+id/home_head"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FFC609"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/home_logo"
+            android:layout_width="56dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/logo"
+            />
+        <!--        <clubmanage.ui.CircleImageView-->
+        <!--            android:id="@+id/home_head_text1"-->
+        <!--            android:layout_width="50dp"-->
+        <!--            android:layout_height="50dp"-->
+        <!--            android:layout_marginLeft="15dp"-->
+        <!--            android:layout_centerVertical="true"-->
+        <!--            android:src="@drawable/logo"-->
+        <!--            app:border_width="0dp"-->
+        <!--            android:background="@color/titlecolorPrimary"/>-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/home_head_text1"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="社团"-->
+        <!--            android:layout_marginLeft="15dp"-->
+        <!--            android:layout_centerVertical="true"-->
+        <!--            android:textSize="30sp"/>-->
+
+
+
+        <TextView
+            android:id="@+id/home_head_edit1"
+            android:layout_width="250dp"
+            android:layout_height="32dp"
+            android:layout_toRightOf="@id/home_logo"
+            android:maxLines="1"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/main_item_shape2"
+            android:paddingLeft="20px">
+        </TextView>
+
+        <Button
+            android:id="@+id/home_head_btn1"
+            android:layout_width="50dp"
+            android:layout_height="26dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="212dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="15dp"
+            android:layout_toRightOf="@id/home_logo"
+            android:background="@drawable/button_shape3"
+            android:text="搜索"
+            android:textColor="#FFFFFF"
+            android:textSize="17dp" />
+
+    </RelativeLayout>
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/home_img_show"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="200dp"-->
+    <!--        android:src="@drawable/culture_arts_festival"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/home_head"-->
+    <!--        tools:layout_editor_absoluteX="-54dp" />-->
+    <com.youth.banner.Banner
+        android:id="@+id/home_img_show"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintTop_toBottomOf="@id/home_head"
+        tools:ignore="MissingConstraints"></com.youth.banner.Banner>
+
+    <RelativeLayout
+        android:id="@+id/home_neck_top"
+
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        app:layout_constraintTop_toBottomOf="@id/home_img_show"
+        android:background="#FFDE00">
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/home_neck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/home_neck_top"
+        android:background="#FFC609">
+
+        <TextView
+            android:id="@+id/home_neck_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="我参与的"
+            android:textSize="20sp" />
+        <!--        <RelativeLayout-->
+        <!--            android:id="@+id/layout_CHOSEN"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:layout_centerInParent="true">-->
+
+        <!--            <Button-->
+        <!--                android:id="@+id/home_neck_btn1"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_centerVertical="true"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:textSize="20sp"-->
+        <!--                android:textColor="#4D4C4C"-->
+        <!--                android:background="@null"-->
+
+        <!--                android:text="活动"/>-->
+        <!--            <Button-->
+        <!--                android:id="@+id/home_neck_btn2"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_centerVertical="true"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_toRightOf="@id/home_neck_btn1"-->
+        <!--                android:background="@null"-->
+        <!--                android:textSize="20sp"-->
+        <!--                android:textColor="#4D4C4C"-->
+
+        <!--                android:text="社团"/>-->
+        <!--            >-->
+        <!--        </RelativeLayout>-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="90dp"
+            android:layout_toLeftOf="@id/relative_one">
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/home_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:tabIndicatorFullWidth="false"
+                app:tabTextAppearance="@style/TabLayoutTextStyle"
+                app:tabTextColor="#4D4C4C"
+                app:tabSelectedTextColor="#FFFFFF"
+                app:tabIndicator="@drawable/indicator"
+                app:tabIndicatorColor="#FF9800"
+                android:layout_weight="1"></com.google.android.material.tabs.TabLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relative_one"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            >
+
+            <Button
+                android:id="@+id/home_neck_btn3"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:background="@null"
+                android:text="所有活动"
+                android:textSize="17sp"
+                android:textColor="#777777"/>
+
+            <ImageView
+                android:id="@+id/left_array_all"
+                android:layout_width="28dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="-8dp"
+                android:layout_toRightOf="@id/home_neck_btn3"
+                android:src="@drawable/arrow_right">
+                >
+            </ImageView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/home_neck_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        app:layout_constraintTop_toBottomOf="@id/home_neck"
+        android:background="#FF9800">
+
+    </RelativeLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/home_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+    </androidx.viewpager.widget.ViewPager>
+
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/home_body"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/home_neck_bottom"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="#EEEEEE">-->
+
+    <!--    </androidx.recyclerview.widget.RecyclerView>-->
+</LinearLayout>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF">
+    <!--    <RelativeLayout-->
+    <!--        android:id="@+id/manage_line1"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="2dp"-->
+    <!--        android:background="#CCCCCC"/>-->
+    <RelativeLayout
+        android:id="@+id/manage_title"
+
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+        <!--        android:layout_below="@id/manage_line1"-->
+        >
+        <TextView
+            android:id="@+id/manage_item_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="#212121"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="社团审核:"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/manage_line2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/manage_title"
+        android:background="#ffc609"/>
+    <RelativeLayout
+        android:id="@+id/manage_main"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/manage_line2"
+        android:layout_height="110dp">
+        <RelativeLayout
+            android:id="@+id/manage_item_demo1"
+            android:layout_width="80dp"
+            android:layout_centerVertical="true"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+                <ImageView
+                    android:id="@+id/manage_item_img1"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/applicatin1"/>
+
+                <TextView
+                    android:id="@+id/manage_item_text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/manage_item_img1"
+                    android:text="申请社团"
+                    android:textColor="#565656"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/manage_item_demo2"
+            android:layout_width="80dp"
+            android:layout_centerVertical="true"
+            android:layout_height="match_parent"
+
+            android:layout_toRightOf="@id/manage_item_demo1">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+                <ImageView
+                    android:id="@+id/manage_item_img2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/applicatin1"/>
+                <TextView
+                    android:id="@+id/manage_item_text3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="申请社团"
+                    android:textSize="16sp"
+                    android:textColor="#565656"
+                    android:textStyle="bold"
+                    android:layout_below="@id/manage_item_img2"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/manage_item_demo3"
+            android:layout_width="80dp"
+            android:layout_centerVertical="true"
+            android:layout_height="match_parent"
+
+            android:layout_toRightOf="@id/manage_item_demo2">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+                <ImageView
+                    android:id="@+id/manage_item_img3"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/applicatin1"/>
+                <TextView
+                    android:id="@+id/manage_item_text4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="申请社团"
+                    android:textColor="#565656"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_below="@id/manage_item_img3"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/manage_item_demo4"
+            android:layout_width="80dp"
+            android:layout_centerVertical="true"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/manage_item_demo3">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+                <ImageView
+                    android:id="@+id/manage_item_img4"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/applicatin1"/>
+                <TextView
+                    android:id="@+id/manage_item_text5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="申请社团"
+                    android:textColor="#565656"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_below="@id/manage_item_img4"/>
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/manage_line1"
+        android:layout_below="@id/manage_main"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#CCCCCC"/>
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="5dp"-->
+    <!--        android:background="#F0FF"/>-->
+
+</RelativeLayout>

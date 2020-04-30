@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#EEEEEE"
+    tools:context=".ChangPwdActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/change_pwd_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="160px"
+            android:background="@color/titlecolorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="更改密码"
+                android:textColor="#FFFFFF"
+                android:textSize="65px"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200px">
+        <TextView
+            android:textSize="48px"
+            android:id="@+id/text_uid"
+            android:layout_width="200px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100px"
+            android:text="用户学号"
+            ></TextView>
+        <TextView
+            android:textSize="48px"
+            android:id="@+id/current_uid"
+            android:layout_width="760px"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/text_uid"
+            android:text="  31701074"></TextView>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70px">
+        <TextView
+            android:id="@+id/old_pwd"
+            android:layout_width="200px"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="false"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="100px"
+            android:text="旧密码"
+            android:textColorHint="#474747"
+            android:textSize="18sp" />
+        <EditText
+            android:color="#FFFFFF"
+            android:id="@+id/edit_pwd1"
+            android:layout_width="680px"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/old_pwd"
+            android:hint="  旧密码"
+            android:inputType="numberPassword"></EditText>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45px">
+        <TextView
+            android:id="@+id/chg_pwd"
+            android:layout_width="200px"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="100px"
+            android:text="新密码"
+            android:textColorHint="#474747"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/edit_pwd2"
+            android:layout_width="680px"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/chg_pwd"
+            android:hint="  新密码"
+            android:inputType="numberPassword"></EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45px"
+        >
+
+        <TextView
+            android:id="@+id/conf_pwd"
+            android:layout_width="200px"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="100px"
+            android:text="确认密码"
+            android:textColorHint="#474747"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/edit_pwd3"
+            android:layout_width="680px"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/conf_pwd"
+            android:hint="  请确认密码"
+            android:inputType="numberPassword"></EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45px"
+        >
+
+        <TextView
+            android:id="@+id/tips"
+            android:layout_width="880px"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="100px"
+            android:text="密码必须是8-16位的数字、字符组合（不能是纯数字）"
+            android:textColorHint="#555555"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px"
+        >
+
+        <TextView
+            android:id="@+id/forget"
+            android:layout_width="300px"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="100px"
+            android:text="忘记密码?"
+            android:textColor="#FFc609"
+            android:textSize="45px" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70px"
+        >
+
+        <Button
+            android:id="@+id/button_change"
+            android:layout_width="875px"
+            android:layout_height="150px"
+            android:layout_marginLeft="100px"
+            android:background="@drawable/button_shape"
+            android:text="更改密码"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"></Button>
+    </RelativeLayout>
+</LinearLayout>
+

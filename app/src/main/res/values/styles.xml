@@ -1,0 +1,19 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here.@color/titlecolorPrimary  F0742B -->
+        <item name="colorPrimary">#FF7100</item>
+        <item name="colorPrimaryDark">@color/titlecolorPrimaryDark</item>
+        <item name="colorAccent">@color/titlecolorPrimary</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="TabLayoutTextStyle2">
+        <item name="android:textSize">17sp</item>
+    </style>
+</resources>

@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:gcs="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/club1_appBar"
+            android:layout_width="match_parent"
+            android:layout_height="250dp">
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/club1_collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                <RelativeLayout
+                    android:id="@+id/club1_head"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/poster"
+                    app:layout_collapseMode="parallax">
+                    <ImageButton
+                        android:id="@+id/club1_head_btn1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/arrow_left_white"
+                        android:layout_marginTop="19dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_alignParentLeft="true"
+                        />
+                    <Button
+                        android:id="@+id/club1_head_btn2"
+                        android:layout_width="59dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="28dp"
+                        android:layout_marginRight="30dp"
+                        android:text="关注"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:background="@drawable/button_shape_clubbutton"/>
+                </RelativeLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_marginTop="-50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:id="@+id/club1_neck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_shape_clubcard_background"
+                android:orientation="vertical">
+                <!--            <androidx.recyclerview.widget.RecyclerView-->
+                <!--                android:id="@+id/club1_recycler1"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content">-->
+
+                <!--            </androidx.recyclerview.widget.RecyclerView>-->
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_shape_clubcard">
+
+                    <TextView
+                        android:id="@+id/club_item_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="90px"
+                        android:text="动漫社"
+                        android:textColor="#101010"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/club_item_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="41dp"
+                        android:layout_marginRight="56dp"
+                        android:layout_toRightOf="@+id/club_item_text1"
+                        android:background="@drawable/button_shape_clubbutton"
+                        android:gravity="center"
+                        android:paddingLeft="35px"
+                        android:paddingTop="8px"
+                        android:paddingRight="35px"
+                        android:paddingBottom="8px"
+                        android:text="热门社团"
+                        android:textColor="#000000"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/club_item_text3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/club_item_text1"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="1dp"
+                        android:text="成员128"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/club_item_text4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/club_item_text1"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_toRightOf="@id/club_item_text3"
+                        android:text="粉丝1273"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/club_item_text5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/club_item_text3"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/text_shape2"
+                        android:paddingLeft="25px"
+                        android:paddingTop="5px"
+                        android:paddingRight="25px"
+                        android:paddingBottom="5px"
+                        android:text="动漫"
+                        android:textColor="#606060"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/club_item_text6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/club_item_text3"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_toRightOf="@id/club_item_text5"
+                        android:background="@drawable/text_shape2"
+                        android:paddingLeft="25px"
+                        android:paddingTop="5px"
+                        android:paddingRight="25px"
+                        android:paddingBottom="5px"
+                        android:text="颜值"
+                        android:textColor="#606060"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/club_item_text7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/club_item_text3"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_toRightOf="@id/club_item_text6"
+                        android:background="@drawable/text_shape2"
+                        android:paddingLeft="25px"
+                        android:paddingTop="5px"
+                        android:paddingRight="25px"
+                        android:paddingBottom="5px"
+                        android:text="cosplay"
+                        android:textColor="#606060"
+                        android:textSize="16sp" />
+
+                    <clubmanage.ui.CircleImageView
+                        android:id="@+id/club_item_img1"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginRight="23dp"
+                        android:src="@drawable/photo1"
+                        gcs:border_color="#868686"
+                        gcs:border_width="2dp"></clubmanage.ui.CircleImageView>
+
+                    <TextView
+                        android:id="@+id/club_item_text8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/club_item_text5"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginBottom="100px"
+                        android:text="“动漫”这一合称的出现主要是因为日本的动画和漫画产业联系紧密，所以日本动画和漫画在中国传播的过程中，出现了《动漫时代》这样综合了日本动画和漫画咨询的杂志。"
+                        android:textSize="17dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="1dp"
+                    android:id="@+id/club1_body1"
+                    android:layout_width="match_parent"
+                    android:background="#ffffff"
+                    android:layout_height="40dp">
+
+                    <ImageView
+                        android:id="@+id/club1_body1_img1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/shout" />
+
+                    <TextView
+                        android:id="@+id/club1_body1_text1"
+                        android:layout_centerVertical="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/club1_body1_img1"
+                        android:text="招新啦!帅哥靓女们！欢迎加入流云梦社"
+                        android:textSize="16sp"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:singleLine="true"
+                        ></TextView>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#ffde00">
+
+                </RelativeLayout>
+
+                <RelativeLayout
+
+                    android:id="@+id/club1_body4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/gonggao"
+                        android:background="#ffffff"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+                        <TextView
+                            android:id="@+id/club1_body4_text1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="15dp"
+                            android:text="公告"
+                            android:textStyle="bold"
+                            android:textColor="#101010"
+                            android:textSize="24sp" />
+
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/gonggao_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#dcdcdc"
+                        android:layout_below="@id/gonggao"
+                        >
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_below="@+id/gonggao_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#ffffff">
+                        <TextView
+                            android:id="@+id/gonggao_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="25dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="25dp"
+                            android:layout_marginBottom="30dp"
+                            android:text=""
+                            android:textSize="17dp" />
+                        />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#ffde00">
+
+                </RelativeLayout>
+
+                <RelativeLayout
+
+                    android:id="@+id/club1_body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/zszb"
+                        android:background="#ffffff"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+                        <TextView
+                            android:id="@+id/club1_body2_text1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="15dp"
+                            android:text="镇社之宝"
+                            android:textStyle="bold"
+                            android:textColor="#101010"
+                            android:textSize="24sp" />
+
+                        <ImageButton
+                            android:id="@+id/club1_body2_btn1"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_alignParentRight="true"
+                            android:background="@drawable/arrow_right" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#dcdcdc"
+                        android:layout_below="@id/zszb"
+                        >
+
+                    </RelativeLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginTop="1dp"
+                        android:paddingLeft="20dp"
+                        android:id="@+id/club1_recycler2"
+                        android:background="#ffffff"
+                        android:layout_below="@id/zszb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#ffde00">
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/club1_body3"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#ffffff"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/club1_body3_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="15dp"
+                        android:text="活动"
+                        android:textStyle="bold"
+                        android:textColor="#101010"
+                        android:textSize="24sp" />
+
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#ffde00">
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    >
+
+                    <androidx.recyclerview.widget.RecyclerView
+
+                        android:id="@+id/club1_recycler3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        >
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                </RelativeLayout>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel_join"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#eeeeee"
+            >
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/club_join"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_shape_joinclubbutton"
+            android:layout_centerInParent="true"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="加入我们"
+                android:textColor="#212121"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

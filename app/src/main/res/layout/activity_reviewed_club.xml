@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbars="none"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".CreateActivity"
+    android:background="#EEEEEE">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/audit_activity_toolbar_club"
+            android:layout_width="match_parent"
+            android:layout_height="160px"
+            android:background="@color/titlecolorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="审核社团"
+                android:textColor="#FFFFFF"
+                android:textSize="65px"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="260px"
+            android:background="#FFFFFF"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="社团logo"
+                android:textSize="50px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50px"></TextView>
+            <clubmanage.ui.CircleImageView
+                android:layout_width="180px"
+                android:layout_height="180px"
+                android:src="@drawable/enrollment"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="150px"
+                ></clubmanage.ui.CircleImageView>
+            <ImageView
+                android:id="@+id/club_check_array"
+                android:src="@drawable/arrow_right"
+                android:layout_width="120px"
+                android:layout_height="120px"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"></ImageView>
+        </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#FFFFFF"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="海报"
+                    android:textSize="18sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="50px"></TextView>
+                <TextView
+                    android:id="@+id/club_value"
+                    android:layout_width="600px"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textColor="#999999"
+                    android:layout_toLeftOf="@+id/review_club_poster"
+                    android:textSize="18sp"
+                    android:text="修改海报"
+                    android:gravity="right"
+                    android:maxLines="5"
+                    android:layout_marginRight="20px"></TextView>
+                <ImageView
+                    android:id="@+id/review_club_poster"
+                    android:src="@drawable/arrow_right"
+                    android:layout_width="120px"
+                    android:layout_height="120px"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"></ImageView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_auditClub"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:background="#D76569"
+                android:layout_marginTop="30dp"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100px"
+                    android:textColor="@color/white"
+                    android:text="    修改意见"
+                    android:layout_centerVertical="true"
+                    android:textSize="17sp"
+                    android:paddingTop="7px"
+                    />
+            </RelativeLayout>
+            <EditText
+                android:id="@+id/edit_text_audit_club"
+                android:layout_width="match_parent"
+                android:layout_height="372px"
+                android:paddingTop="15px"
+                android:paddingLeft="45px"
+                android:background="@color/white"
+                android:hint="请输入您的整改意见，及驳回的原因"
+                android:gravity="top|left"
+                android:textSize="16sp"
+                android:maxLines="5"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="60dp"
+                >
+
+                <Button
+                    android:id="@+id/button_return_audit_club"
+                    android:layout_width="462px"
+                    android:layout_height="wrap_content"
+                    android:text="驳回"
+                    android:layout_marginLeft="40px"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_shape4"
+                    android:textSize="48px"
+                    android:layout_marginBottom="0px"/>
+
+                <Button
+                    android:id="@+id/button_pass_audit_club"
+                    android:layout_width="462px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="40px"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_shape2"
+                    android:textSize="48px"
+                    android:text="审核通过" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

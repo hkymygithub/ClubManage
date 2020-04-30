@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginAndRegistActivity"
+    android:background="@drawable/loginpic">
+
+    <Button
+        android:id="@+id/user_reg"
+        android:layout_width="421px"
+        android:layout_height="135px"
+        android:layout_marginStart="91px"
+        android:layout_marginTop="1700px"
+        android:text="注册"
+        android:textColor="@color/titlecolorPrimary"
+        android:textSize="60px"
+        android:background="@drawable/button_shape1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/user_login"
+        android:layout_width="421px"
+        android:layout_height="135px"
+        android:layout_marginStart="569px"
+        android:layout_marginTop="1700px"
+        android:text="登录"
+        android:textColor="@color/white"
+        android:textSize="60px"
+        android:background="@drawable/button_shape2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="501px"
+        android:layout_height="42px"
+        android:layout_marginStart="132px"
+        android:layout_marginTop="2000px"
+        android:textSize="36px"
+        android:text="点击'登录',即代表您阅读并同意"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="324px"
+        android:layout_height="42px"
+        android:layout_marginStart="625px"
+        android:layout_marginTop="2000px"
+        android:textSize="36px"
+        android:text="《社团家用户协议》"
+        android:textColor="@color/titlecolorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

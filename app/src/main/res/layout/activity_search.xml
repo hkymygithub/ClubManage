@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SearchClub">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160px"
+        android:background="@color/titlecolorPrimary"
+        tools:ignore="MissingConstraints">
+        <ImageView
+            android:id="@+id/img_array"
+            android:layout_width="120px"
+            android:layout_height="120px"
+            android:src="@drawable/arrow_left"
+            android:layout_marginTop="8.5dp"
+            android:layout_alignParentLeft="true"
+            ></ImageView>
+        <Button
+            android:id="@+id/search_head_btn1"
+            android:layout_width="50dp"
+            android:layout_height="26dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="256dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/button_shape3"
+            android:text="搜索"
+            android:layout_toRightOf="@id/img_array"
+            android:textColor="#FFFFFF"
+            android:textSize="17dp" />
+        <EditText
+            android:id="@+id/home_head_edit1"
+            android:layout_width="300dp"
+            android:layout_height="32dp"
+            android:maxLines="1"
+            android:layout_toRightOf="@id/img_array"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/main_item_shape2"
+            android:paddingLeft="20px">
+        </EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_searchClub"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+
+</LinearLayout>

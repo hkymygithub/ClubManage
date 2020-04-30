@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Register"
+    android:background="#EEEEEE">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/reg_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="160px"
+            android:background="@color/titlecolorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="账号注册"
+                android:textColor="#FFFFFF"
+                android:textSize="65px"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150px">
+        <ImageView
+            android:id="@+id/img_uid"
+            android:layout_width="120px"
+            android:layout_height="120px"
+            android:src="@mipmap/id"
+            android:layout_marginLeft="100px"
+            ></ImageView>
+        <EditText
+            android:id="@+id/edit_uid"
+            android:layout_width="760px"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/img_uid"
+            android:hint="  学号"></EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45px">
+        <ImageView
+            android:id="@+id/img_pwd1"
+            android:layout_width="120px"
+            android:layout_height="120px"
+            android:src="@mipmap/password"
+            android:layout_marginLeft="100px"
+            ></ImageView>
+        <EditText
+            android:id="@+id/edit_pwd1"
+            android:layout_width="760px"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_pwd1"
+            android:hint="  请输入密码"
+            android:inputType="numberPassword"></EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45px">
+        <ImageView
+            android:id="@+id/img_pwd2"
+            android:layout_width="120px"
+            android:layout_height="120px"
+            android:src="@mipmap/password"
+            android:layout_marginLeft="100px"
+            ></ImageView>
+        <EditText
+            android:id="@+id/edit_pwd2"
+            android:layout_width="760px"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_pwd2"
+            android:hint="  请再次输入密码"
+            android:inputType="numberPassword"></EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45px">
+        <ImageView
+            android:id="@+id/img_name"
+            android:layout_width="120px"
+            android:layout_height="120px"
+            android:src="@mipmap/name"
+            android:layout_marginLeft="100px"
+            ></ImageView>
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_width="760px"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_name"
+            android:hint="  请输入姓名"></EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45px">
+        <ImageView
+            android:id="@+id/img_mail"
+            android:layout_width="120px"
+            android:layout_height="120px"
+            android:src="@mipmap/email"
+            android:layout_marginLeft="100px"
+            ></ImageView>
+        <EditText
+            android:id="@+id/edit_mail"
+            android:layout_width="760px"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_mail"
+            android:hint="  请输入邮箱"></EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45px">
+        <ImageView
+            android:id="@+id/img_phone"
+            android:layout_width="120px"
+            android:layout_height="120px"
+            android:src="@mipmap/mobile"
+            android:layout_marginLeft="100px"
+            ></ImageView>
+        <EditText
+            android:id="@+id/edit_phone"
+            android:layout_width="760px"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_phone"
+            android:hint="  请输入手机号码"></EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45px">
+        <ImageView
+            android:id="@+id/img_check"
+            android:layout_width="120px"
+            android:layout_height="120px"
+            android:src="@mipmap/checkmobile"
+            android:layout_marginLeft="100px"
+            ></ImageView>
+        <EditText
+            android:id="@+id/edit_check"
+            android:layout_width="500px"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_check"
+            android:hint="  验证码"></EditText>
+        <Button
+            android:layout_width="250px"
+            android:layout_height="100px"
+            android:text="验证手机"
+            android:textColor="#FFFFFF"
+            android:layout_toRightOf="@+id/edit_check"
+
+            android:background="@drawable/button_shape"></Button>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70px"
+        >
+        <Button
+            android:id="@+id/button_register"
+            android:layout_width="875px"
+            android:layout_height="150px"
+            android:text="注册"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:layout_marginLeft="100px"
+            android:background="@drawable/button_shape"></Button>
+    </RelativeLayout>
+</LinearLayout>
