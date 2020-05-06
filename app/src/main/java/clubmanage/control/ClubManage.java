@@ -1,5 +1,7 @@
 package clubmanage.control;
 
+import android.util.Base64;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,8 +32,8 @@ public class ClubManage implements IClubManage {
                 Club club = new Club();
                 club.setClub_id(rs.getInt(1));
                 club.setCategory_name(rs.getString(2));
-                club.setClub_icon(rs.getBytes(3));
-                club.setClub_cover(rs.getBytes(4));
+                club.setClub_icon(Base64.encodeToString(rs.getBytes(3),Base64.DEFAULT));
+                club.setClub_cover(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 club.setClub_name(rs.getString(5));
                 club.setClub_introduce(rs.getString(6));
                 club.setSlogan(rs.getString(7));
@@ -73,8 +75,8 @@ public class ClubManage implements IClubManage {
                 Club club = new Club();
                 club.setClub_id(rs.getInt(1));
                 club.setCategory_name(rs.getString(2));
-                club.setClub_icon(rs.getBytes(3));
-                club.setClub_cover(rs.getBytes(4));
+                club.setClub_icon(Base64.encodeToString(rs.getBytes(3),Base64.DEFAULT));
+                club.setClub_cover(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 club.setClub_name(rs.getString(5));
                 club.setClub_introduce(rs.getString(6));
                 club.setSlogan(rs.getString(7));
@@ -115,8 +117,8 @@ public class ClubManage implements IClubManage {
                 Club club = new Club();
                 club.setClub_id(rs.getInt(1));
                 club.setCategory_name(rs.getString(2));
-                club.setClub_icon(rs.getBytes(3));
-                club.setClub_cover(rs.getBytes(4));
+                club.setClub_icon(Base64.encodeToString(rs.getBytes(3),Base64.DEFAULT));
+                club.setClub_cover(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 club.setClub_name(rs.getString(5));
                 club.setClub_introduce(rs.getString(6));
                 club.setSlogan(rs.getString(7));
@@ -156,8 +158,8 @@ public class ClubManage implements IClubManage {
             if(rs.next()){
                 club.setClub_id(rs.getInt(1));
                 club.setCategory_name(rs.getString(2));
-                club.setClub_icon(rs.getBytes(3));
-                club.setClub_cover(rs.getBytes(4));
+                club.setClub_icon(Base64.encodeToString(rs.getBytes(3),Base64.DEFAULT));
+                club.setClub_cover(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 club.setClub_name(rs.getString(5));
                 club.setClub_introduce(rs.getString(6));
                 club.setSlogan(rs.getString(7));
@@ -241,8 +243,8 @@ public class ClubManage implements IClubManage {
             if(rs.next()){
                 club.setClub_id(rs.getInt(1));
                 club.setCategory_name(rs.getString(2));
-                club.setClub_icon(rs.getBytes(3));
-                club.setClub_cover(rs.getBytes(4));
+                club.setClub_icon(Base64.encodeToString(rs.getBytes(3),Base64.DEFAULT));
+                club.setClub_cover(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 club.setClub_name(rs.getString(5));
                 club.setClub_introduce(rs.getString(6));
                 club.setSlogan(rs.getString(7));
@@ -310,13 +312,14 @@ public class ClubManage implements IClubManage {
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, uid);
             java.sql.ResultSet rs = pst.executeQuery();
-
             while(rs.next()){
                 Club club=new Club();
                 club.setClub_id(rs.getInt(1));
                 club.setCategory_name(rs.getString(2));
-                club.setClub_icon(rs.getBytes(3));
-                club.setClub_cover(rs.getBytes(4));
+                if (rs.getBytes(3)==null) club.setClub_icon(null);
+                else club.setClub_icon(Base64.encodeToString(rs.getBytes(3),Base64.DEFAULT));
+                if (rs.getBytes(3)==null) club.setClub_cover(null);
+                else club.setClub_cover(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 club.setClub_name(rs.getString(5));
                 club.setClub_introduce(rs.getString(6));
                 club.setSlogan(rs.getString(7));
@@ -587,13 +590,13 @@ public class ClubManage implements IClubManage {
 //    }
 
     @Override
-    public void editLogo(int club_id,byte[] club_icon) {//编辑图标
+    public void editLogo(int club_id,String club_icon) {//编辑图标
         Connection conn = null;
         try {
             conn = DBUtil.getConnection();
             String sql = "update club set club_icon=? where club_id=?";
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setBytes(1,club_icon);
+            pst.setBytes(1,Base64.decode(club_icon,Base64.DEFAULT));
             pst.setInt(2, club_id);
             pst.execute();
             pst.close();
@@ -610,13 +613,13 @@ public class ClubManage implements IClubManage {
     }
 
     @Override
-    public void editCover(int club_id,byte[] club_cover) {//编辑封面
+    public void editCover(int club_id,String club_cover) {//编辑封面
         Connection conn = null;
         try {
             conn = DBUtil.getConnection();
             String sql = "update club set club_cover=? where club_id=?";
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setBytes(1,club_cover);
+            pst.setBytes(1,Base64.decode(club_cover,Base64.DEFAULT));
             pst.setInt(2, club_id);
             pst.execute();
             pst.close();
@@ -880,12 +883,13 @@ public class ClubManage implements IClubManage {
 
     public static void main(String[] args) throws BaseException {
         ClubManage cm=new ClubManage();
+        cm.searchMyClub("31701073");
 //        cm.joinClub("31701015",1);
 //        List<Club> club=cm.searchMyClub("31701015");
 //        for(int i=0;i<club.size();i++){
 //           System.out.println(club.get(i).getClub_id());
 //       }
-        System.out.println(cm.searchNotice(1));
+//        System.out.println(cm.searchNotice(1));
 
 //        System.out.println(cm.searchClubByProprieter("31701073").getClub_name());
 //        System.out.println(cm.searchMember(1).size());

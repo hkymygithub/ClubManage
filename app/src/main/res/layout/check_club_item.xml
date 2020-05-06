@@ -21,16 +21,16 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"></ImageView>
 
-    <clubmanage.ui.CircleImageView
-        android:id="@+id/check_club_act_img"
-        android:layout_width="175px"
-        android:layout_height="175px"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10px"
-        android:layout_marginRight="16dp"
-        gcs:border_width="5px"
-        gcs:border_color="#BBBBBB"
-        android:layout_toLeftOf="@id/check_club_right_array"></clubmanage.ui.CircleImageView>
+<!--    <clubmanage.ui.CircleImageView-->
+<!--        android:id="@+id/check_club_act_img"-->
+<!--        android:layout_width="175px"-->
+<!--        android:layout_height="175px"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginLeft="10px"-->
+<!--        android:layout_marginRight="16dp"-->
+<!--        gcs:border_width="5px"-->
+<!--        gcs:border_color="#BBBBBB"-->
+<!--        android:layout_toLeftOf="@id/check_club_right_array"></clubmanage.ui.CircleImageView>-->
 
     <ImageView
         android:id="@+id/check_club_clock"

@@ -2,15 +2,16 @@ package clubmanage.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -23,42 +24,44 @@ import clubmanage.util.ClubManageUtil;
 public class ReviewedClub extends AppCompatActivity implements View.OnClickListener {
     private List<CreateClubMsg> createClubMsgList=new ArrayList<>();
     private Create_club create_club;
+    private int clubid;
     private EditText suggest;
+    private TextView t_create_club_name;
+    private TextView t_create_club_cat;
+    private TextView t_create_club_place;
+    private TextView t_create_club_introduce;
+    private TextView t_create_club_reason;
+    private Handler handler=new Handler(){
+        public void handleMessage(Message msg){
+            create_club=(Create_club) msg.obj;
+            t_create_club_name.setText(create_club.getClub_name());
+            t_create_club_cat.setText(create_club.getClub_category());
+            t_create_club_place.setText(create_club.getArea_name());
+            t_create_club_introduce.setText(create_club.getIntroduce());
+            t_create_club_reason.setText(create_club.getReason());
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviewed_club);
         Toolbar toolbar = findViewById(R.id.audit_activity_toolbar_club);
         Intent intentget=getIntent();
-        create_club=(Create_club)intentget.getSerializableExtra("create_club");
+        clubid=(int)intentget.getSerializableExtra("clubid");
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        initAuditClub();
-        RecyclerView recyclerView=(RecyclerView)findViewById(R.id.recycler_auditClub);
-        recyclerView.addItemDecoration(new SpaceItemDecoration(10));
-        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        CreateClubAdapter adapter = new CreateClubAdapter(createClubMsgList,ReviewedClub.this,false);
-        recyclerView.setAdapter(adapter);
+        t_create_club_name=findViewById(R.id.t_create_club_name);
+        t_create_club_cat=findViewById(R.id.t_create_club_cat);
+        t_create_club_place=findViewById(R.id.t_create_club_place);
+        t_create_club_introduce=findViewById(R.id.t_create_club_introduce);
+        t_create_club_reason=findViewById(R.id.t_create_club_reason);
         suggest=(EditText)findViewById(R.id.edit_text_audit_club);
         Button yes=(Button)findViewById(R.id.button_pass_audit_club);
         yes.setOnClickListener(this);
         Button no=(Button)findViewById(R.id.button_return_audit_club);
         no.setOnClickListener(this);
-    }
-
-    private void initAuditClub(){
-        CreateClubMsg club_name=new CreateClubMsg("社团名",create_club.getClub_name());
-        createClubMsgList.add(club_name);
-        CreateClubMsg sort=new CreateClubMsg("分类",create_club.getClub_category());
-        createClubMsgList.add(sort);
-        CreateClubMsg arrangement=new CreateClubMsg("社团场地",create_club.getArea_name());
-        createClubMsgList.add(arrangement);
-        CreateClubMsg gonggao=new CreateClubMsg("社团简介",create_club.getIntroduce());
-        createClubMsgList.add(gonggao);
-        CreateClubMsg if_public=new CreateClubMsg("创建理由",create_club.getReason());
-        createClubMsgList.add(if_public);
+        getClub();
     }
 
     @Override
@@ -95,5 +98,11 @@ public class ReviewedClub extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
         }
+    }
+    private void getClub(){
+        Create_club club=ClubManageUtil.applicationManage.searchCreateClubAppliByID(clubid);
+        Message message=new Message();
+        message.obj=club;
+        handler.sendMessage(message);
     }
 }

@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import clubmanage.model.Club;
 import clubmanage.model.User;
 import clubmanage.ui.CheckActivity;
+import clubmanage.ui.CheckClub;
 import clubmanage.ui.CheckResult;
 import clubmanage.ui.ClubMemberManage;
 import clubmanage.ui.CreateActivity;
@@ -159,6 +160,8 @@ public class Manage_Fragement extends Fragment implements View.OnClickListener {
                 startActivity(intent4);
                 break;
             case R.id.club_apply_audit:
+                Intent intent5=new Intent(getContext(), CheckClub.class);
+                startActivity(intent5);
                 break;
             case R.id.club_destroy_audit:
                 break;

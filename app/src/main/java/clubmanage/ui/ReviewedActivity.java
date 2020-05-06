@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -41,7 +42,7 @@ public class ReviewedActivity extends AppCompatActivity implements View.OnClickL
     private Handler handler=new Handler(){
         public void handleMessage(Message msg){
             activity=(Create_activity) msg.obj;
-            byte[] bt=activity.getPoster();
+            byte[] bt= Base64.decode(activity.getPoster(),Base64.DEFAULT);
             if(bt!=null){
                 poster.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
             }else {

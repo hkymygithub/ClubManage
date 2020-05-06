@@ -8,7 +8,7 @@ public class Create_activity implements Serializable {
 	private int activity_approval_id;
 	private int club_id;
 	private String activity_name;
-	private byte[] poster;
+	private String poster;
 	private String area_name;
 	private String activity_owner_id;
 	private String activity_owner_name;
@@ -113,11 +113,11 @@ public class Create_activity implements Serializable {
 	public void setHandle_people_id(String handle_people_id) {
 		this.handle_people_id = handle_people_id;
 	}
-	public byte[] getPoster() {
+	public String getPoster() {
 		return poster;
 	}
 
-	public void setPoster(byte[] poster) {
+	public void setPoster(String poster) {
 		this.poster = poster;
 	}
 	public String getActivity_category() {

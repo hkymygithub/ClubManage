@@ -38,5 +38,5 @@ public interface IPersonalManage {
     /**
      * 改变头像
      */
-    public void changeImage(String uid, byte[] image)throws BaseException;
+    public void changeImage(String uid, String image)throws BaseException;
 }

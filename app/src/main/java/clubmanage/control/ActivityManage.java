@@ -1,5 +1,7 @@
 package clubmanage.control;
 
+import android.util.Base64;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -18,7 +20,7 @@ import clubmanage.util.BaseException;
 
 public class ActivityManage implements IActivityManage {
     @Override
-    public void addActivity(int club_id, String activity_name,byte[] poster, String activity_start_time, String activity_end_time, String activity_introduce, String activity_place, String activity_attention, boolean if_public_activity, String activity_category) throws ParseException {//添加活动
+    public void addActivity(int club_id, String activity_name,String poster, String activity_start_time, String activity_end_time, String activity_introduce, String activity_place, String activity_attention, boolean if_public_activity, String activity_category) throws ParseException {//添加活动
         Connection conn = null;
         byte if_public=(byte)0;
         if(if_public_activity==true)
@@ -51,7 +53,7 @@ public class ActivityManage implements IActivityManage {
                     pst.setInt(1,max_id+1);
                     pst.setInt(2, club_id);
                     pst.setString(3, activity_name);
-                    pst.setBytes(4,poster);
+                    pst.setBytes(4,Base64.decode(poster,Base64.DEFAULT));
                     pst.setTimestamp(5, new Timestamp(start_time.getTime()));
                     pst.setTimestamp(6, new Timestamp(end_time.getTime()));
                     pst.setString(7,activity_introduce);
@@ -172,7 +174,7 @@ public class ActivityManage implements IActivityManage {
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, activity.getClub_id());
             pst.setString(2,activity.getActivity_name());
-            pst.setBytes(3,activity.getPoster());
+            pst.setBytes(3, Base64.decode(activity.getPoster(),Base64.DEFAULT));
             pst.setTimestamp(4,activity.getActivity_start_time());
             pst.setTimestamp(5,activity.getActivity_end_time());
             pst.setString(6,activity.getActivity_introduce());
@@ -211,7 +213,7 @@ public class ActivityManage implements IActivityManage {
                 activity.setActivity_id(rs.getInt(1));
                 activity.setClub_id(rs.getInt(2));
                 activity.setActivity_name(rs.getString(3));
-                activity.setPoster(rs.getBytes(4));
+                activity.setPoster(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 activity.setActivity_start_time(rs.getTimestamp(5));
                 activity.setActivity_end_time(rs.getTimestamp(6));
                 activity.setActivity_introduce(rs.getString(7));
@@ -250,7 +252,7 @@ public class ActivityManage implements IActivityManage {
                 activity.setActivity_id(rs.getInt(1));
                 activity.setClub_id(rs.getInt(2));
                 activity.setActivity_name(rs.getString(3));
-                activity.setPoster(rs.getBytes(4));
+                activity.setPoster(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 activity.setActivity_start_time(rs.getTimestamp(5));
                 activity.setActivity_end_time(rs.getTimestamp(6));
                 activity.setActivity_introduce(rs.getString(7));
@@ -290,7 +292,7 @@ public class ActivityManage implements IActivityManage {
                 activity.setActivity_id(rs.getInt(1));
                 activity.setClub_id(rs.getInt(2));
                 activity.setActivity_name(rs.getString(3));
-                activity.setPoster(rs.getBytes(4));
+                activity.setPoster(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 activity.setActivity_start_time(rs.getTimestamp(5));
                 activity.setActivity_end_time(rs.getTimestamp(6));
                 activity.setActivity_introduce(rs.getString(7));
@@ -330,7 +332,7 @@ public class ActivityManage implements IActivityManage {
                 activity.setActivity_id(rs.getInt(1));
                 activity.setClub_id(rs.getInt(2));
                 activity.setActivity_name(rs.getString(3));
-                activity.setPoster(rs.getBytes(4));
+                activity.setPoster(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 activity.setActivity_start_time(rs.getTimestamp(5));
                 activity.setActivity_end_time(rs.getTimestamp(6));
                 activity.setActivity_introduce(rs.getString(7));
@@ -369,7 +371,7 @@ public class ActivityManage implements IActivityManage {
                 activity.setActivity_id(rs.getInt(1));
                 activity.setClub_id(rs.getInt(2));
                 activity.setActivity_name(rs.getString(3));
-                activity.setPoster(rs.getBytes(4));
+                activity.setPoster(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 activity.setActivity_start_time(rs.getTimestamp(5));
                 activity.setActivity_end_time(rs.getTimestamp(6));
                 activity.setActivity_introduce(rs.getString(7));
@@ -436,7 +438,8 @@ public class ActivityManage implements IActivityManage {
                 activity.setActivity_id(rs.getInt(1));
                 activity.setClub_id(rs.getInt(2));
                 activity.setActivity_name(rs.getString(3));
-                activity.setPoster(rs.getBytes(4));
+                if (rs.getBytes(4)==null) activity.setPoster(null);
+                else activity.setPoster(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 activity.setActivity_start_time(rs.getTimestamp(5));
                 activity.setActivity_end_time(rs.getTimestamp(6));
                 activity.setActivity_introduce(rs.getString(7));
@@ -531,7 +534,7 @@ public class ActivityManage implements IActivityManage {
                 activity.setActivity_id(rs.getInt(1));
                 activity.setClub_id(rs.getInt(2));
                 activity.setActivity_name(rs.getString(3));
-                activity.setPoster(rs.getBytes(4));
+                activity.setPoster(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 activity.setActivity_start_time(rs.getTimestamp(5));
                 activity.setActivity_end_time(rs.getTimestamp(6));
                 activity.setActivity_introduce(rs.getString(7));

@@ -7,7 +7,7 @@ public class Activity implements Serializable {
 	private int activity_id;
 	private int club_id;
 	private String activity_name;
-	private byte[] poster;
+	private String poster;
 	private Timestamp activity_start_time;
 	private Timestamp activity_end_time;
 	private String activity_introduce;
@@ -75,11 +75,11 @@ public class Activity implements Serializable {
 	public void setActivity_category(String activity_category) {
 		this.activity_category = activity_category;
 	}
-	public byte[] getPoster() {
+	public String getPoster() {
 		return poster;
 	}
 
-	public void setPoster(byte[] poster) {
+	public void setPoster(String poster) {
 		this.poster = poster;
 	}
 }

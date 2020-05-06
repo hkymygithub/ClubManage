@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -58,7 +59,7 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
         public void handleMessage(Message msg) {
             activity=(Activity)msg.obj;
             if (activity.getPoster()!=null){
-                byte[] bt= activity.getPoster();
+                byte[] bt= Base64.decode(activity.getPoster(),Base64.DEFAULT);
                 poster.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
             }
             Timestamp now = new Timestamp(System.currentTimeMillis());

@@ -44,12 +44,12 @@ public class CheckClub extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh() {
-                initActivity();
+                initClub();
                 adapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-        initActivity();
+        initClub();
         recyclerView=(RecyclerView)findViewById(R.id.recycler_club_check);
         recyclerView.addItemDecoration(new SpaceItemDecoration(10));
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
@@ -57,7 +57,7 @@ public class CheckClub extends AppCompatActivity {
         adapter = new CheckClubAdapter(CheckClubMsgList);
         recyclerView.setAdapter(adapter);
     }
-    private void initActivity(){
+    private void initClub(){
         new Thread(){
             @Override
             public void run() {
@@ -77,5 +77,10 @@ public class CheckClub extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initClub();
     }
 }

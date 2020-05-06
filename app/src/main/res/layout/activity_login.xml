@@ -14,7 +14,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/reg_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="160px"
+            android:layout_height="58dp"
             android:background="@color/titlecolorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
             <TextView
@@ -23,7 +23,7 @@
                 android:layout_gravity="center"
                 android:text="账号登录"
                 android:textColor="#FFFFFF"
-                android:textSize="65px"
+                android:textSize="23.6sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -32,7 +32,7 @@
         xmlns:gcs="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150px">
+        android:layout_marginTop="54.5dp">
         <ImageView
             android:id="@+id/iv_avatar"
             android:layout_width="120dp"
@@ -48,17 +48,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150px">
+        android:layout_marginTop="54.5dp">
         <ImageView
             android:id="@+id/img_uid"
-            android:layout_width="120px"
-            android:layout_height="120px"
+            android:layout_width="43.6dp"
+            android:layout_height="43.6dp"
             android:src="@mipmap/id"
-            android:layout_marginLeft="100px"
+            android:layout_marginLeft="36.4dp"
             ></ImageView>
         <EditText
             android:id="@+id/edit_uid"
-            android:layout_width="760px"
+            android:layout_width="276dp"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/img_uid"
             android:hint="  学号"></EditText>
@@ -67,17 +67,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45px">
+        android:layout_marginTop="16.4dp">
         <ImageView
             android:id="@+id/img_pwd1"
-            android:layout_width="120px"
-            android:layout_height="120px"
+            android:layout_width="43.6dp"
+            android:layout_height="43.6dp"
             android:src="@mipmap/password"
-            android:layout_marginLeft="100px"
+            android:layout_marginLeft="36.4dp"
             ></ImageView>
         <EditText
             android:id="@+id/edit_pwd_login"
-            android:layout_width="760px"
+            android:layout_width="276dp"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/img_pwd1"
             android:hint="  请输入密码"
@@ -87,19 +87,19 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45px"/>
+        android:layout_marginTop="16dp"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70px">
+        android:layout_marginTop="25.5dp">
         <Button
             android:id="@+id/button_login"
-            android:layout_width="875px"
-            android:layout_height="150px"
+            android:layout_width="318dp"
+            android:layout_height="54.5dp"
             android:text="登录"
             android:textColor="#FFFFFF"
             android:textSize="20dp"
-            android:layout_marginLeft="100px"
+            android:layout_marginLeft="36.4dp"
             android:background="@drawable/button_shape"></Button>
     </RelativeLayout>
 </LinearLayout>

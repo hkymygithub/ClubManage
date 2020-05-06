@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class Club implements Serializable {
 	private int club_id;
 	private String category_name;
-	private byte[] club_icon;
-	private byte[] club_cover;
+	private String club_icon;
+	private String club_cover;
 	private String club_name;
 	private String club_introduce;
 	private String slogan;
@@ -26,16 +26,16 @@ public class Club implements Serializable {
 	public void setCategory_name(String category_name) {
 		this.category_name = category_name;
 	}
-	public byte[] getClub_icon() {
+	public String getClub_icon() {
 		return club_icon;
 	}
-	public void setClub_icon(byte[] club_icon) {
+	public void setClub_icon(String club_icon) {
 		this.club_icon = club_icon;
 	}
-	public byte[] getClub_cover() {
+	public String getClub_cover() {
 		return club_cover;
 	}
-	public void setClub_cover(byte[] club_cover) {
+	public void setClub_cover(String club_cover) {
 		this.club_cover = club_cover;
 	}
 	public String getClub_name() {

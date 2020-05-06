@@ -361,9 +361,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:layout_marginBottom="60dp"
-            >
-
+            android:layout_marginBottom="60dp">
             <Button
                 android:id="@+id/button_return_audit"
                 android:layout_width="462px"

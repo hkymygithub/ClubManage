@@ -27,7 +27,7 @@ public interface IApplicationManage {
      * if_public_activity: 0=不公开；1=公开
      * state：0=未通过；1=通过；2=待审查
      */
-    public void addActivityAppli(int club_id,byte[] poster,String activity_name,String area_name,String activity_owner_id,String activity_owner_name,String activity_start_time,String activity_end_time,String activity_details,String sttention,String activity_category,boolean if_public_activity,String reason)throws BaseException;
+    public void addActivityAppli(int club_id,String poster,String activity_name,String area_name,String activity_owner_id,String activity_owner_name,String activity_start_time,String activity_end_time,String activity_details,String sttention,String activity_category,boolean if_public_activity,String reason)throws BaseException;
     /**
      * 活动申请反馈
      * state：0=未通过；1=通过；2=待审查

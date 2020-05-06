@@ -21,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,14 +88,12 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
         t_person_phone=findViewById(R.id.t_person_phone);
         t_person_mail=findViewById(R.id.t_person_mail);
         t_person_major=findViewById(R.id.t_person_major);
-
         t_person_uid.setText(User.currentLoginUser.getUid());
         t_person_name.setText(User.currentLoginUser.getName());
         t_person_gender.setText(User.currentLoginUser.getGender());
         t_person_phone.setText(User.currentLoginUser.getPhone_number());
         t_person_mail.setText(User.currentLoginUser.getMail());
         t_person_major.setText(User.currentLoginUser.getMajor());
-
         img=findViewById(R.id.per_cen_head);
         img.setOnClickListener(this);
         byte[] bt=User.currentLoginUser.getImage();
@@ -406,7 +405,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
             @Override
             public void run() {
                 try {
-                    ClubManageUtil.personalManage.changeImage(User.currentLoginUser.getUid(),img);
+                    ClubManageUtil.personalManage.changeImage(User.currentLoginUser.getUid(), Base64.encodeToString(img,Base64.DEFAULT));
                 } catch (BaseException e) {
                     e.printStackTrace();
                 }

@@ -77,11 +77,11 @@ public interface IClubManage {
     /**
      * 编辑社团logo
      */
-    public void editLogo(int club_id,byte[] club_icon);
+    public void editLogo(int club_id,String club_icon);
     /**
      * 编辑社团海报
      */
-    public void editCover(int club_id,byte[] club_cover);
+    public void editCover(int club_id,String club_cover);
     /**
      * 加入一个社团
      */

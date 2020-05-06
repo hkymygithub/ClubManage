@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -69,7 +70,7 @@ public class ManageClub extends AppCompatActivity implements View.OnClickListene
     private Handler handler=new Handler(){
         public void handleMessage(Message msg){
             club=(Club) msg.obj;
-            byte[] bt=club.getClub_icon();
+            byte[] bt= Base64.decode(club.getClub_icon(),Base64.DEFAULT);
             if(bt!=null){
                 c_club_logo.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
             }else {
@@ -380,7 +381,7 @@ public class ManageClub extends AppCompatActivity implements View.OnClickListene
                 new Thread(){
                     @Override
                     public void run() {
-                        ClubManageUtil.clubManage.editLogo(clubid,byteArray);
+                        ClubManageUtil.clubManage.editLogo(clubid,Base64.encodeToString(byteArray,Base64.DEFAULT));
                     }
                 }.start();
                 Toast.makeText(this, "logo修改成功", Toast.LENGTH_SHORT).show();
@@ -389,7 +390,7 @@ public class ManageClub extends AppCompatActivity implements View.OnClickListene
                 new Thread(){
                     @Override
                     public void run() {
-                        ClubManageUtil.clubManage.editCover(clubid,byteArray);
+                        ClubManageUtil.clubManage.editCover(clubid,Base64.encodeToString(byteArray,Base64.DEFAULT));
                     }
                 }.start();
                 Toast.makeText(this, "海报修改成功", Toast.LENGTH_SHORT).show();

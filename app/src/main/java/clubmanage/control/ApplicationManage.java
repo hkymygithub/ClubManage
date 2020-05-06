@@ -1,5 +1,7 @@
 package clubmanage.control;
 
+import android.util.Base64;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -102,7 +104,7 @@ public class ApplicationManage implements IApplicationManage {
     }
 
     @Override
-    public void addActivityAppli(int club_id,byte[] poster,String activity_name, String area_name, String activity_owner_id, String activity_owner_name,
+    public void addActivityAppli(int club_id,String poster,String activity_name, String area_name, String activity_owner_id, String activity_owner_name,
                                  String activity_start_time, String activity_end_time, String activity_details,String attention,String activity_category, boolean if_public_activity, String reason) throws BaseException{
         Connection conn=null;
         try {
@@ -117,7 +119,7 @@ public class ApplicationManage implements IApplicationManage {
             pst=conn.prepareStatement(sql);
             pst.setInt(1,club_id);
             pst.setString(2,activity_name);
-            pst.setBytes(3,poster);
+            pst.setBytes(3,Base64.decode(poster,Base64.DEFAULT));
             pst.setString(4,area_name);
             pst.setString(5,activity_owner_id);
             pst.setString(6,activity_owner_name);
@@ -165,7 +167,7 @@ public class ApplicationManage implements IApplicationManage {
                 if(rs.next()){
                     if (rs.getByte(13)==0) ispublic=false;
                     else ispublic=true;
-                    ClubManageUtil.activityManage.addActivity(rs.getInt(2),rs.getString(3),rs.getBytes(4),
+                    ClubManageUtil.activityManage.addActivity(rs.getInt(2),rs.getString(3),Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT),
                     rs.getTimestamp(8).toString(),rs.getTimestamp(9).toString(),rs.getString(10),rs.getString(5),
                             rs.getString(11),ispublic,rs.getString(12));
                 }
@@ -424,7 +426,7 @@ public class ApplicationManage implements IApplicationManage {
                 create_activity.setActivity_approval_id(rs.getInt(1));
                 create_activity.setClub_id(rs.getInt(2));
                 create_activity.setActivity_name(rs.getString(3));
-                create_activity.setPoster(rs.getBytes(4));
+                create_activity.setPoster(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 create_activity.setArea_name(rs.getString(5));
                 create_activity.setActivity_owner_id(rs.getString(6));
                 create_activity.setActivity_owner_name(rs.getString(7));
@@ -469,7 +471,7 @@ public class ApplicationManage implements IApplicationManage {
                 create_activity.setActivity_approval_id(rs.getInt(1));
                 create_activity.setClub_id(rs.getInt(2));
                 create_activity.setActivity_name(rs.getString(3));
-                create_activity.setPoster(rs.getBytes(4));
+                create_activity.setPoster(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 create_activity.setArea_name(rs.getString(5));
                 create_activity.setActivity_owner_id(rs.getString(6));
                 create_activity.setActivity_owner_name(rs.getString(7));
@@ -587,7 +589,7 @@ public class ApplicationManage implements IApplicationManage {
                 create_activity.setActivity_approval_id(rs.getInt(1));
                 create_activity.setClub_id(rs.getInt(2));
                 create_activity.setActivity_name(rs.getString(3));
-                create_activity.setPoster(rs.getBytes(4));
+                create_activity.setPoster(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 create_activity.setArea_name(rs.getString(5));
                 create_activity.setActivity_owner_id(rs.getString(6));
                 create_activity.setActivity_owner_name(rs.getString(7));

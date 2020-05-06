@@ -12,7 +12,7 @@ public interface IActivityManage {
     /**
      * 添加活动
      */
-    public void addActivity(int club_id, String activity_name,byte[] poster, String activity_start_time, String activity_end_time, String activity_introduce, String activity_place, String activity_attention,boolean if_public_activity,String activity_category) throws ParseException;
+    public void addActivity(int club_id, String activity_name,String poster, String activity_start_time, String activity_end_time, String activity_introduce, String activity_place, String activity_attention,boolean if_public_activity,String activity_category) throws ParseException;
     /**
      * 添加活动图片
      * 一次只加一张

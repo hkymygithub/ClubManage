@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -127,9 +128,9 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
         public void handleMessage(Message msg){
             clubMsg=(Club) msg.obj;
             if (clubMsg.getClub_icon()==null) logo.setImageResource(R.drawable.photo1);
-            logo.setImageBitmap(BitmapAndBytes.bytesToBitmap(clubMsg.getClub_icon()));
+            logo.setImageBitmap(BitmapAndBytes.bytesToBitmap(Base64.decode(clubMsg.getClub_icon(),Base64.DEFAULT)));
             if (clubMsg.getClub_cover()==null) poster.setBackgroundResource(R.drawable.poster);
-            else poster.setBackground(BitmapAndBytes.bytesToDrawable(clubMsg.getClub_cover()));
+            else poster.setBackground(BitmapAndBytes.bytesToDrawable(Base64.decode(clubMsg.getClub_cover(),Base64.DEFAULT)));
             name.setText(clubMsg.getClub_name());
             memberNum.setText("成员"+clubMsg.getMember_number());
             introduce.setText(clubMsg.getClub_introduce());

@@ -27,6 +27,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -334,7 +335,7 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
                 if (t_create_public.equals("是"))p=true;
                 else if (t_create_public.equals("否")) p=false;
                 try {
-                    ClubManageUtil.applicationManage.addActivityAppli(clubid,mbyteArray,
+                    ClubManageUtil.applicationManage.addActivityAppli(clubid, Base64.encodeToString(mbyteArray,Base64.DEFAULT),
                             t_create_name.getText().toString(),t_create_place.getText().toString(),User.currentLoginUser.getUid(),
                             User.currentLoginUser.getName(),t_create_start_time.getText().toString()+" 00:00:00",
                             t_create_finish_time.getText().toString()+" 00:00:00", t_create_introduce.getText().toString(),

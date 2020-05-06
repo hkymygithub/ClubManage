@@ -3,6 +3,7 @@ package clubmanage.ui.home;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,18 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import clubmanage.httpInterface.ActivityRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.Activity;
 import clubmanage.model.User;
 import clubmanage.ui.R;
 import clubmanage.ui.adapter.ActivityAdapter;
 import clubmanage.util.ClubManageUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Home_Activity extends Fragment {
     private List<Activity> homeList = new ArrayList<>();
@@ -69,15 +77,27 @@ public class Home_Activity extends Fragment {
     }
 
     private void initHomes(){
-        new Thread(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ActivityRequest request = retrofit.create(ActivityRequest.class);
+        Call<HttpMessage<List<Activity>>> call = request.searchMyActivity(User.currentLoginUser.getUid());
+        call.enqueue(new Callback<HttpMessage<List<Activity>>>() {
             @Override
-            public void run() {
-                List<Activity> activityList=new ArrayList<>();
-                activityList.addAll(ClubManageUtil.activityManage.searchMyActivity(User.currentLoginUser.getUid()));
-                Message message=new Message();
-                message.obj=activityList;
-                handler.sendMessage(message);
+            public void onResponse(Call<HttpMessage<List<Activity>>> call, Response<HttpMessage<List<Activity>>> response) {
+                HttpMessage<List<Activity>> data=response.body();
+                if (data.getCode()==0){
+                    List<Activity> activityList = (List<Activity>)data.getData();
+                    Message message=new Message();
+                    message.obj=activityList;
+                    handler.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<List<Activity>>> call, Throwable t) {
+                Log.i("Activity_TabFragment1",t.getMessage());
+            }
+        });
     }
 }

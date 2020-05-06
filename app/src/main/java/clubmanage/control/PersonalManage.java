@@ -1,5 +1,7 @@
 package clubmanage.control;
 
+import android.util.Base64;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -162,14 +164,14 @@ public class PersonalManage implements IPersonalManage {
     }
 
     @Override
-    public void changeImage(String uid, byte[] image) throws BaseException{
+    public void changeImage(String uid, String image) throws BaseException{
         if (image==null) throw new BaseException("性别不能为空！");
         Connection conn=null;
         try {
             conn= DBUtil.getConnection();
             String sql="update user set image=? where uid=?";
             java.sql.PreparedStatement pst=conn.prepareStatement(sql);
-            pst.setBytes(1,image);
+            pst.setBytes(1, Base64.decode(image,Base64.DEFAULT));
             pst.setString(2,uid);
             pst.execute();
             pst.close();

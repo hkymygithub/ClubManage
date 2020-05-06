@@ -3,6 +3,7 @@ package clubmanage.ui.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +75,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         if (home.getPoster()==null)
             Glide.with(mContext).load(R.drawable.sports_club).into(holder.homeImage1);
         else {
-            byte[] bt= home.getPoster();
+            byte[] bt= Base64.decode(home.getPoster(),Base64.DEFAULT);
             holder.homeImage1.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
         }
         holder.homeText1.setText(home.getActivity_name());

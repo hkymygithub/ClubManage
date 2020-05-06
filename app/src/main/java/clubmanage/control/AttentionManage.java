@@ -1,5 +1,7 @@
 package clubmanage.control;
 
+import android.util.Base64;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -80,8 +82,8 @@ public class AttentionManage implements IAttentionManage {
                 Club club = new Club();
                 club.setClub_id(rs.getInt(1));
                 club.setCategory_name(rs.getString(2));
-                club.setClub_icon(rs.getBytes(3));
-                club.setClub_cover(rs.getBytes(4));
+                club.setClub_icon(Base64.encodeToString(rs.getBytes(3),Base64.DEFAULT));
+                club.setClub_cover(Base64.encodeToString(rs.getBytes(4),Base64.DEFAULT));
                 club.setClub_name(rs.getString(5));
                 club.setClub_introduce(rs.getString(6));
                 club.setSlogan(rs.getString(7));

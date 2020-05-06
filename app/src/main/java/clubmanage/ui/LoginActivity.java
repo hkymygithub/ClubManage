@@ -5,50 +5,32 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import clubmanage.model.Club;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
+import clubmanage.httpInterface.UserRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.User;
-import clubmanage.util.BaseException;
-import clubmanage.util.ClubManageUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
-    private Handler handler=new Handler(){
-        public void handleMessage(Message msg){
-            User a=(User)msg.obj;
-            User.currentLoginUser=a;
-        }
-    };
-    private Handler handler2=new Handler(){
-        public void handleMessage(Message msg){
-            exception =(String)msg.obj;
-            if(exception!=null){
-                logButton.setEnabled(true);
-                new AlertDialog.Builder(LoginActivity.this)
-                        .setTitle(exception)
-                        .setIcon(R.drawable.mark)
-                        .setPositiveButton("确定", null)
-                        .show();
-                return;
-            }else {
-                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
-                Intent intent1=new Intent();
-                intent1.putExtra("data","OK");
-                setResult(RESULT_OK,intent1);
-                finish();
-            }
-        }
-    };
+
     EditText uid;
     EditText pwd;
     String exception=null;
@@ -80,26 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         logButton.setEnabled(false);
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    String id=uid.getText().toString();
-                    String p=pwd.getText().toString();
-                    user=ClubManageUtil.usermanage.login(uid.getText().toString(),pwd.getText().toString());
-                    Message message=new Message();
-                    message.obj=user;
-                    handler.sendMessage(message);
-                    Message message2=new Message();
-                    message2.obj=null;
-                    handler2.sendMessage(message2);
-                } catch (BaseException e) {
-                    Message message2=new Message();
-                    message2.obj=e.getMessage();
-                    handler2.sendMessage(message2);
-                }
-            }
-        }.start();
+        login(uid.getText().toString(),pwd.getText().toString());
     }
     @Override
     public void onBackPressed(){
@@ -107,5 +70,46 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         intentback.putExtra("data","No");
         setResult(RESULT_CANCELED);
         finish();
+    }
+
+    public void login(String uid,String pwd){
+        //创建Retrofit对象
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000") //基础url,其他部分在GetRequestInterface里
+                .addConverterFactory(GsonConverterFactory.create()) //Gson数据转换器
+                .build();
+
+        //创建网络请求接口实例
+        UserRequest request = retrofit.create(UserRequest.class);
+        Call<HttpMessage<User>> call = request.login(uid,pwd);
+
+        //发送网络请求(异步)
+        call.enqueue(new Callback<HttpMessage<User>>() {
+            @Override
+            public void onResponse(Call<HttpMessage<User>> call, Response<HttpMessage<User>> response) {
+                HttpMessage<User> message=response.body();
+                if (message.getCode()==0){
+                    User.currentLoginUser = (User)message.getData();
+                    Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+                    Intent intent1=new Intent();
+                    intent1.putExtra("data","OK");
+                    setResult(RESULT_OK,intent1);
+                    finish();
+                }else if (message.getCode()==1){
+                    logButton.setEnabled(true);
+                    new AlertDialog.Builder(LoginActivity.this)
+                            .setTitle(message.getMsg())
+                            .setIcon(R.drawable.mark)
+                            .setPositiveButton("确定", null)
+                            .show();
+                }
+            }
+            @Override
+            public void onFailure(Call<HttpMessage<User>> call, Throwable t) {
+                Log.i("Login",t.getMessage());
+            }
+        });
     }
 }

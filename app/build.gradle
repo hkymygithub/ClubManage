@@ -45,5 +45,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
     implementation 'com.youth.banner:banner:1.4.10'
 
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
 }

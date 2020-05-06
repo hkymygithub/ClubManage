@@ -3,6 +3,7 @@ package clubmanage.ui.home;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,18 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import clubmanage.httpInterface.ClubRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.Club;
 import clubmanage.model.User;
 import clubmanage.ui.R;
 import clubmanage.ui.adapter.ClubAdapter;
 import clubmanage.util.ClubManageUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Home_Club extends Fragment {
     private List<Club> clubList = new ArrayList<>();
@@ -69,15 +77,27 @@ public class Home_Club extends Fragment {
     }
 
     private void initHomes(){
-        new Thread(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+       ClubRequest request = retrofit.create(ClubRequest.class);
+        Call<HttpMessage<List<Club>>> call = request.searchMyClub(User.currentLoginUser.getUid());
+        call.enqueue(new Callback<HttpMessage<List<Club>>>() {
             @Override
-            public void run(){
-                List<Club> clubList= null;
-                clubList = ClubManageUtil.clubManage.searchMyClub(User.currentLoginUser.getUid());
-                Message message=new Message();
-                message.obj=clubList;
-                handler.sendMessage(message);
+            public void onResponse(Call<HttpMessage<List<Club>>> call, Response<HttpMessage<List<Club>>> response) {
+                HttpMessage<List<Club>> data=response.body();
+                if (data.getCode()==0){
+                    List<Club> clubList = (List<Club>)data.getData();
+                    Message message=new Message();
+                    message.obj=clubList;
+                    handler.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<List<Club>>> call, Throwable t) {
+                Log.i("Activity_TabFragment1",t.getMessage());
+            }
+        });
     }
 }

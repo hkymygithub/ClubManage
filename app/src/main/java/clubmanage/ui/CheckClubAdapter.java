@@ -31,9 +31,9 @@ public class CheckClubAdapter extends RecyclerView.Adapter<CheckClubAdapter.View
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 if(position<0) return;
-                Create_club club = checkClubMsgList.get(position);
+                int clubid = checkClubMsgList.get(position).getApplyclub_formid();
                 Intent intent=new Intent(mContext, ReviewedClub.class);
-                intent.putExtra("create_club",club);
+                intent.putExtra("clubid",clubid);
                 mContext.startActivity(intent);
 //                Toast.makeText(v.getContext(), "you clicked view " + activity.getAct_name(), Toast.LENGTH_SHORT).show();
             }
@@ -47,8 +47,6 @@ public class CheckClubAdapter extends RecyclerView.Adapter<CheckClubAdapter.View
         holder.clubname.setText(club.getClub_name());
         holder.clubcreattime.setText("申请人学号："+club.getUid());
         holder.actposition.setText("申请人姓名："+club.getApplican_name());
-
-        holder.clubImage.setImageResource(R.drawable.enrollment);
         holder.array.setImageResource(R.drawable.arrow_right);
         holder.clock.setImageResource(R.drawable.clock);
         holder.posi.setImageResource(R.drawable.map);
@@ -64,7 +62,6 @@ public class CheckClubAdapter extends RecyclerView.Adapter<CheckClubAdapter.View
         TextView clubname;
         TextView clubcreattime;
         TextView actposition;
-        ImageView clubImage;
         ImageView array;
         ImageView clock;
         ImageView posi;
@@ -75,7 +72,6 @@ public class CheckClubAdapter extends RecyclerView.Adapter<CheckClubAdapter.View
             clubname = (TextView) view.findViewById(R.id.check_club_name);
             clubcreattime = (TextView) view.findViewById(R.id.check_club_time);
             actposition = (TextView) view.findViewById(R.id.check_club_position);
-            clubImage = (ImageView) view.findViewById(R.id.check_club_act_img);
             array=(ImageView)view.findViewById(R.id.check_club_right_array);
             clock=(ImageView)view.findViewById(R.id.check_club_clock);
             posi=(ImageView)view.findViewById(R.id.check_club_posi);

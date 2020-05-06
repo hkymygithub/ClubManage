@@ -9,6 +9,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -45,7 +46,7 @@ public class CheckResult extends AppCompatActivity {
                     a="审核通过";
                 else if(createActivitiesrList.get(i).getState()==2)
                     a="等待审核";
-                CheckResultMsg act=new CheckResultMsg(createActivitiesrList.get(i).getActivity_name(),createActivitiesrList.get(i).getPoster(),createActivitiesrList.get(i).getSuggestion(),a);
+                CheckResultMsg act=new CheckResultMsg(createActivitiesrList.get(i).getActivity_name(), Base64.decode(createActivitiesrList.get(i).getPoster(),Base64.DEFAULT),createActivitiesrList.get(i).getSuggestion(),a);
                 checkResultMsgs.add(act);
             }
             adapter.notifyDataSetChanged();

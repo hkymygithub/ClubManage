@@ -3,6 +3,7 @@ package clubmanage.ui.club;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,17 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import clubmanage.httpInterface.ClubRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.Club;
 import clubmanage.ui.R;
 import clubmanage.ui.adapter.ClubAdapter;
 import clubmanage.util.ClubManageUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Club_TabFragment4 extends Fragment {
     private List<Club> clubList = new ArrayList<>();
@@ -63,28 +71,32 @@ public class Club_TabFragment4 extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new ClubAdapter(clubList);
-//        Log.i("Club_TabFragment4","***************"+mTitle+"  2");
         recyclerView.setAdapter(adapter);
     }
 
     private void initActs(){
-//        for(int i=0;i<5;i++){
-//            ClubItem one = new ClubItem(R.drawable.photo7,"围棋社","热门社团","成员128","粉丝1273","动漫","颜值","cosplay","“动漫”这一合称的出现主要是因为日本的动画和漫画产业联系紧密，所以日本动画和漫画在中国传播的过程中，出现了《动漫时代》这样综合了日本动画和漫画咨询的杂志。");
-//            actList.add(one);
-//            ClubItem two = new ClubItem(R.drawable.photo1,"书画社","十佳社团","成员128","粉丝1273","读书","颜值","定期团建","“动漫”这一合称的出现主要是因为日本的动画和漫画产业联系紧密，所以日本动画和漫画在中国传播的过程中，出现了《动漫时代》这样综合了日本动画和漫画咨询的杂志。");
-//            actList.add(two);
-//        }
-        new Thread(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ClubRequest request = retrofit.create(ClubRequest.class);
+        Call<HttpMessage<List<Club>>> call = request.searchClubByType(mTitle,false);
+        call.enqueue(new Callback<HttpMessage<List<Club>>>() {
             @Override
-            public void run() {
-                List<Club> clubList= null;
-                clubList = ClubManageUtil.clubManage.searchClubByType(mTitle,false);
-                Message message=new Message();
-                message.obj=clubList;
-                handler.sendMessage(message);
-//                Log.i("Club_TabFragment4","***************"+mTitle+"  1");
+            public void onResponse(Call<HttpMessage<List<Club>>> call, Response<HttpMessage<List<Club>>> response) {
+                HttpMessage<List<Club>> data=response.body();
+                if (data.getCode()==0){
+                    List<Club> clubList = (List<Club>)data.getData();
+                    Message message=new Message();
+                    message.obj=clubList;
+                    handler.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<List<Club>>> call, Throwable t) {
+                Log.i("Club_TabFragment4",t.getMessage());
+            }
+        });
     }
 
 }

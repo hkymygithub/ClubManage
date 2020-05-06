@@ -3,6 +3,7 @@ package clubmanage.ui.adapter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,6 @@ import clubmanage.ui.R;
 public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ViewHolder> {
     private Context mContext;
     private List<Club> mClubList;
-    private ProgressDialog progressDialog = null;
     static class ViewHolder extends RecyclerView.ViewHolder{
         View clubView;
         ImageView actImage;
@@ -80,7 +80,7 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder,int position){
         Club club = mClubList.get(position);
         if (club.getClub_icon()==null)Glide.with(mContext).load(R.drawable.photo1).into(holder.actImage);
-        else holder.actImage.setImageBitmap(BitmapAndBytes.bytesToBitmap(club.getClub_icon()));
+        else holder.actImage.setImageBitmap(BitmapAndBytes.bytesToBitmap(Base64.decode(club.getClub_icon(),Base64.DEFAULT)));
         holder.actText1.setText(club.getClub_name());
         holder.actText2.setText("热门社团");
         holder.actText3.setText("成员"+club.getMember_number());

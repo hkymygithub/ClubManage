@@ -3,6 +3,7 @@ package clubmanage.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,7 @@ public class CheckAdapter extends RecyclerView.Adapter<CheckAdapter.ViewHolder>{
         int eday=act.getActivity_end_time().getDay();
         holder.acttime.setText(syear+"-"+smonth+"-"+sday+"至"+eyear+"-"+emonth+"-"+eday);
         holder.actposition.setText(act.getArea_name());
-        byte[] bt=act.getPoster();
+        byte[] bt= Base64.decode(act.getPoster(),Base64.DEFAULT);
         if(bt!=null){
             holder.actImage.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
         }else {
