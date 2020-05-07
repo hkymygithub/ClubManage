@@ -8,7 +8,7 @@ public class User implements Serializable {
     public static User currentLoginUser=null;
 	private String uid;
 	private String pwd;
-	private byte[] image;
+	private String image;
 	private String name;
 	private String gender;
 	private String mail;
@@ -30,10 +30,10 @@ public class User implements Serializable {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 	public String getGender() {

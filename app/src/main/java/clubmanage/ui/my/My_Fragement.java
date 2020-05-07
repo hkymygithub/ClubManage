@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,11 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import clubmanage.httpInterface.ActivityRequest;
+import clubmanage.httpInterface.ApplicationRequest;
+import clubmanage.httpInterface.AttentionRequest;
+import clubmanage.httpInterface.ClubRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.User;
 import clubmanage.ui.CircleImageView;
 import clubmanage.ui.LoginActivity;
@@ -27,6 +34,11 @@ import clubmanage.ui.R;
 import clubmanage.ui.Register;
 import clubmanage.ui.Setting;
 import clubmanage.util.ClubManageUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -102,43 +114,106 @@ public class My_Fragement extends Fragment implements View.OnClickListener {
         initAttNumber();
     }
     private void initClubNumber(){
-        new Thread(){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                int clubnum= ClubManageUtil.clubManage.searchMyClubCount(User.currentLoginUser.getUid());
+//                Message message=new Message();
+//                message.obj=clubnum;
+//                handler2.sendMessage(message);
+//            }
+//        }.start();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ClubRequest request = retrofit.create(ClubRequest.class);
+        Call<HttpMessage<Integer>> call = request.searchMyClubCount(User.currentLoginUser.getUid());
+        call.enqueue(new Callback<HttpMessage<Integer>>() {
             @Override
-            public void run() {
-                int clubnum= ClubManageUtil.clubManage.searchMyClubCount(User.currentLoginUser.getUid());
-                Message message=new Message();
-                message.obj=clubnum;
-                handler2.sendMessage(message);
+            public void onResponse(Call<HttpMessage<Integer>> call, Response<HttpMessage<Integer>> response) {
+                HttpMessage<Integer> data=response.body();
+                if (data.getCode()==0){
+                    Integer clubnum = (Integer)data.getData();
+                    Message message=new Message();
+                    message.obj=clubnum;
+                    handler2.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<Integer>> call, Throwable t) {
+            }
+        });
     }
 
     private void initActivityMumber(){
-        new Thread(){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                int num= ClubManageUtil.activityManage.searchMyActivityCount(User.currentLoginUser.getUid());
+//                Message message=new Message();
+//                message.obj=num;
+//                handler3.sendMessage(message);
+//            }
+//        }.start();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ActivityRequest request = retrofit.create(ActivityRequest.class);
+        Call<HttpMessage<Integer>> call = request.searchMyActivityCount(User.currentLoginUser.getUid());
+        call.enqueue(new Callback<HttpMessage<Integer>>() {
             @Override
-            public void run() {
-                int num= ClubManageUtil.activityManage.searchMyActivityCount(User.currentLoginUser.getUid());
-                Message message=new Message();
-                message.obj=num;
-                handler3.sendMessage(message);
+            public void onResponse(Call<HttpMessage<Integer>> call, Response<HttpMessage<Integer>> response) {
+                HttpMessage<Integer> data=response.body();
+                if (data.getCode()==0){
+                    Integer num = (Integer)data.getData();
+                    Message message=new Message();
+                    message.obj=num;
+                    handler3.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<Integer>> call, Throwable t) {
+            }
+        });
     }
 
     private void initAttNumber(){
-        new Thread(){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                int num= ClubManageUtil.attentionManage.searchAttenCount(User.currentLoginUser.getUid());
+//                Message message=new Message();
+//                message.obj=num;
+//                handler4.sendMessage(message);
+//            }
+//        }.start();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        AttentionRequest request = retrofit.create(AttentionRequest.class);
+        Call<HttpMessage<Integer>> call = request.searchAttenCount(User.currentLoginUser.getUid());
+        call.enqueue(new Callback<HttpMessage<Integer>>() {
             @Override
-            public void run() {
-                int num= ClubManageUtil.attentionManage.searchAttenCount(User.currentLoginUser.getUid());
-                Message message=new Message();
-                message.obj=num;
-                handler4.sendMessage(message);
+            public void onResponse(Call<HttpMessage<Integer>> call, Response<HttpMessage<Integer>> response) {
+                HttpMessage<Integer> data=response.body();
+                if (data.getCode()==0){
+                    Integer num = (Integer)data.getData();
+                    Message message=new Message();
+                    message.obj=num;
+                    handler4.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<Integer>> call, Throwable t) {
+            }
+        });
     }
 
     private void initHead(){
-        byte[] bt= User.currentLoginUser.getImage();
+        byte[] bt= Base64.decode(User.currentLoginUser.getImage(),Base64.DEFAULT);
         if(bt!=null){
             img.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
         }else img.setImageResource(R.drawable.photo1);

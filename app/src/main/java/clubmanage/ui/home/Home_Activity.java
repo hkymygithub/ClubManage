@@ -96,7 +96,6 @@ public class Home_Activity extends Fragment {
             }
             @Override
             public void onFailure(Call<HttpMessage<List<Activity>>> call, Throwable t) {
-                Log.i("Activity_TabFragment1",t.getMessage());
             }
         });
     }

@@ -96,7 +96,6 @@ public class Home_Club extends Fragment {
             }
             @Override
             public void onFailure(Call<HttpMessage<List<Club>>> call, Throwable t) {
-                Log.i("Activity_TabFragment1",t.getMessage());
             }
         });
     }

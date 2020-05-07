@@ -19,9 +19,17 @@ import com.bumptech.glide.Glide;
 
 import java.sql.Timestamp;
 
+import clubmanage.httpInterface.ActivityRequest;
+import clubmanage.httpInterface.ApplicationRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.Activity;
 import clubmanage.model.User;
 import clubmanage.util.ClubManageUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ActivityItem extends AppCompatActivity implements View.OnClickListener {
     private int activityid;
@@ -113,15 +121,7 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
         act_club=findViewById(R.id.act_club);
         ImageButton back=findViewById(R.id.act_head_img1);
         back.setOnClickListener(this);
-        new Thread(){
-            @Override
-            public void run() {
-                boolean isSignUp=ClubManageUtil.activityManage.if_participate(User.currentLoginUser.getUid(),activityid);
-                Message message=new Message();
-                message.obj=isSignUp;
-                handler.sendMessage(message);
-            }
-        }.start();
+        ifSignUp();
         getActivity();
         getClubName();
         getOwnname();
@@ -142,48 +142,162 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-    private void signUpAvtivity(String uid){
-        new Thread(){
+
+    private void ifSignUp(){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                boolean isSignUp=ClubManageUtil.activityManage.if_participate(User.currentLoginUser.getUid(),activityid);
+//                Message message=new Message();
+//                message.obj=isSignUp;
+//                handler.sendMessage(message);
+//            }
+//        }.start();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ActivityRequest request = retrofit.create(ActivityRequest.class);
+        Call<HttpMessage<Boolean>> call = request.ifparticipate(User.currentLoginUser.getUid(),activityid);
+        call.enqueue(new Callback<HttpMessage<Boolean>>() {
             @Override
-            public void run() {
-               ClubManageUtil.applicationManage.signupActivity(User.currentLoginUser.getUid(),activityid);
+            public void onResponse(Call<HttpMessage<Boolean>> call, Response<HttpMessage<Boolean>> response) {
+                HttpMessage<Boolean> data=response.body();
+                if (data.getCode()==0){
+                    Boolean isSignUp = (Boolean)data.getData();
+                    Message message=new Message();
+                    message.obj=isSignUp;
+                    handler.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<Boolean>> call, Throwable t) {
+            }
+        });
+    }
+
+    private void signUpAvtivity(String uid){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//               ClubManageUtil.applicationManage.signupActivity(User.currentLoginUser.getUid(),activityid);
+//            }
+//        }.start();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApplicationRequest request = retrofit.create(ApplicationRequest.class);
+        Call<HttpMessage> call = request.signupActivity(User.currentLoginUser.getUid(),activityid);
+        call.enqueue(new Callback<HttpMessage>() {
+            @Override
+            public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                HttpMessage<Boolean> data=response.body();
+                if (data.getCode()==0){
+                }
+            }
+            @Override
+            public void onFailure(Call<HttpMessage> call, Throwable t) {
+            }
+        });
     }
 
     private void getActivity(){
-        new Thread(){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                Activity activity=ClubManageUtil.activityManage.searchActivityById(activityid);
+//                Message message=new Message();
+//                message.obj=activity;
+//                handler2.sendMessage(message);
+//            }
+//        }.start();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ActivityRequest request = retrofit.create(ActivityRequest.class);
+        Call<HttpMessage<Activity>> call = request.searchActivityById(activityid);
+        call.enqueue(new Callback<HttpMessage<Activity>>() {
             @Override
-            public void run() {
-                Activity activity=ClubManageUtil.activityManage.searchActivityById(activityid);
-                Message message=new Message();
-                message.obj=activity;
-                handler2.sendMessage(message);
+            public void onResponse(Call<HttpMessage<Activity>> call, Response<HttpMessage<Activity>> response) {
+                HttpMessage<Activity> data=response.body();
+                if (data.getCode()==0){
+                    Activity act = (Activity)data.getData();
+                    Message message=new Message();
+                    message.obj=act;
+                    handler2.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<Activity>> call, Throwable t) {
+            }
+        });
     }
 
     private void getClubName(){
-        new Thread(){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                String cname=ClubManageUtil.activityManage.findClubNameByActivityId(activityid);
+//                Message message=new Message();
+//                message.obj=cname;
+//                handler3.sendMessage(message);
+//            }
+//        }.start();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ActivityRequest request = retrofit.create(ActivityRequest.class);
+        Call<HttpMessage<String>> call = request.findClubNameByActivityId(activityid);
+        call.enqueue(new Callback<HttpMessage<String>>() {
             @Override
-            public void run() {
-                String cname=ClubManageUtil.activityManage.findClubNameByActivityId(activityid);
-                Message message=new Message();
-                message.obj=cname;
-                handler3.sendMessage(message);
+            public void onResponse(Call<HttpMessage<String>> call, Response<HttpMessage<String>> response) {
+                HttpMessage<String> data=response.body();
+                if (data.getCode()==0){
+                    String name = (String)data.getData();
+                    Message message=new Message();
+                    message.obj=name;
+                    handler3.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<String>> call, Throwable t) {
+            }
+        });
     }
 
     private void getOwnname(){
-        new Thread(){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                String uname=ClubManageUtil.activityManage.findProprieterNameByActivityId(activityid);
+//                Message message=new Message();
+//                message.obj=uname;
+//                handler4.sendMessage(message);
+//            }
+//        }.start();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ActivityRequest request = retrofit.create(ActivityRequest.class);
+        Call<HttpMessage<String>> call = request.findProprieterNameByActivityId(activityid);
+        call.enqueue(new Callback<HttpMessage<String>>() {
             @Override
-            public void run() {
-                String uname=ClubManageUtil.activityManage.findProprieterNameByActivityId(activityid);
-                Message message=new Message();
-                message.obj=uname;
-                handler4.sendMessage(message);
+            public void onResponse(Call<HttpMessage<String>> call, Response<HttpMessage<String>> response) {
+                HttpMessage<String> data=response.body();
+                if (data.getCode()==0){
+                    String name = (String)data.getData();
+                    Message message=new Message();
+                    message.obj=name;
+                    handler4.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<String>> call, Throwable t) {
+            }
+        });
     }
 }

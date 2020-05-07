@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,11 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.List;
+
+import clubmanage.httpInterface.ApplicationRequest;
+import clubmanage.httpInterface.ClubRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.Club;
 import clubmanage.model.User;
 import clubmanage.ui.CheckActivity;
@@ -25,6 +31,11 @@ import clubmanage.ui.CreateClub;
 import clubmanage.ui.ManageClub;
 import clubmanage.ui.R;
 import clubmanage.util.ClubManageUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -115,27 +126,71 @@ public class Manage_Fragement extends Fragment implements View.OnClickListener {
     }
 
     private void ifHaveClubAppli(){
-        new Thread(){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                boolean haveClubAppli= ClubManageUtil.applicationManage.ifHaveClubAppli(User.currentLoginUser.getUid());
+//                Message message=new Message();
+//                message.obj=haveClubAppli;
+//                handler2.sendMessage(message);
+//            }
+//        }.start();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApplicationRequest request = retrofit.create(ApplicationRequest.class);
+        Call<HttpMessage<Boolean>> call = request.ifHaveClubAppli(User.currentLoginUser.getUid());
+        call.enqueue(new Callback<HttpMessage<Boolean>>() {
             @Override
-            public void run() {
-                boolean haveClubAppli= ClubManageUtil.applicationManage.ifHaveClubAppli(User.currentLoginUser.getUid());
-                Message message=new Message();
-                message.obj=haveClubAppli;
-                handler2.sendMessage(message);
+            public void onResponse(Call<HttpMessage<Boolean>> call, Response<HttpMessage<Boolean>> response) {
+                HttpMessage<Boolean> data=response.body();
+                if (data.getCode()==0){
+                    Boolean haveClubAppli = (Boolean)data.getData();
+                    Message message=new Message();
+                    message.obj=haveClubAppli;
+                    handler.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<Boolean>> call, Throwable t) {
+                Log.i("Activity_TabFragment1",t.getMessage());
+            }
+        });
     }
 
     private void searchClub(){
-        new Thread(){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                Integer clubid= ClubManageUtil.clubManage.searchClubIdByProprieter(User.currentLoginUser.getUid());
+//                Message message=new Message();
+//                message.obj=clubid;
+//                handler.sendMessage(message);
+//            }
+//        }.start();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ClubRequest request = retrofit.create(ClubRequest.class);
+        Call<HttpMessage<Integer>> call = request.searchClubIdByProprieter(User.currentLoginUser.getUid());
+        call.enqueue(new Callback<HttpMessage<Integer>>() {
             @Override
-            public void run() {
-                Integer clubid= ClubManageUtil.clubManage.searchClubIdByProprieter(User.currentLoginUser.getUid());
-                Message message=new Message();
-                message.obj=clubid;
-                handler.sendMessage(message);
+            public void onResponse(Call<HttpMessage<Integer>> call, Response<HttpMessage<Integer>> response) {
+                HttpMessage<Integer> data=response.body();
+                if (data.getCode()==0){
+                    Integer clubid = (Integer)data.getData();
+                    Message message=new Message();
+                    message.obj=clubid;
+                    handler.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<Integer>> call, Throwable t) {
+                Log.i("Activity_TabFragment1",t.getMessage());
+            }
+        });
     }
 
     @Override

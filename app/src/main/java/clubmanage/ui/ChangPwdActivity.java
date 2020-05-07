@@ -16,9 +16,16 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 import clubmanage.control.Tools;
+import clubmanage.httpInterface.PersonalRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.User;
 import clubmanage.util.BaseException;
 import clubmanage.util.ClubManageUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ChangPwdActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText oldpwd;
@@ -79,23 +86,47 @@ public class ChangPwdActivity extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(ChangPwdActivity.this,"重复密码不能为空",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                new Thread(){
-                    @Override
-                    public void run() {
-                        try {
-                            ClubManageUtil.personalManage.changePwd(User.currentLoginUser.getUid(),oldpwd.getText().toString(),
+//                new Thread(){
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            ClubManageUtil.personalManage.changePwd(User.currentLoginUser.getUid(),oldpwd.getText().toString(),
+//                                    newpwd.getText().toString(),newpwd2.getText().toString());
+//                            Message message=new Message();
+//                            message.obj=null;
+//                            handler.sendMessage(message);
+//                        } catch (BaseException e) {
+//                            Message message=new Message();
+//                            message.obj=e.getMessage();
+//                            handler.sendMessage(message);
+//                        }
+//                    }
+//                }.start();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://121.36.153.113:8000")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                PersonalRequest request = retrofit.create(PersonalRequest.class);
+                Call<HttpMessage> call = request.changePwd(User.currentLoginUser.getUid(),oldpwd.getText().toString(),
                                     newpwd.getText().toString(),newpwd2.getText().toString());
+                call.enqueue(new Callback<HttpMessage>() {
+                    @Override
+                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                        HttpMessage<Integer> data=response.body();
+                        if (data.getCode()==0){
                             Message message=new Message();
                             message.obj=null;
                             handler.sendMessage(message);
-                        } catch (BaseException e) {
+                        }else {
                             Message message=new Message();
-                            message.obj=e.getMessage();
+                            message.obj=data.getMsg();
                             handler.sendMessage(message);
                         }
                     }
-                }.start();
-
+                    @Override
+                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                    }
+                });
                 break;
         }
     }

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">社团家</string>
     <string name="regToolBar">账号注册</string>
+    <string name="linkIp">http://121.36.153.113:8000</string>
 </resources>
