@@ -15,7 +15,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/club_toolbar_check"
             android:layout_width="match_parent"
-            android:layout_height="160px"
+            android:layout_height="58.18dp"
             android:background="@color/titlecolorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
             <TextView
@@ -24,7 +24,7 @@
                 android:layout_gravity="center"
                 android:text="社团审核"
                 android:textColor="#FFFFFF"
-                android:textSize="65px"
+                android:textSize="23.6dp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>

@@ -11,15 +11,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import clubmanage.model.Club;
+import clubmanage.httpInterface.ClubRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.User;
-import clubmanage.util.BaseException;
-import clubmanage.util.ClubManageUtil;
+import clubmanage.ui.adapter.ClubMemberAdapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ClubMemberManage extends AppCompatActivity {
     private int clubid;
@@ -68,20 +72,29 @@ public class ClubMemberManage extends AppCompatActivity {
     }
 
     public void initUsers(){
-        new Thread(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ClubRequest request = retrofit.create(ClubRequest.class);
+        Call<HttpMessage<List<User>>> call = request.searchMember(clubid);
+        call.enqueue(new Callback<HttpMessage<List<User>>>() {
             @Override
-            public void run() {
-                List<User> userList=new ArrayList<>();
-                try {
-                    userList.addAll(ClubManageUtil.clubManage.searchMember(clubid));
-                } catch (BaseException e) {
-                    e.printStackTrace();
+            public void onResponse(Call<HttpMessage<List<User>>> call, Response<HttpMessage<List<User>>> response) {
+                HttpMessage<List<User>> data=response.body();
+                if (data.getCode()==0){
+                    List<User> userList = (List<User>)data.getData();
+                    Message message=new Message();
+                    message.obj=userList;
+                    handler.sendMessage(message);
+                }else if (data.getCode()==1){
+
                 }
-                Message message=new Message();
-                message.obj=userList;
-                handler.sendMessage(message);
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<List<User>>> call, Throwable t) {
+            }
+        });
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

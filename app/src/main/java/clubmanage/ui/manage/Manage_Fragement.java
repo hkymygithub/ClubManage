@@ -126,15 +126,6 @@ public class Manage_Fragement extends Fragment implements View.OnClickListener {
     }
 
     private void ifHaveClubAppli(){
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                boolean haveClubAppli= ClubManageUtil.applicationManage.ifHaveClubAppli(User.currentLoginUser.getUid());
-//                Message message=new Message();
-//                message.obj=haveClubAppli;
-//                handler2.sendMessage(message);
-//            }
-//        }.start();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://121.36.153.113:8000")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -149,7 +140,7 @@ public class Manage_Fragement extends Fragment implements View.OnClickListener {
                     Boolean haveClubAppli = (Boolean)data.getData();
                     Message message=new Message();
                     message.obj=haveClubAppli;
-                    handler.sendMessage(message);
+                    handler2.sendMessage(message);
                 }
             }
             @Override

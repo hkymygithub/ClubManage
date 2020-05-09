@@ -1,7 +1,8 @@
-package clubmanage.ui;
+package clubmanage.ui.adapter;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import clubmanage.model.User;
+import clubmanage.ui.R;
 
 public class TopAdapter extends RecyclerView.Adapter<TopAdapter.ViewHolder> {
     private Context mContext;
@@ -44,7 +46,8 @@ public class TopAdapter extends RecyclerView.Adapter<TopAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(TopAdapter.ViewHolder holder, int position){
         User top = mTopList.get(position);
-        byte[] bt=top.getImage();
+        byte[] bt=null;
+        if (top.getImage()!=null) bt= Base64.decode(top.getImage(),Base64.DEFAULT);
         if(bt!=null){
             holder.topImage.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
         }

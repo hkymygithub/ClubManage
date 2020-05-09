@@ -22,12 +22,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import clubmanage.Tools.BitmapAndBytes;
+import clubmanage.httpInterface.ActivityRequest;
+import clubmanage.httpInterface.AttentionRequest;
+import clubmanage.httpInterface.ClubRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.Activity;
 import clubmanage.model.Club;
 import clubmanage.model.User;
 import clubmanage.ui.adapter.ActivityAdapter;
+import clubmanage.ui.adapter.TopAdapter;
 import clubmanage.util.BaseException;
 import clubmanage.util.ClubManageUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Club_group extends AppCompatActivity implements View.OnClickListener {
     private List<User> topList = new ArrayList<>();
@@ -128,7 +138,7 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
         public void handleMessage(Message msg){
             clubMsg=(Club) msg.obj;
             if (clubMsg.getClub_icon()==null) logo.setImageResource(R.drawable.photo1);
-            logo.setImageBitmap(BitmapAndBytes.bytesToBitmap(Base64.decode(clubMsg.getClub_icon(),Base64.DEFAULT)));
+            else logo.setImageBitmap(BitmapAndBytes.bytesToBitmap(Base64.decode(clubMsg.getClub_icon(),Base64.DEFAULT)));
             if (clubMsg.getClub_cover()==null) poster.setBackgroundResource(R.drawable.poster);
             else poster.setBackground(BitmapAndBytes.bytesToDrawable(Base64.decode(clubMsg.getClub_cover(),Base64.DEFAULT)));
             name.setText(clubMsg.getClub_name());
@@ -146,24 +156,8 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
         Intent intentget=getIntent();
         clubid=(int)intentget.getSerializableExtra("clubid");
 
-        new Thread(){
-            @Override
-            public void run() {
-                boolean ifatt =ClubManageUtil.attentionManage.issubscribe(User.currentLoginUser.getUid(),clubid);
-                Message message=new Message();
-                message.obj=ifatt;
-                handler1.sendMessage(message);
-            }
-        }.start();
-        new Thread(){
-            @Override
-            public void run() {
-                boolean ifinclub =ClubManageUtil.clubManage.if_userInClub(User.currentLoginUser.getUid(),clubid);
-                Message message=new Message();
-                message.obj=ifinclub;
-                handler5.sendMessage(message);
-            }
-        }.start();
+        issubscribe();
+        if_userInClub();
 
         logo=findViewById(R.id.club_item_img1);
         poster=findViewById(R.id.club1_head);
@@ -205,57 +199,149 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
 
     }
 
-    private void initTops(){
-        new Thread(){
+    private void issubscribe(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        AttentionRequest request = retrofit.create(AttentionRequest.class);
+        Call<HttpMessage<Boolean>> call = request.issubscribe(User.currentLoginUser.getUid(),clubid);
+        call.enqueue(new Callback<HttpMessage<Boolean>>() {
             @Override
-            public void run() {
-                List<User> userList= null;
-                try {
-                    userList = ClubManageUtil.clubManage.searchMember(clubid);
-                } catch (BaseException e) {
-                    e.printStackTrace();
+            public void onResponse(Call<HttpMessage<Boolean>> call, Response<HttpMessage<Boolean>> response) {
+                HttpMessage<Boolean> data=response.body();
+                if (data.getCode()==0){
+                    Boolean ifatt = (Boolean)data.getData();
+                    Message message=new Message();
+                    message.obj=ifatt;
+                    handler1.sendMessage(message);
                 }
-                Message message=new Message();
-                message.obj=userList;
-                handler2.sendMessage(message);
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<Boolean>> call, Throwable t) {
+            }
+        });
+    }
+
+    private void if_userInClub(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ClubRequest request = retrofit.create(ClubRequest.class);
+        Call<HttpMessage<Boolean>> call = request.if_userInClub(User.currentLoginUser.getUid(),clubid);
+        call.enqueue(new Callback<HttpMessage<Boolean>>() {
+            @Override
+            public void onResponse(Call<HttpMessage<Boolean>> call, Response<HttpMessage<Boolean>> response) {
+                HttpMessage<Boolean> data=response.body();
+                if (data.getCode()==0){
+                    Boolean ifinclub = (Boolean)data.getData();
+                    Message message=new Message();
+                    message.obj=ifinclub;
+                    handler5.sendMessage(message);
+                }
+            }
+            @Override
+            public void onFailure(Call<HttpMessage<Boolean>> call, Throwable t) {
+            }
+        });
+    }
+
+    private void initTops(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ClubRequest request = retrofit.create(ClubRequest.class);
+        Call<HttpMessage<List<User>>> call = request.searchMember(clubid);
+        call.enqueue(new Callback<HttpMessage<List<User>>>() {
+            @Override
+            public void onResponse(Call<HttpMessage<List<User>>> call, Response<HttpMessage<List<User>>> response) {
+                HttpMessage<List<User>> data=response.body();
+                if (data.getCode()==0){
+                    List<User> ifinclub = (List<User>)data.getData();
+                    Message message=new Message();
+                    message.obj=ifinclub;
+                    handler2.sendMessage(message);
+                }else if(data.getCode()==1){
+                }
+            }
+            @Override
+            public void onFailure(Call<HttpMessage<List<User>>> call, Throwable t) {
+            }
+        });
     }
 
     private void initGonggao(){
-        new Thread(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ClubRequest request = retrofit.create(ClubRequest.class);
+        Call<HttpMessage<String>> call = request.searchNotice(clubid);
+        call.enqueue(new Callback<HttpMessage<String>>() {
             @Override
-            public void run() {
-                String notice=ClubManageUtil.clubManage.searchNotice(clubid);
-                Message message=new Message();
-                message.obj=notice;
-                handler4.sendMessage(message);
+            public void onResponse(Call<HttpMessage<String>> call, Response<HttpMessage<String>> response) {
+                HttpMessage<String> data=response.body();
+                if (data.getCode()==0){
+                    String notice = (String)data.getData();
+                    Message message=new Message();
+                    message.obj=notice;
+                    handler4.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<String>> call, Throwable t) {
+            }
+        });
     }
 
     private void initActs(){
-        new Thread(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ActivityRequest request = retrofit.create(ActivityRequest.class);
+        Call<HttpMessage<List<Activity>>> call = request.searchActivityByClubId(clubid);
+        call.enqueue(new Callback<HttpMessage<List<Activity>>>() {
             @Override
-            public void run() {
-                List<Activity> activityList=ClubManageUtil.activityManage.searchActivityByClubId(clubid);
-                Message message=new Message();
-                message.obj=activityList;
-                handler3.sendMessage(message);
+            public void onResponse(Call<HttpMessage<List<Activity>>> call, Response<HttpMessage<List<Activity>>> response) {
+                HttpMessage<List<Activity>> data=response.body();
+                if (data.getCode()==0){
+                    List<Activity> activityList = (List<Activity>)data.getData();
+                    Message message=new Message();
+                    message.obj=activityList;
+                    handler3.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<List<Activity>>> call, Throwable t) {
+            }
+        });
     }
 
     private void getClubMsg(){
-        new Thread(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ClubRequest request = retrofit.create(ClubRequest.class);
+        Call<HttpMessage<Club>> call = request.searchClubByClubid(clubid);
+        call.enqueue(new Callback<HttpMessage<Club>>() {
             @Override
-            public void run() {
-                Club club=ClubManageUtil.clubManage.searchClubByClubid(clubid);
-                Message message=new Message();
-                message.obj=club;
-                handler7.sendMessage(message);
+            public void onResponse(Call<HttpMessage<Club>> call, Response<HttpMessage<Club>> response) {
+                HttpMessage<Club> data=response.body();
+                if (data.getCode()==0){
+                    Club club = (Club)data.getData();
+                    Message message=new Message();
+                    message.obj=club;
+                    handler7.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<Club>> call, Throwable t) {
+            }
+        });
     }
 
     @Override

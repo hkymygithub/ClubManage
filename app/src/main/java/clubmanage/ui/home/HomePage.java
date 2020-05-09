@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import clubmanage.ui.activity.ActiviytsPage;
-import clubmanage.ui.FragmentAdapter;
+import clubmanage.ui.adapter.FragmentAdapter;
 import clubmanage.ui.R;
 
 public class HomePage extends Fragment implements View.OnClickListener{

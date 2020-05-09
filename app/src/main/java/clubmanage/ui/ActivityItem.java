@@ -144,15 +144,6 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
     }
 
     private void ifSignUp(){
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                boolean isSignUp=ClubManageUtil.activityManage.if_participate(User.currentLoginUser.getUid(),activityid);
-//                Message message=new Message();
-//                message.obj=isSignUp;
-//                handler.sendMessage(message);
-//            }
-//        }.start();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://121.36.153.113:8000")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -177,12 +168,6 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
     }
 
     private void signUpAvtivity(String uid){
-//        new Thread(){
-//            @Override
-//            public void run() {
-//               ClubManageUtil.applicationManage.signupActivity(User.currentLoginUser.getUid(),activityid);
-//            }
-//        }.start();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://121.36.153.113:8000")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -203,15 +188,6 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getActivity(){
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                Activity activity=ClubManageUtil.activityManage.searchActivityById(activityid);
-//                Message message=new Message();
-//                message.obj=activity;
-//                handler2.sendMessage(message);
-//            }
-//        }.start();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://121.36.153.113:8000")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -236,15 +212,6 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getClubName(){
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                String cname=ClubManageUtil.activityManage.findClubNameByActivityId(activityid);
-//                Message message=new Message();
-//                message.obj=cname;
-//                handler3.sendMessage(message);
-//            }
-//        }.start();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://121.36.153.113:8000")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -269,15 +236,6 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getOwnname(){
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                String uname=ClubManageUtil.activityManage.findProprieterNameByActivityId(activityid);
-//                Message message=new Message();
-//                message.obj=uname;
-//                handler4.sendMessage(message);
-//            }
-//        }.start();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://121.36.153.113:8000")
                 .addConverterFactory(GsonConverterFactory.create())

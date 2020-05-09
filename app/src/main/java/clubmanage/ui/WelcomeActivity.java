@@ -17,7 +17,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 public void run() {
                     startApp();
                 }
-            }, 1000);
+            }, 500);
     }
     private void startApp(){
         Intent intent = new Intent(this, LoginAndRegistActivity.class);

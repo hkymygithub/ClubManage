@@ -199,7 +199,7 @@ public class ClubManage implements IClubManage {
                 User user = new User();
                 user.setUid(rs.getString(1));
                 user.setPwd(rs.getString(2));
-                user.setImage(rs.getBytes(3));
+                user.setImage(Base64.encodeToString(rs.getBytes(3),Base64.DEFAULT));
                 user.setName(rs.getString(4));
                 user.setGender(rs.getString(5));
                 user.setMail(rs.getString(6));

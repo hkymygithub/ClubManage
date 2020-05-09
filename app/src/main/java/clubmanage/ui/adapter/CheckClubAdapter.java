@@ -1,4 +1,4 @@
-package clubmanage.ui;
+package clubmanage.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import clubmanage.model.Create_club;
+import clubmanage.ui.R;
+import clubmanage.ui.ReviewedClub;
 
 public class CheckClubAdapter extends RecyclerView.Adapter<CheckClubAdapter.ViewHolder>{
     private List<Create_club> checkClubMsgList;

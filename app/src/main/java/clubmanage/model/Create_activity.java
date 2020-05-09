@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class Create_activity implements Serializable {
-	public static Create_activity createActivity=null;
 	private int activity_approval_id;
 	private int club_id;
 	private String activity_name;

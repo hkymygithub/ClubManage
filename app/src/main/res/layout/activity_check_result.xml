@@ -15,7 +15,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/checkResult_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="160px"
+            android:layout_height="58.18dp"
             android:background="@color/titlecolorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
             <TextView
@@ -24,7 +24,7 @@
                 android:layout_gravity="center"
                 android:text="审核结果"
                 android:textColor="#FFFFFF"
-                android:textSize="65px"
+                android:textSize="23.6dp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -40,7 +40,8 @@
        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
            android:id="@+id/checkresult_refresh"
            android:layout_width="match_parent"
-           android:layout_height="wrap_content">
+           android:layout_height="wrap_content"
+           android:layout_marginTop="3dp">
            <androidx.recyclerview.widget.RecyclerView
                android:id="@+id/recycler_checkresult"
                android:layout_width="match_parent"

@@ -1,12 +1,9 @@
 package clubmanage.model;
 
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class Create_club implements Serializable {
-	public static Create_club createClub=null;
 	private int applyclub_formid;
 	private String area_name;
 	private String uid;

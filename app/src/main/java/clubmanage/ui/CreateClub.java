@@ -45,7 +45,6 @@ import clubmanage.util.ClubManageUtil;
 
 public class CreateClub extends AppCompatActivity implements View.OnClickListener {
     private String exception=null;
-    private int f=0;
     private String[] place;
     private Button button;
     private RelativeLayout create_club_name;
@@ -73,7 +72,6 @@ public class CreateClub extends AppCompatActivity implements View.OnClickListene
                 Toast.makeText(CreateClub.this, exception, Toast.LENGTH_SHORT).show();
                 return;
             }else{
-                Create_club.createClub=null;
                 Toast.makeText(CreateClub.this, "创建成功，请等待审批", Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent();
                 intent.putExtra("data","OK");

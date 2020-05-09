@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import clubmanage.httpInterface.ActivityRequest;
-import clubmanage.httpInterface.ApplicationRequest;
 import clubmanage.httpInterface.AttentionRequest;
 import clubmanage.httpInterface.ClubRequest;
 import clubmanage.message.HttpMessage;
@@ -33,7 +31,6 @@ import clubmanage.ui.PersonalCenterActivity;
 import clubmanage.ui.R;
 import clubmanage.ui.Register;
 import clubmanage.ui.Setting;
-import clubmanage.util.ClubManageUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -114,15 +111,6 @@ public class My_Fragement extends Fragment implements View.OnClickListener {
         initAttNumber();
     }
     private void initClubNumber(){
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                int clubnum= ClubManageUtil.clubManage.searchMyClubCount(User.currentLoginUser.getUid());
-//                Message message=new Message();
-//                message.obj=clubnum;
-//                handler2.sendMessage(message);
-//            }
-//        }.start();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://121.36.153.113:8000")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -147,15 +135,6 @@ public class My_Fragement extends Fragment implements View.OnClickListener {
     }
 
     private void initActivityMumber(){
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                int num= ClubManageUtil.activityManage.searchMyActivityCount(User.currentLoginUser.getUid());
-//                Message message=new Message();
-//                message.obj=num;
-//                handler3.sendMessage(message);
-//            }
-//        }.start();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://121.36.153.113:8000")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -180,15 +159,6 @@ public class My_Fragement extends Fragment implements View.OnClickListener {
     }
 
     private void initAttNumber(){
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                int num= ClubManageUtil.attentionManage.searchAttenCount(User.currentLoginUser.getUid());
-//                Message message=new Message();
-//                message.obj=num;
-//                handler4.sendMessage(message);
-//            }
-//        }.start();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://121.36.153.113:8000")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -213,7 +183,8 @@ public class My_Fragement extends Fragment implements View.OnClickListener {
     }
 
     private void initHead(){
-        byte[] bt= Base64.decode(User.currentLoginUser.getImage(),Base64.DEFAULT);
+        byte[] bt=null;
+        if (User.currentLoginUser.getImage()!=null) bt= Base64.decode(User.currentLoginUser.getImage(),Base64.DEFAULT);
         if(bt!=null){
             img.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
         }else img.setImageResource(R.drawable.photo1);

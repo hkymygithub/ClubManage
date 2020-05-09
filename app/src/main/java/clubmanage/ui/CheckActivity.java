@@ -16,8 +16,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import clubmanage.httpInterface.ApplicationRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.Create_activity;
-import clubmanage.util.ClubManageUtil;
+import clubmanage.ui.adapter.CheckActivityAdapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CheckActivity extends AppCompatActivity {
     private List<Create_activity> checkMsgList =new ArrayList<>();
@@ -32,7 +39,7 @@ public class CheckActivity extends AppCompatActivity {
         }
     };
     private RecyclerView recyclerView;
-    private CheckAdapter adapter;
+    private CheckActivityAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,19 +65,31 @@ public class CheckActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new SpaceItemDecoration(10));
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new CheckAdapter(checkMsgList);
+        adapter = new CheckActivityAdapter(checkMsgList);
         recyclerView.setAdapter(adapter);
     }
     public void initActivity(){
-        new Thread(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApplicationRequest request = retrofit.create(ApplicationRequest.class);
+        Call<HttpMessage<List<Create_activity>>> call = request.searchCreateActivityAppli();
+        call.enqueue(new Callback<HttpMessage<List<Create_activity>>>() {
             @Override
-            public void run() {
-                List<Create_activity> activityList= ClubManageUtil.applicationManage.searchCreateActivityAppli();
-                Message message=new Message();
-                message.obj=activityList;
-                handler.sendMessage(message);
+            public void onResponse(Call<HttpMessage<List<Create_activity>>> call, Response<HttpMessage<List<Create_activity>>> response) {
+                HttpMessage<List<Create_activity>> data=response.body();
+                if (data.getCode()==0){
+                    List<Create_activity> activityList = (List<Create_activity>)data.getData();
+                    Message message=new Message();
+                    message.obj=activityList;
+                    handler.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<List<Create_activity>>> call, Throwable t) {
+            }
+        });
     }
 
     @Override

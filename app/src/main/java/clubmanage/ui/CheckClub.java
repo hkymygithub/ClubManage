@@ -14,9 +14,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import clubmanage.model.Create_activity;
+import clubmanage.httpInterface.ApplicationRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.Create_club;
-import clubmanage.util.ClubManageUtil;
+import clubmanage.ui.adapter.CheckClubAdapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CheckClub extends AppCompatActivity {
     private List<Create_club> CheckClubMsgList =new ArrayList<>();
@@ -58,15 +64,27 @@ public class CheckClub extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
     private void initClub(){
-        new Thread(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApplicationRequest request = retrofit.create(ApplicationRequest.class);
+        Call<HttpMessage<List<Create_club>>> call = request.searchCreateClubAppli();
+        call.enqueue(new Callback<HttpMessage<List<Create_club>>>() {
             @Override
-            public void run() {
-                List<Create_club> clubList= ClubManageUtil.applicationManage.searchCreateClubAppli();
-                Message message=new Message();
-                message.obj=clubList;
-                handler.sendMessage(message);
+            public void onResponse(Call<HttpMessage<List<Create_club>>> call, Response<HttpMessage<List<Create_club>>> response) {
+                HttpMessage<List<Create_club>> data=response.body();
+                if (data.getCode()==0){
+                    List<Create_club> clubList = (List<Create_club>)data.getData();
+                    Message message=new Message();
+                    message.obj=clubList;
+                    handler.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<List<Create_club>>> call, Throwable t) {
+            }
+        });
     }
 
     @Override

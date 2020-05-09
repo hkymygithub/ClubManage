@@ -1,4 +1,4 @@
-package clubmanage.ui;
+package clubmanage.ui.adapter;
 
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -6,12 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import clubmanage.ui.CheckResultMsg;
+import clubmanage.ui.R;
 
 public class CheckResultAdapter extends RecyclerView.Adapter<CheckResultAdapter.ViewHolder>{
     private List<CheckResultMsg> checkResultMsgsList;
@@ -25,7 +27,6 @@ public class CheckResultAdapter extends RecyclerView.Adapter<CheckResultAdapter.
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 CheckResultMsg activity = checkResultMsgsList.get(position);
-//                Toast.makeText(v.getContext(), "you clicked view " + activity.getAct_name(), Toast.LENGTH_SHORT).show();
             }
         });
         return holder;

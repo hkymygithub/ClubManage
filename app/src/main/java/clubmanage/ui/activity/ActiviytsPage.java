@@ -19,7 +19,7 @@ import com.youth.banner.loader.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import clubmanage.ui.FragmentAdapter;
+import clubmanage.ui.adapter.FragmentAdapter;
 import clubmanage.ui.R;
 import clubmanage.ui.SearchActivity;
 

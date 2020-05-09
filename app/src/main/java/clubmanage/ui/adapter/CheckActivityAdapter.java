@@ -1,4 +1,4 @@
-package clubmanage.ui;
+package clubmanage.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,19 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import clubmanage.model.Create_activity;
+import clubmanage.ui.R;
+import clubmanage.ui.ReviewedActivity;
 
-import static android.app.Activity.RESULT_OK;
-
-public class CheckAdapter extends RecyclerView.Adapter<CheckAdapter.ViewHolder>{
+public class CheckActivityAdapter extends RecyclerView.Adapter<CheckActivityAdapter.ViewHolder>{
     private List<Create_activity> checkMsgList;
     private Context mContext;
     @NonNull
@@ -96,7 +94,7 @@ public class CheckAdapter extends RecyclerView.Adapter<CheckAdapter.ViewHolder>{
         }
     }
 
-    public CheckAdapter(List<Create_activity> fruitList) {
+    public CheckActivityAdapter(List<Create_activity> fruitList) {
         checkMsgList = fruitList;
     }
 }

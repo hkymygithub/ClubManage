@@ -86,22 +86,6 @@ public class ChangPwdActivity extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(ChangPwdActivity.this,"重复密码不能为空",Toast.LENGTH_SHORT).show();
                     return;
                 }
-//                new Thread(){
-//                    @Override
-//                    public void run() {
-//                        try {
-//                            ClubManageUtil.personalManage.changePwd(User.currentLoginUser.getUid(),oldpwd.getText().toString(),
-//                                    newpwd.getText().toString(),newpwd2.getText().toString());
-//                            Message message=new Message();
-//                            message.obj=null;
-//                            handler.sendMessage(message);
-//                        } catch (BaseException e) {
-//                            Message message=new Message();
-//                            message.obj=e.getMessage();
-//                            handler.sendMessage(message);
-//                        }
-//                    }
-//                }.start();
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("http://121.36.153.113:8000")
                         .addConverterFactory(GsonConverterFactory.create())

@@ -17,9 +17,16 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 import java.util.List;
 
+import clubmanage.httpInterface.ActivityRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.Activity;
 import clubmanage.ui.adapter.ActivityAdapter;
 import clubmanage.util.ClubManageUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener{
@@ -57,16 +64,37 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initSearchActivity() {
-        new Thread(){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                List<Activity> activityList=new ArrayList<>();
+//                activityList.addAll(ClubManageUtil.activityManage.searchActivityByName(searchCon.getText().toString()));
+//                Message message=new Message();
+//                message.obj=activityList;
+//                handler.sendMessage(message);
+//            }
+//        }.start();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ActivityRequest request = retrofit.create(ActivityRequest.class);
+        Call<HttpMessage<List<Activity>>> call = request.searchActivityByName(searchCon.getText().toString());
+        call.enqueue(new Callback<HttpMessage<List<Activity>>>() {
             @Override
-            public void run() {
-                List<Activity> activityList=new ArrayList<>();
-                activityList.addAll(ClubManageUtil.activityManage.searchActivityByName(searchCon.getText().toString()));
-                Message message=new Message();
-                message.obj=activityList;
-                handler.sendMessage(message);
+            public void onResponse(Call<HttpMessage<List<Activity>>> call, Response<HttpMessage<List<Activity>>> response) {
+                HttpMessage<List<Activity>> data=response.body();
+                if (data.getCode()==0){
+                    List<Activity> activityList = (List<Activity>)data.getData();
+                    Message message=new Message();
+                    message.obj=activityList;
+                    handler.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<List<Activity>>> call, Throwable t) {
+            }
+        });
     }
 
     @Override

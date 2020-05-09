@@ -1,9 +1,5 @@
 package clubmanage.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
 public class CheckResultMsg{
     private byte[] act_picid;
     private String act_name;

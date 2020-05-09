@@ -17,15 +17,19 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import clubmanage.model.Create_activity;
-import clubmanage.model.Create_club;
+import clubmanage.httpInterface.ApplicationRequest;
+import clubmanage.message.HttpMessage;
+import clubmanage.model.Create;
 import clubmanage.model.User;
-import clubmanage.util.BaseException;
-import clubmanage.util.ClubManageUtil;
+import clubmanage.ui.adapter.CheckResultAdapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CheckResult extends AppCompatActivity {
-    private List<Create_activity> createActivitiesrList=new ArrayList<>();
-    private List<Create_club> createClubList=new ArrayList<>();
+    private List<Create> createList=new ArrayList<>();
     private List<CheckResultMsg> checkResultMsgs =new ArrayList<>();
     private RecyclerView recyclerView;
     private CheckResultAdapter adapter;
@@ -34,40 +38,19 @@ public class CheckResult extends AppCompatActivity {
     private int f=0;
     private Handler handler=new Handler(){
         public void handleMessage(Message msg){
-            List<Create_activity> cractivityList=(List<Create_activity>) msg.obj;
-            createActivitiesrList.clear();
-            createActivitiesrList.addAll(cractivityList);
-
-            for(int i=0;i<createActivitiesrList.size();i++){
-                String a = null;
-                if(createActivitiesrList.get(i).getState()==0)
-                    a="申请驳回";
-                else if(createActivitiesrList.get(i).getState()==1)
-                    a="审核通过";
-                else if(createActivitiesrList.get(i).getState()==2)
-                    a="等待审核";
-                CheckResultMsg act=new CheckResultMsg(createActivitiesrList.get(i).getActivity_name(), Base64.decode(createActivitiesrList.get(i).getPoster(),Base64.DEFAULT),createActivitiesrList.get(i).getSuggestion(),a);
-                checkResultMsgs.add(act);
-            }
-            adapter.notifyDataSetChanged();
-            progressBar.setVisibility(View.INVISIBLE);
-        }
-    };
-    private Handler handler2=new Handler(){
-        public void handleMessage(Message msg){
-            List<Create_club> clubList=(List<Create_club>) msg.obj;
-            createClubList.clear();
-            createClubList.addAll(clubList);
             checkResultMsgs.clear();
-            for(int i=0;i<createClubList.size();i++){
+            createList=(List<Create>) msg.obj;
+            for(int i=0;i<createList.size();i++){
                 String a = null;
-                if(createClubList.get(i).getState()==0)
+                if(createList.get(i).getState()==0)
                     a="申请驳回";
-                else if(createClubList.get(i).getState()==1)
+                else if(createList.get(i).getState()==1)
                     a="审核通过";
-                else if(createClubList.get(i).getState()==2)
+                else if(createList.get(i).getState()==2)
                     a="等待审核";
-                CheckResultMsg act=new CheckResultMsg(createClubList.get(i).getClub_name(),null,createClubList.get(i).getSuggestion(),a);
+                byte[] bt=null;
+                if (createList.get(i).getPoster()!=null) bt=Base64.decode(createList.get(i).getPoster(),Base64.DEFAULT);
+                CheckResultMsg act=new CheckResultMsg(createList.get(i).getName(),bt,createList.get(i).getReason(),a);
                 checkResultMsgs.add(act);
             }
             adapter.notifyDataSetChanged();
@@ -89,46 +72,42 @@ public class CheckResult extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh() {
-                initActivity();
-                initClub();
+                initData();
                 adapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-        initActivity();
-        initClub();
+        initData();
         recyclerView=(RecyclerView)findViewById(R.id.recycler_checkresult);
         recyclerView.addItemDecoration(new SpaceItemDecoration(10));
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
         adapter = new CheckResultAdapter(checkResultMsgs);
         recyclerView.setAdapter(adapter);
     }
-    private void initActivity(){
-        new Thread(){
-            @Override
-            public void run() {
-                List<Create_activity> createActivitiesrList=new ArrayList<>();
-                createActivitiesrList.addAll(ClubManageUtil.applicationManage.searchCreateActivityByUser(User.currentLoginUser.getUid()));
-                Message message=new Message();
-                message.obj=createActivitiesrList;
-                handler.sendMessage(message);
-            }
-        }.start();
-    }
 
-    private void initClub(){
-        new Thread(){
+    public void initData(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApplicationRequest request = retrofit.create(ApplicationRequest.class);
+        Call<HttpMessage<List<Create>>> call = request.searchCreateAppli(User.currentLoginUser.getUid());
+        call.enqueue(new Callback<HttpMessage<List<Create>>>() {
             @Override
-            public void run() {
-                List<Create_club> createClubList=new ArrayList<>();
-                createClubList.addAll(ClubManageUtil.applicationManage.searchCreateClubByUser(User.currentLoginUser.getUid()));
-                Message message=new Message();
-                message.obj=createClubList;
-                handler2.sendMessage(message);
+            public void onResponse(Call<HttpMessage<List<Create>>> call, Response<HttpMessage<List<Create>>> response) {
+                HttpMessage<List<Create>> data=response.body();
+                if (data.getCode()==0){
+                    List<Create> createdata = (List<Create>)data.getData();
+                    Message message=new Message();
+                    message.obj=createdata;
+                    handler.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<List<Create>>> call, Throwable t) {
+            }
+        });
     }
 
     @Override

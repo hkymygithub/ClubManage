@@ -1,5 +1,7 @@
 package clubmanage.control;
 
+import android.util.Base64;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ public class UserManage implements IUserManage {
             User user=new User();
             user.setUid(rs.getString(1));
             user.setPwd(rs.getString(2));
-            user.setImage(rs.getBytes(3));
+            user.setImage(Base64.encodeToString(rs.getBytes(3),Base64.DEFAULT));
             user.setName(rs.getString(4));
             user.setGender(rs.getString(5));
             user.setMajor(rs.getString(6));
@@ -146,7 +148,7 @@ public class UserManage implements IUserManage {
             User user=new User();
             user.setUid(rs.getString(1));
             user.setPwd(rs.getString(2));
-            user.setImage(rs.getBytes(3));
+            user.setImage(Base64.encodeToString(rs.getBytes(3),Base64.DEFAULT));
             user.setName(rs.getString(4));
             user.setGender(rs.getString(5));
             user.setMajor(rs.getString(6));
@@ -186,7 +188,7 @@ public class UserManage implements IUserManage {
                 User user=new User();
                 user.setUid(rs.getString(1));
                 user.setPwd(rs.getString(2));
-                user.setImage(rs.getBytes(3));
+                user.setImage(Base64.encodeToString(rs.getBytes(3),Base64.DEFAULT));
                 user.setName(rs.getString(4));
                 user.setGender(rs.getString(5));
                 user.setMajor(rs.getString(6));
@@ -228,7 +230,7 @@ public class UserManage implements IUserManage {
                 User user=new User();
                 user.setUid(rs.getString(1));
                 user.setPwd(rs.getString(2));
-                user.setImage(rs.getBytes(3));
+                user.setImage(Base64.encodeToString(rs.getBytes(3),Base64.DEFAULT));
                 user.setName(rs.getString(4));
                 user.setGender(rs.getString(5));
                 user.setMajor(rs.getString(6));
@@ -271,7 +273,7 @@ public class UserManage implements IUserManage {
                 User user=new User();
                 user.setUid(rs.getString(1));
                 user.setPwd(rs.getString(2));
-                user.setImage(rs.getBytes(3));
+                user.setImage(Base64.encodeToString(rs.getBytes(3),Base64.DEFAULT));
                 user.setName(rs.getString(4));
                 user.setGender(rs.getString(5));
                 user.setMajor(rs.getString(6));

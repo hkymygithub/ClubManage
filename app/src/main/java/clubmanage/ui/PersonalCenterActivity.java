@@ -96,7 +96,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
         t_person_major.setText(User.currentLoginUser.getMajor());
         img=findViewById(R.id.per_cen_head);
         img.setOnClickListener(this);
-        byte[] bt=User.currentLoginUser.getImage();
+        byte[] bt=Base64.decode(User.currentLoginUser.getImage(),Base64.DEFAULT);
         if(bt!=null){
             img.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
         }
@@ -387,7 +387,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] byteArray = stream.toByteArray();
             updateImg(byteArray);
-            User.currentLoginUser.setImage(byteArray);
+            User.currentLoginUser.setImage(Base64.encodeToString(byteArray,Base64.DEFAULT));
             img.setImageBitmap(bitmap);
             Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
             try {
