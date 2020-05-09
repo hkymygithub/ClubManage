@@ -7,7 +7,6 @@ import clubmanage.model.Activity;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-
 public interface ActivityRequest {
     @GET("/activity/all")
     Call<HttpMessage<List<Activity>>> searchAllActivity();
