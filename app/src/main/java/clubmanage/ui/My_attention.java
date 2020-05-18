@@ -16,10 +16,17 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import clubmanage.httpInterface.AttentionRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.Club;
 import clubmanage.model.User;
 import clubmanage.ui.adapter.ClubAdapter;
 import clubmanage.util.ClubManageUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class My_attention extends AppCompatActivity {
     private List<Club> clubList = new ArrayList<>();
@@ -66,16 +73,36 @@ public class My_attention extends AppCompatActivity {
     }
 
     private void initHomes(){
-        new Thread(){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                List<Club> clubList= null;
+//                clubList = ClubManageUtil.attentionManage.searchAttenByUser(User.currentLoginUser.getUid());
+//                Message message=new Message();
+//                message.obj=clubList;
+//                handler.sendMessage(message);
+//            }
+//        }.start();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        AttentionRequest request = retrofit.create(AttentionRequest.class);
+        Call<HttpMessage<List<Club>>> call = request.searchAttenByUser(User.currentLoginUser.getUid());
+        call.enqueue(new Callback<HttpMessage<List<Club>>>() {
             @Override
-            public void run() {
-                List<Club> clubList= null;
-                clubList = ClubManageUtil.attentionManage.searchAttenByUser(User.currentLoginUser.getUid());
-                Message message=new Message();
-                message.obj=clubList;
-                handler.sendMessage(message);
+            public void onResponse(Call<HttpMessage<List<Club>>> call, Response<HttpMessage<List<Club>>> response) {
+                HttpMessage data=response.body();
+                if (data.getCode()==0){
+                    Message message=new Message();
+                    message.obj=data.getData();
+                    handler.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<List<Club>>> call, Throwable t) {
+            }
+        });
     }
 
     @Override

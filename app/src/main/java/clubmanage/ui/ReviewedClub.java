@@ -17,12 +17,19 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import clubmanage.httpInterface.ApplicationRequest;
+import clubmanage.message.HttpMessage;
+import clubmanage.model.Activity;
 import clubmanage.model.Create_club;
 import clubmanage.model.User;
 import clubmanage.util.ClubManageUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ReviewedClub extends AppCompatActivity implements View.OnClickListener {
-    private List<CreateClubMsg> createClubMsgList=new ArrayList<>();
     private Create_club create_club;
     private int clubid;
     private EditText suggest;
@@ -78,31 +85,73 @@ public class ReviewedClub extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.button_return_audit_club:
-                new Thread(){
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://121.36.153.113:8000")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                ApplicationRequest request = retrofit.create(ApplicationRequest.class);
+                Call<HttpMessage> call = request.feedbackClubAppli(create_club.getApplyclub_formid(),0, User.currentLoginUser.getUid(),suggest.getText().toString());
+                call.enqueue(new Callback<HttpMessage>() {
                     @Override
-                    public void run() {
-                        ClubManageUtil.applicationManage.feedbackClubAppli(create_club.getApplyclub_formid(),0, User.currentLoginUser.getUid(),suggest.getText().toString());
+                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                        HttpMessage data=response.body();
+                        if (data.getCode()==0){
+                        }
                     }
-                }.start();
+                    @Override
+                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                    }
+                });
                 Toast.makeText(this,"审核完成",Toast.LENGTH_SHORT).show();
                 finish();
                 break;
             case R.id.button_pass_audit_club:
-                new Thread(){
+                Retrofit retrofit2 = new Retrofit.Builder()
+                        .baseUrl("http://121.36.153.113:8000")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                ApplicationRequest request2 = retrofit2.create(ApplicationRequest.class);
+                Call<HttpMessage> call2 = request2.feedbackClubAppli(create_club.getApplyclub_formid(),1, User.currentLoginUser.getUid(),suggest.getText().toString());
+                call2.enqueue(new Callback<HttpMessage>() {
                     @Override
-                    public void run() {
-                        ClubManageUtil.applicationManage.feedbackClubAppli(create_club.getApplyclub_formid(),1, User.currentLoginUser.getUid(),suggest.getText().toString());
+                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                        HttpMessage data=response.body();
+                        if (data.getCode()==0){
+                        }
                     }
-                }.start();
+                    @Override
+                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                    }
+                });
                 Toast.makeText(this,"审核完成",Toast.LENGTH_SHORT).show();
                 finish();
                 break;
         }
     }
     private void getClub(){
-        Create_club club=ClubManageUtil.applicationManage.searchCreateClubAppliByID(clubid);
-        Message message=new Message();
-        message.obj=club;
-        handler.sendMessage(message);
+//        Create_club club=ClubManageUtil.applicationManage.searchCreateClubAppliByID(clubid);
+//        Message message=new Message();
+//        message.obj=club;
+//        handler.sendMessage(message);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApplicationRequest request = retrofit.create(ApplicationRequest.class);
+        Call<HttpMessage<Create_club>> call = request.searchCreateClubAppliByID(clubid);
+        call.enqueue(new Callback<HttpMessage<Create_club>>() {
+            @Override
+            public void onResponse(Call<HttpMessage<Create_club>> call, Response<HttpMessage<Create_club>> response) {
+                HttpMessage data=response.body();
+                if (data.getCode()==0){
+                    Message message=new Message();
+                    message.obj=data.getData();
+                    handler.sendMessage(message);
+                }
+            }
+            @Override
+            public void onFailure(Call<HttpMessage<Create_club>> call, Throwable t) {
+            }
+        });
     }
 }

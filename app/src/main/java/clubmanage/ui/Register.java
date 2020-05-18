@@ -15,8 +15,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.List;
+
+import clubmanage.httpInterface.UserRequest;
+import clubmanage.message.HttpMessage;
+import clubmanage.model.Activity;
 import clubmanage.util.BaseException;
 import clubmanage.util.ClubManageUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Register extends AppCompatActivity implements View.OnClickListener{
     EditText uid;
@@ -77,23 +87,32 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    ClubManageUtil.usermanage.reg(uid.getText().toString(),pwd1.getText().toString(),
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserRequest request = retrofit.create(UserRequest.class);
+        Call<HttpMessage> call = request.reg(uid.getText().toString(),pwd1.getText().toString(),
                             pwd2.getText().toString(),name.getText().toString(),mail.getText().toString(),
                             phone.getText().toString());
+        call.enqueue(new Callback<HttpMessage>() {
+            @Override
+            public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                HttpMessage data=response.body();
+                if (data.getCode()==0){
                     Message message=new Message();
                     message.obj=null;
                     handler.sendMessage(message);
-                } catch (BaseException e) {
+                }else {
                     Message message=new Message();
-                    message.obj=e.getMessage();
+                    message.obj=data.getMsg();
                     handler.sendMessage(message);
                 }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage> call, Throwable t) {
+            }
+        });
     }
     @Override
     public void onBackPressed(){

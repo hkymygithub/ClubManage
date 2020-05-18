@@ -19,6 +19,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -32,9 +33,17 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import clubmanage.httpInterface.PersonalRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.User;
 import clubmanage.util.BaseException;
 import clubmanage.util.ClubManageUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PersonalCenterActivity extends AppCompatActivity implements View.OnClickListener {
     private CircleImageView img;
@@ -136,16 +145,24 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                                     Toast.makeText(PersonalCenterActivity.this, "内容不能为空" , Toast.LENGTH_SHORT).show();
                                     return;
                                 }
-                                new Thread(){
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl("http://121.36.153.113:8000")
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                PersonalRequest request = retrofit.create(PersonalRequest.class);
+                                Call<HttpMessage> call = request.changeName(User.currentLoginUser.getUid(), meg);
+                                call.enqueue(new Callback<HttpMessage>() {
                                     @Override
-                                    public void run() {
-                                        try {
-                                            ClubManageUtil.personalManage.changeName(User.currentLoginUser.getUid(), meg);
-                                        } catch (BaseException e) {
-                                            e.printStackTrace();
+                                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                                        HttpMessage data=response.body();
+                                        if (data.getCode()==0){
+                                        }else {
                                         }
                                     }
-                                }.start();
+                                    @Override
+                                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                                    }
+                                });
                                 t_person_name.setText(meg);
                                 User.currentLoginUser.setName(meg);
                                 Toast.makeText(PersonalCenterActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
@@ -162,16 +179,24 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 final String msg=items[which];
-                                new Thread(){
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl("http://121.36.153.113:8000")
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                PersonalRequest request = retrofit.create(PersonalRequest.class);
+                                Call<HttpMessage> call = request.changeGender(User.currentLoginUser.getUid(), msg);
+                                call.enqueue(new Callback<HttpMessage>() {
                                     @Override
-                                    public void run() {
-                                        try {
-                                            ClubManageUtil.personalManage.changeGender(User.currentLoginUser.getUid(), msg);
-                                        } catch (BaseException e) {
-                                            e.printStackTrace();
+                                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                                        HttpMessage data=response.body();
+                                        if (data.getCode()==0){
+                                        }else {
                                         }
                                     }
-                                }.start();
+                                    @Override
+                                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                                    }
+                                });
                                 t_person_gender.setText(msg);
                                 User.currentLoginUser.setGender(msg);
                                 Toast.makeText(PersonalCenterActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
@@ -193,16 +218,24 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                                     Toast.makeText(PersonalCenterActivity.this, "内容不能为空" , Toast.LENGTH_SHORT).show();
                                     return;
                                 }
-                                new Thread(){
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl("http://121.36.153.113:8000")
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                PersonalRequest request = retrofit.create(PersonalRequest.class);
+                                Call<HttpMessage> call = request.changePhone_number(User.currentLoginUser.getUid(), meg);
+                                call.enqueue(new Callback<HttpMessage>() {
                                     @Override
-                                    public void run() {
-                                        try {
-                                            ClubManageUtil.personalManage.changePhone_number(User.currentLoginUser.getUid(), meg);
-                                        } catch (BaseException e) {
-                                            e.printStackTrace();
+                                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                                        HttpMessage data=response.body();
+                                        if (data.getCode()==0){
+                                        }else {
                                         }
                                     }
-                                }.start();
+                                    @Override
+                                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                                    }
+                                });
                                 t_person_phone.setText(meg);
                                 User.currentLoginUser.setPhone_number(meg);
                                 Toast.makeText(PersonalCenterActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
@@ -226,16 +259,24 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                                     Toast.makeText(PersonalCenterActivity.this, "内容不能为空" , Toast.LENGTH_SHORT).show();
                                     return;
                                 }
-                                new Thread(){
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl("http://121.36.153.113:8000")
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                PersonalRequest request = retrofit.create(PersonalRequest.class);
+                                Call<HttpMessage> call = request.changeMail(User.currentLoginUser.getUid(), meg);
+                                call.enqueue(new Callback<HttpMessage>() {
                                     @Override
-                                    public void run() {
-                                        try {
-                                            ClubManageUtil.personalManage.changeMail(User.currentLoginUser.getUid(), meg);
-                                        } catch (BaseException e) {
-                                            e.printStackTrace();
+                                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                                        HttpMessage data=response.body();
+                                        if (data.getCode()==0){
+                                        }else {
                                         }
                                     }
-                                }.start();
+                                    @Override
+                                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                                    }
+                                });
                                 t_person_mail.setText(meg);
                                 User.currentLoginUser.setMail(meg);
                                 Toast.makeText(PersonalCenterActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
@@ -259,16 +300,24 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                                     Toast.makeText(PersonalCenterActivity.this, "内容不能为空" , Toast.LENGTH_SHORT).show();
                                     return;
                                 }
-                                new Thread(){
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl("http://121.36.153.113:8000")
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                PersonalRequest request = retrofit.create(PersonalRequest.class);
+                                Call<HttpMessage> call = request.changeMajor(User.currentLoginUser.getUid(), meg);
+                                call.enqueue(new Callback<HttpMessage>() {
                                     @Override
-                                    public void run() {
-                                        try {
-                                            ClubManageUtil.personalManage.changeMajor(User.currentLoginUser.getUid(), meg);
-                                        } catch (BaseException e) {
-                                            e.printStackTrace();
+                                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                                        HttpMessage data=response.body();
+                                        if (data.getCode()==0){
+                                        }else {
                                         }
                                     }
-                                }.start();
+                                    @Override
+                                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                                    }
+                                });
                                 t_person_major.setText(meg);
                                 User.currentLoginUser.setMajor(meg);
                                 Toast.makeText(PersonalCenterActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
@@ -401,15 +450,33 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
     }
 
     private void updateImg(final byte[] img){
-        new Thread(){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                try {
+//                    ClubManageUtil.personalManage.changeImage(User.currentLoginUser.getUid(), Base64.encodeToString(img,Base64.DEFAULT));
+//                } catch (BaseException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.start();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        PersonalRequest request = retrofit.create(PersonalRequest.class);
+        Call<HttpMessage> call = request.changeImage(User.currentLoginUser.getUid(), Base64.encodeToString(img,Base64.DEFAULT));
+        call.enqueue(new Callback<HttpMessage>() {
             @Override
-            public void run() {
-                try {
-                    ClubManageUtil.personalManage.changeImage(User.currentLoginUser.getUid(), Base64.encodeToString(img,Base64.DEFAULT));
-                } catch (BaseException e) {
-                    e.printStackTrace();
+            public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                HttpMessage data=response.body();
+                if (data.getCode()==0){
+                }else {
                 }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage> call, Throwable t) {
+            }
+        });
     }
 }

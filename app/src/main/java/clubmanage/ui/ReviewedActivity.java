@@ -19,9 +19,16 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import clubmanage.httpInterface.ApplicationRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.Create_activity;
 import clubmanage.model.User;
 import clubmanage.util.ClubManageUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ReviewedActivity extends AppCompatActivity implements View.OnClickListener {
     private int activityid;
@@ -109,22 +116,50 @@ public class ReviewedActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.button_return_audit:
-                new Thread(){
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://121.36.153.113:8000")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                ApplicationRequest request = retrofit.create(ApplicationRequest.class);
+                Call<HttpMessage> call = request.feedbackActivityAppli(activity.getActivity_approval_id(),0, User.currentLoginUser.getUid(),suggest.getText().toString());
+                call.enqueue(new Callback<HttpMessage>() {
                     @Override
-                    public void run() {
-                        ClubManageUtil.applicationManage.feedbackActivityAppli(activity.getActivity_approval_id(),0,suggest.getText().toString(), User.currentLoginUser.getUid());
+                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                        HttpMessage data=response.body();
+                        if (data.getCode()==0){
+                        }
                     }
-                }.start();
+                    @Override
+                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                    }
+                });
                 Toast.makeText(this,"审核完成",Toast.LENGTH_SHORT).show();
                 finish();
                 break;
             case R.id.button_pass_audit:
-                new Thread(){
+//                new Thread(){
+//                    @Override
+//                    public void run() {
+//                        ClubManageUtil.applicationManage.feedbackActivityAppli(activity.getActivity_approval_id(),1,suggest.getText().toString(), User.currentLoginUser.getUid());
+//                    }
+//                }.start();
+                Retrofit retrofit2 = new Retrofit.Builder()
+                        .baseUrl("http://121.36.153.113:8000")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                ApplicationRequest request2 = retrofit2.create(ApplicationRequest.class);
+                Call<HttpMessage> call2 = request2.feedbackActivityAppli(activity.getActivity_approval_id(),1, User.currentLoginUser.getUid(),suggest.getText().toString());
+                call2.enqueue(new Callback<HttpMessage>() {
                     @Override
-                    public void run() {
-                        ClubManageUtil.applicationManage.feedbackActivityAppli(activity.getActivity_approval_id(),1,suggest.getText().toString(), User.currentLoginUser.getUid());
+                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                        HttpMessage data=response.body();
+                        if (data.getCode()==0){
+                        }
                     }
-                }.start();
+                    @Override
+                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                    }
+                });
                 Toast.makeText(this,"审核完成",Toast.LENGTH_SHORT).show();
                 finish();
                 break;
@@ -132,14 +167,34 @@ public class ReviewedActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void getActivaty(){
-        new Thread(){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                Create_activity activity= ClubManageUtil.applicationManage.searchCreateActivityAppliByID(activityid);
+//                Message message=new Message();
+//                message.obj=activity;
+//                handler.sendMessage(message);
+//            }
+//        }.start();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://121.36.153.113:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApplicationRequest request = retrofit.create(ApplicationRequest.class);
+        Call<HttpMessage<Create_activity>> call = request.searchCreateActivityAppliByID(activityid);
+        call.enqueue(new Callback<HttpMessage<Create_activity>>() {
             @Override
-            public void run() {
-                Create_activity activity= ClubManageUtil.applicationManage.searchCreateActivityAppliByID(activityid);
-                Message message=new Message();
-                message.obj=activity;
-                handler.sendMessage(message);
+            public void onResponse(Call<HttpMessage<Create_activity>> call, Response<HttpMessage<Create_activity>> response) {
+                HttpMessage data=response.body();
+                if (data.getCode()==0){
+                    Message message=new Message();
+                    message.obj=data.getData();
+                    handler.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<Create_activity>> call, Throwable t) {
+            }
+        });
     }
 }

@@ -21,4 +21,12 @@ public interface ApplicationRequest {
     Call<HttpMessage<List<Create_club>>> searchCreateClubAppli();
     @GET("/application/searchcreateappli")
     Call<HttpMessage<List<Create>>> searchCreateAppli(@Query("uid") String uid);
+    @GET("/application/feedbackclubappli")
+    Call<HttpMessage> feedbackClubAppli(@Query("applyid") int applyid,@Query("state") int state,@Query("uid") String uid,@Query("suggestion") String suggestion);
+    @GET("/application/searchcreateclubapplibyid")
+    Call<HttpMessage<Create_club>> searchCreateClubAppliByID(@Query("applyid") int applyid);
+    @GET("/application/feedbackactivityappli")
+    Call<HttpMessage> feedbackActivityAppli(@Query("applyid") int applyid,@Query("state") int state,@Query("uid") String uid,@Query("suggestion") String suggestion);
+    @GET("/application/searchcreateactivityapplibyid")
+    Call<HttpMessage<Create_activity>> searchCreateActivityAppliByID(@Query("applyid") int applyid);
 }
