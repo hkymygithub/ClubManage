@@ -23,6 +23,7 @@ import clubmanage.model.Activity;
 import clubmanage.ui.R;
 import clubmanage.ui.adapter.ActivityAdapter;
 import clubmanage.util.ClubManageUtil;
+import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -76,7 +77,7 @@ public class Activity_TabFragment4 extends Fragment {
 
     private void initHomes(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ActivityRequest request = retrofit.create(ActivityRequest.class);
@@ -85,7 +86,7 @@ public class Activity_TabFragment4 extends Fragment {
             @Override
             public void onResponse(Call<HttpMessage<List<Activity>>> call, Response<HttpMessage<List<Activity>>> response) {
                 HttpMessage<List<Activity>> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     List<Activity> activityList = (List<Activity>)data.getData();
                     Message message=new Message();
                     message.obj=activityList;

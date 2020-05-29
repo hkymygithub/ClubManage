@@ -45,12 +45,21 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import clubmanage.httpInterface.ApplicationRequest;
+import clubmanage.httpInterface.AreaRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.Area;
 import clubmanage.model.Club;
 import clubmanage.model.Create_activity;
 import clubmanage.model.User;
 import clubmanage.util.BaseException;
 import clubmanage.util.ClubManageUtil;
+import clubmanage.util.HttpUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CreateActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -80,14 +89,9 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
     private Handler handler2=new Handler(){
         public void handleMessage(Message msg){
             exception=(String) msg.obj;
-            if (exception==null){
-                Toast.makeText(CreateActivity.this, "创建成功，请等待审批", Toast.LENGTH_SHORT).show();
-                finish();
-            }else {
-                button.setEnabled(true);
-                Toast.makeText(CreateActivity.this, exception, Toast.LENGTH_SHORT).show();
-                return;
-            }
+            button.setEnabled(true);
+            Toast.makeText(CreateActivity.this, exception, Toast.LENGTH_SHORT).show();
+            return;
         }
     };
     private Handler handler3=new Handler(){
@@ -153,24 +157,31 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     public void getPlace(){
-        new Thread(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(HttpUtil.httpUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        AreaRequest request = retrofit.create(AreaRequest.class);
+        Call<HttpMessage<List<Area>>> call = request.listUsibleSpe();
+        call.enqueue(new Callback<HttpMessage<List<Area>>>() {
             @Override
-            public void run() {
-                List<Area> area=null;
-                try {
-                    area=ClubManageUtil.areaManage.listUsibleSpe();
-                } catch (BaseException e) {
-                    e.printStackTrace();
+            public void onResponse(Call<HttpMessage<List<Area>>> call, Response<HttpMessage<List<Area>>> response) {
+                HttpMessage<List<Area>> data=response.body();
+                if (data.getCode()==200){
+                    List<Area> area=(List<Area>) data.getData();
+                    String[] places=new String[area.size()];
+                    for(int i=0;i<area.size();i++){
+                        places[i]=area.get(i).getArea_name();
+                    }
+                    Message message=new Message();
+                    message.obj=places;
+                    handler3.sendMessage(message);
                 }
-                String[] places=new String[area.size()];
-                for(int i=0;i<area.size();i++){
-                    places[i]=area.get(i).getArea_name();
-                }
-                Message message=new Message();
-                message.obj=places;
-                handler3.sendMessage(message);
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<List<Area>>> call, Throwable t) {
+            }
+        });
     }
 
     @Override
@@ -328,28 +339,69 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private void createActivity(){
-        new Thread(){
+        byte p=0;
+        if (t_create_public.equals("是"))p=1;
+        else if (t_create_public.equals("否")) p=0;
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                boolean p=true;
+//                if (t_create_public.equals("是"))p=true;
+//                else if (t_create_public.equals("否")) p=false;
+//                try {
+//                    ClubManageUtil.applicationManage.addActivityAppli(clubid, Base64.encodeToString(mbyteArray,Base64.DEFAULT),
+//                            t_create_name.getText().toString(),t_create_place.getText().toString(),User.currentLoginUser.getUid(),
+//                            User.currentLoginUser.getName(),t_create_start_time.getText().toString()+" 00:00:00",
+//                            t_create_finish_time.getText().toString()+" 00:00:00", t_create_introduce.getText().toString(),
+//                            t_create_attention.getText().toString(),t_create_cat.getText().toString(),p,t_create_reason.getText().toString());
+//                    Message message=new Message();
+//                    message.obj=null;
+//                    handler2.sendMessage(message);
+//                } catch (BaseException e) {
+//                    Message message=new Message();
+//                    message.obj=e.getMessage();
+//                    handler2.sendMessage(message);
+//                }
+//            }
+//        }.start();
+        Create_activity create_activity=new Create_activity();
+        create_activity.setClub_id(clubid);
+        create_activity.setPoster(Base64.encodeToString(mbyteArray,Base64.DEFAULT));
+        create_activity.setActivity_name(t_create_name.getText().toString());
+        create_activity.setArea_name(t_create_place.getText().toString());
+        create_activity.setActivity_owner_id(User.currentLoginUser.getUid());
+        create_activity.setActivity_owner_name(User.currentLoginUser.getName());
+        create_activity.setActivity_start_time(Timestamp.valueOf(t_create_start_time.getText().toString()+" 00:00:00"));
+        create_activity.setActivity_end_time(Timestamp.valueOf(t_create_finish_time.getText().toString()+" 00:00:00"));
+        create_activity.setActivity_details(t_create_introduce.getText().toString());
+        create_activity.setActivity_attention(t_create_attention.getText().toString());
+        create_activity.setActivity_category(t_create_cat.getText().toString());
+        create_activity.setIf_public_activity(p);
+        create_activity.setReason(t_create_reason.getText().toString());
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(HttpUtil.httpUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApplicationRequest request = retrofit.create(ApplicationRequest.class);
+        Call<HttpMessage> call = request.addActivityAppli(create_activity);
+        call.enqueue(new Callback<HttpMessage>() {
             @Override
-            public void run() {
-                boolean p=true;
-                if (t_create_public.equals("是"))p=true;
-                else if (t_create_public.equals("否")) p=false;
-                try {
-                    ClubManageUtil.applicationManage.addActivityAppli(clubid, Base64.encodeToString(mbyteArray,Base64.DEFAULT),
-                            t_create_name.getText().toString(),t_create_place.getText().toString(),User.currentLoginUser.getUid(),
-                            User.currentLoginUser.getName(),t_create_start_time.getText().toString()+" 00:00:00",
-                            t_create_finish_time.getText().toString()+" 00:00:00", t_create_introduce.getText().toString(),
-                            t_create_attention.getText().toString(),t_create_cat.getText().toString(),p,t_create_reason.getText().toString());
+            public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                HttpMessage data=response.body();
+                if (data.getCode()==200){
+                    Toast.makeText(CreateActivity.this, "创建成功，请等待审批", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else if (data.getCode()==400){
                     Message message=new Message();
-                    message.obj=null;
-                    handler2.sendMessage(message);
-                } catch (BaseException e) {
-                    Message message=new Message();
-                    message.obj=e.getMessage();
+                    message.obj=data.getMsg();
                     handler2.sendMessage(message);
                 }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage> call, Throwable t) {
+            }
+        });
+
     }
 
     public static void verifyStoragePermissions(Activity activity) {

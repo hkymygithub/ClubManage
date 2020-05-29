@@ -22,6 +22,7 @@ import clubmanage.model.Club;
 import clubmanage.model.User;
 import clubmanage.ui.adapter.ClubAdapter;
 import clubmanage.util.ClubManageUtil;
+import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,18 +74,8 @@ public class My_attention extends AppCompatActivity {
     }
 
     private void initHomes(){
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                List<Club> clubList= null;
-//                clubList = ClubManageUtil.attentionManage.searchAttenByUser(User.currentLoginUser.getUid());
-//                Message message=new Message();
-//                message.obj=clubList;
-//                handler.sendMessage(message);
-//            }
-//        }.start();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         AttentionRequest request = retrofit.create(AttentionRequest.class);
@@ -93,7 +84,7 @@ public class My_attention extends AppCompatActivity {
             @Override
             public void onResponse(Call<HttpMessage<List<Club>>> call, Response<HttpMessage<List<Club>>> response) {
                 HttpMessage data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     Message message=new Message();
                     message.obj=data.getData();
                     handler.sendMessage(message);

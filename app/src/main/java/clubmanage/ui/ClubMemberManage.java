@@ -19,6 +19,7 @@ import clubmanage.httpInterface.ClubRequest;
 import clubmanage.message.HttpMessage;
 import clubmanage.model.User;
 import clubmanage.ui.adapter.ClubMemberAdapter;
+import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,7 +74,7 @@ public class ClubMemberManage extends AppCompatActivity {
 
     public void initUsers(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ClubRequest request = retrofit.create(ClubRequest.class);
@@ -82,7 +83,7 @@ public class ClubMemberManage extends AppCompatActivity {
             @Override
             public void onResponse(Call<HttpMessage<List<User>>> call, Response<HttpMessage<List<User>>> response) {
                 HttpMessage<List<User>> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     List<User> userList = (List<User>)data.getData();
                     Message message=new Message();
                     message.obj=userList;

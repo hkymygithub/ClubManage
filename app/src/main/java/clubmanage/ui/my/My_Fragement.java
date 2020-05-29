@@ -31,6 +31,7 @@ import clubmanage.ui.PersonalCenterActivity;
 import clubmanage.ui.R;
 import clubmanage.ui.Register;
 import clubmanage.ui.Setting;
+import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -112,7 +113,7 @@ public class My_Fragement extends Fragment implements View.OnClickListener {
     }
     private void initClubNumber(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ClubRequest request = retrofit.create(ClubRequest.class);
@@ -121,7 +122,7 @@ public class My_Fragement extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<HttpMessage<Integer>> call, Response<HttpMessage<Integer>> response) {
                 HttpMessage<Integer> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     Integer clubnum = (Integer)data.getData();
                     Message message=new Message();
                     message.obj=clubnum;
@@ -136,7 +137,7 @@ public class My_Fragement extends Fragment implements View.OnClickListener {
 
     private void initActivityMumber(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ActivityRequest request = retrofit.create(ActivityRequest.class);
@@ -145,7 +146,7 @@ public class My_Fragement extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<HttpMessage<Integer>> call, Response<HttpMessage<Integer>> response) {
                 HttpMessage<Integer> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     Integer num = (Integer)data.getData();
                     Message message=new Message();
                     message.obj=num;
@@ -160,7 +161,7 @@ public class My_Fragement extends Fragment implements View.OnClickListener {
 
     private void initAttNumber(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         AttentionRequest request = retrofit.create(AttentionRequest.class);
@@ -169,7 +170,7 @@ public class My_Fragement extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<HttpMessage<Integer>> call, Response<HttpMessage<Integer>> response) {
                 HttpMessage<Integer> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     Integer num = (Integer)data.getData();
                     Message message=new Message();
                     message.obj=num;

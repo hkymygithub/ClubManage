@@ -22,6 +22,7 @@ import java.lang.reflect.Type;
 import clubmanage.httpInterface.UserRequest;
 import clubmanage.message.HttpMessage;
 import clubmanage.model.User;
+import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void login(String uid,String pwd){
         //创建Retrofit对象
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000") //基础url,其他部分在GetRequestInterface里
+                .baseUrl(HttpUtil.httpUrl) //基础url,其他部分在GetRequestInterface里
                 .addConverterFactory(GsonConverterFactory.create()) //Gson数据转换器
                 .build();
 
@@ -88,7 +89,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(Call<HttpMessage<User>> call, Response<HttpMessage<User>> response) {
                 HttpMessage<User> message=response.body();
-                if (message.getCode()==0){
+                if (message.getCode()==200){
                     User.currentLoginUser = (User)message.getData();
                     Intent intent=new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
@@ -97,7 +98,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     intent1.putExtra("data","OK");
                     setResult(RESULT_OK,intent1);
                     finish();
-                }else if (message.getCode()==1){
+                }else if (message.getCode()==400){
                     logButton.setEnabled(true);
                     new AlertDialog.Builder(LoginActivity.this)
                             .setTitle(message.getMsg())

@@ -24,6 +24,7 @@ import clubmanage.message.HttpMessage;
 import clubmanage.model.Create_activity;
 import clubmanage.model.User;
 import clubmanage.util.ClubManageUtil;
+import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -117,7 +118,7 @@ public class ReviewedActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()){
             case R.id.button_return_audit:
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://121.36.153.113:8000")
+                        .baseUrl(HttpUtil.httpUrl)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 ApplicationRequest request = retrofit.create(ApplicationRequest.class);
@@ -126,7 +127,7 @@ public class ReviewedActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
                         HttpMessage data=response.body();
-                        if (data.getCode()==0){
+                        if (data.getCode()==200){
                         }
                     }
                     @Override
@@ -137,14 +138,9 @@ public class ReviewedActivity extends AppCompatActivity implements View.OnClickL
                 finish();
                 break;
             case R.id.button_pass_audit:
-//                new Thread(){
-//                    @Override
-//                    public void run() {
-//                        ClubManageUtil.applicationManage.feedbackActivityAppli(activity.getActivity_approval_id(),1,suggest.getText().toString(), User.currentLoginUser.getUid());
-//                    }
-//                }.start();
+
                 Retrofit retrofit2 = new Retrofit.Builder()
-                        .baseUrl("http://121.36.153.113:8000")
+                        .baseUrl(HttpUtil.httpUrl)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 ApplicationRequest request2 = retrofit2.create(ApplicationRequest.class);
@@ -153,7 +149,7 @@ public class ReviewedActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
                         HttpMessage data=response.body();
-                        if (data.getCode()==0){
+                        if (data.getCode()==200){
                         }
                     }
                     @Override
@@ -167,17 +163,8 @@ public class ReviewedActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void getActivaty(){
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                Create_activity activity= ClubManageUtil.applicationManage.searchCreateActivityAppliByID(activityid);
-//                Message message=new Message();
-//                message.obj=activity;
-//                handler.sendMessage(message);
-//            }
-//        }.start();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApplicationRequest request = retrofit.create(ApplicationRequest.class);
@@ -186,7 +173,7 @@ public class ReviewedActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onResponse(Call<HttpMessage<Create_activity>> call, Response<HttpMessage<Create_activity>> response) {
                 HttpMessage data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     Message message=new Message();
                     message.obj=data.getData();
                     handler.sendMessage(message);

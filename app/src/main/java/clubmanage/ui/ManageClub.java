@@ -35,9 +35,17 @@ import androidx.core.content.ContextCompat;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import clubmanage.httpInterface.ClubRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.Club;
 import clubmanage.model.User;
 import clubmanage.util.ClubManageUtil;
+import clubmanage.util.HttpUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ManageClub extends AppCompatActivity implements View.OnClickListener{
     private Club club;
@@ -129,27 +137,51 @@ public class ManageClub extends AppCompatActivity implements View.OnClickListene
     }
 
     public void getClubMsg(){
-        new Thread(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(HttpUtil.httpUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ClubRequest request = retrofit.create(ClubRequest.class);
+        Call<HttpMessage<Club>> call = request.searchClubByProprieter(User.currentLoginUser.getUid());
+        call.enqueue(new Callback<HttpMessage<Club>>() {
             @Override
-            public void run() {
-                Club club= ClubManageUtil.clubManage.searchClubByProprieter(User.currentLoginUser.getUid());
-                Message message=new Message();
-                message.obj=club;
-                handler.sendMessage(message);
+            public void onResponse(Call<HttpMessage<Club>> call, Response<HttpMessage<Club>> response) {
+                HttpMessage<Club> data=response.body();
+                if (data.getCode()==200){
+                    Club club = (Club)data.getData();
+                    Message message=new Message();
+                    message.obj=club;
+                    handler.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<Club>> call, Throwable t) {
+            }
+        });
     }
 
     public void getClubNotice(){
-        new Thread(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(HttpUtil.httpUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ClubRequest request = retrofit.create(ClubRequest.class);
+        Call<HttpMessage<String>> call = request.searchNotice(clubid);
+        call.enqueue(new Callback<HttpMessage<String>>() {
             @Override
-            public void run() {
-                String notice= ClubManageUtil.clubManage.searchNotice(clubid);
-                Message message=new Message();
-                message.obj=notice;
-                handler2.sendMessage(message);
+            public void onResponse(Call<HttpMessage<String>> call, Response<HttpMessage<String>> response) {
+                HttpMessage<String> data=response.body();
+                if (data.getCode()==200){
+                    String notice = (String)data.getData();
+                    Message message=new Message();
+                    message.obj=notice;
+                    handler2.sendMessage(message);
+                }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<String>> call, Throwable t) {
+            }
+        });
     }
 
     @Override
@@ -189,12 +221,23 @@ public class ManageClub extends AppCompatActivity implements View.OnClickListene
                             @Override
                             public void onClick(DialogInterface dialog, final int which) {
                                 t_club_cat.setText(items[which]);
-                                new Thread(){
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(HttpUtil.httpUrl)
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                ClubRequest request = retrofit.create(ClubRequest.class);
+                                Call<HttpMessage> call = request.editCategory(clubid,items[which]);
+                                call.enqueue(new Callback<HttpMessage>() {
                                     @Override
-                                    public void run() {
-                                        ClubManageUtil.clubManage.editCategory(clubid,items[which]);
+                                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                                        HttpMessage<String> data=response.body();
+                                        if (data.getCode()==200){
+                                        }
                                     }
-                                }.start();
+                                    @Override
+                                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                                    }
+                                });
                                 Toast.makeText(ManageClub.this, "类别修改成功", Toast.LENGTH_SHORT).show();
                             }
                         }).show();
@@ -210,12 +253,23 @@ public class ManageClub extends AppCompatActivity implements View.OnClickListene
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0, int arg1) {
                                 t_club_slogan.setText(edt1.getText().toString());
-                                new Thread(){
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(HttpUtil.httpUrl)
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                ClubRequest request = retrofit.create(ClubRequest.class);
+                                Call<HttpMessage> call = request.editSlogan(clubid,edt1.getText().toString());
+                                call.enqueue(new Callback<HttpMessage>() {
                                     @Override
-                                    public void run() {
-                                        ClubManageUtil.clubManage.editSlogan(clubid,edt1.getText().toString());
+                                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                                        HttpMessage<String> data=response.body();
+                                        if (data.getCode()==200){
+                                        }
                                     }
-                                }.start();
+                                    @Override
+                                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                                    }
+                                });
                                 Toast.makeText(ManageClub.this, "标语修改成功", Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -233,12 +287,23 @@ public class ManageClub extends AppCompatActivity implements View.OnClickListene
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0, int arg1) {
                                 t_club_introduce.setText(edt2.getText().toString());
-                                new Thread(){
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(HttpUtil.httpUrl)
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                ClubRequest request = retrofit.create(ClubRequest.class);
+                                Call<HttpMessage> call = request.editIntroduction(clubid,edt2.getText().toString());
+                                call.enqueue(new Callback<HttpMessage>() {
                                     @Override
-                                    public void run() {
-                                        ClubManageUtil.clubManage.editIntroduction(clubid,edt2.getText().toString());
+                                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                                        HttpMessage<String> data=response.body();
+                                        if (data.getCode()==200){
+                                        }
                                     }
-                                }.start();
+                                    @Override
+                                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                                    }
+                                });
                                 Toast.makeText(ManageClub.this, "简介修改成功", Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -256,12 +321,23 @@ public class ManageClub extends AppCompatActivity implements View.OnClickListene
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0, int arg1) {
                                 t_club_notice.setText(edt3.getText().toString());
-                                new Thread(){
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(HttpUtil.httpUrl)
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                ClubRequest request = retrofit.create(ClubRequest.class);
+                                Call<HttpMessage> call = request.editNotice(clubid,edt3.getText().toString());
+                                call.enqueue(new Callback<HttpMessage>() {
                                     @Override
-                                    public void run() {
-                                        ClubManageUtil.clubManage.editNotice(clubid,edt3.getText().toString());
+                                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                                        HttpMessage<String> data=response.body();
+                                        if (data.getCode()==200){
+                                        }
                                     }
-                                }.start();
+                                    @Override
+                                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                                    }
+                                });
                                 Toast.makeText(ManageClub.this, "公告发布成功", Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -378,21 +454,43 @@ public class ManageClub extends AppCompatActivity implements View.OnClickListene
             final byte[] byteArray = stream.toByteArray();
             if(this.f==1){
                 c_club_logo.setImageBitmap(bitmap);
-                new Thread(){
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(HttpUtil.httpUrl)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                ClubRequest request = retrofit.create(ClubRequest.class);
+                Call<HttpMessage> call = request.editLogo(clubid,Base64.encodeToString(byteArray,Base64.DEFAULT));
+                call.enqueue(new Callback<HttpMessage>() {
                     @Override
-                    public void run() {
-                        ClubManageUtil.clubManage.editLogo(clubid,Base64.encodeToString(byteArray,Base64.DEFAULT));
+                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                        HttpMessage<String> data=response.body();
+                        if (data.getCode()==200){
+                        }
                     }
-                }.start();
+                    @Override
+                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                    }
+                });
                 Toast.makeText(this, "logo修改成功", Toast.LENGTH_SHORT).show();
             }else if (this.f==2){
                 t_club_poster.setText(imagePath);
-                new Thread(){
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(HttpUtil.httpUrl)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                ClubRequest request = retrofit.create(ClubRequest.class);
+                Call<HttpMessage> call = request.editCover(clubid,Base64.encodeToString(byteArray,Base64.DEFAULT));
+                call.enqueue(new Callback<HttpMessage>() {
                     @Override
-                    public void run() {
-                        ClubManageUtil.clubManage.editCover(clubid,Base64.encodeToString(byteArray,Base64.DEFAULT));
+                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                        HttpMessage<String> data=response.body();
+                        if (data.getCode()==200){
+                        }
                     }
-                }.start();
+                    @Override
+                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                    }
+                });
                 Toast.makeText(this, "海报修改成功", Toast.LENGTH_SHORT).show();
             }
             try {

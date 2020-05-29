@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
+import android.os.Message;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +20,17 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import clubmanage.httpInterface.ClubRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.User;
 import clubmanage.ui.R;
 import clubmanage.util.ClubManageUtil;
+import clubmanage.util.HttpUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ClubMemberAdapter extends RecyclerView.Adapter<ClubMemberAdapter.ViewHolder>{
     private List<User> userList;
@@ -63,22 +72,56 @@ public class ClubMemberAdapter extends RecyclerView.Adapter<ClubMemberAdapter.Vi
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         if (fruits[index].equals("转让社长")){
-                                            new Thread(){
+//                                            new Thread(){
+//                                                @Override
+//                                                public void run() {
+//                                                    ClubManageUtil.clubManage.transferPresident(user.getUid(),User.currentLoginUser.getUid(),clubid);
+//                                                }
+//                                            }.start();
+                                            Retrofit retrofit = new Retrofit.Builder()
+                                                    .baseUrl(HttpUtil.httpUrl)
+                                                    .addConverterFactory(GsonConverterFactory.create())
+                                                    .build();
+                                            ClubRequest request = retrofit.create(ClubRequest.class);
+                                            Call<HttpMessage> call = request.transferPresident(user.getUid(),User.currentLoginUser.getUid(),clubid);
+                                            call.enqueue(new Callback<HttpMessage>() {
                                                 @Override
-                                                public void run() {
-                                                    ClubManageUtil.clubManage.transferPresident(user.getUid(),User.currentLoginUser.getUid(),clubid);
+                                                public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                                                    HttpMessage<Boolean> data=response.body();
+                                                    if (data.getCode()==200){
+                                                    }
                                                 }
-                                            }.start();
+                                                @Override
+                                                public void onFailure(Call<HttpMessage> call, Throwable t) {
+                                                }
+                                            });
                                             iscap=false;
                                             Toast.makeText(mContext, "转让成功", Toast.LENGTH_SHORT).show();
                                         }
                                         else if (fruits[index].equals("删除社员")){
-                                            new Thread(){
+//                                            new Thread(){
+//                                                @Override
+//                                                public void run() {
+//                                                    ClubManageUtil.clubManage.deleteMember(user.getUid(),clubid);
+//                                                }
+//                                            }.start();
+                                            Retrofit retrofit = new Retrofit.Builder()
+                                                    .baseUrl(HttpUtil.httpUrl)
+                                                    .addConverterFactory(GsonConverterFactory.create())
+                                                    .build();
+                                            ClubRequest request = retrofit.create(ClubRequest.class);
+                                            Call<HttpMessage> call = request.deleteMember(user.getUid(),clubid);
+                                            call.enqueue(new Callback<HttpMessage>() {
                                                 @Override
-                                                public void run() {
-                                                    ClubManageUtil.clubManage.deleteMember(user.getUid(),clubid);
+                                                public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                                                    HttpMessage<Boolean> data=response.body();
+                                                    if (data.getCode()==200){
+                                                    }
                                                 }
-                                            }.start();
+                                                @Override
+                                                public void onFailure(Call<HttpMessage> call, Throwable t) {
+                                                }
+                                            });
                                             Toast.makeText(mContext, "删除成功", Toast.LENGTH_SHORT).show();
                                         }
                                     }

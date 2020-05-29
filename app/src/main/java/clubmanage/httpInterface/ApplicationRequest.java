@@ -7,7 +7,9 @@ import clubmanage.model.Create;
 import clubmanage.model.Create_activity;
 import clubmanage.model.Create_club;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ApplicationRequest {
@@ -29,4 +31,10 @@ public interface ApplicationRequest {
     Call<HttpMessage> feedbackActivityAppli(@Query("applyid") int applyid,@Query("state") int state,@Query("uid") String uid,@Query("suggestion") String suggestion);
     @GET("/application/searchcreateactivityapplibyid")
     Call<HttpMessage<Create_activity>> searchCreateActivityAppliByID(@Query("applyid") int applyid);
+
+    @POST("/application/addqctivityqppli")
+    Call<HttpMessage> addActivityAppli(@Body Create_activity create_activity);
+    @POST("/application/addclubappli")
+    Call<HttpMessage> addClubAppli(@Body Create_club create_club);
+
 }

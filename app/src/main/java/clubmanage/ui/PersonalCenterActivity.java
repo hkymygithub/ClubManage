@@ -39,6 +39,7 @@ import clubmanage.message.HttpMessage;
 import clubmanage.model.User;
 import clubmanage.util.BaseException;
 import clubmanage.util.ClubManageUtil;
+import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -146,7 +147,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                                     return;
                                 }
                                 Retrofit retrofit = new Retrofit.Builder()
-                                        .baseUrl("http://121.36.153.113:8000")
+                                        .baseUrl(HttpUtil.httpUrl)
                                         .addConverterFactory(GsonConverterFactory.create())
                                         .build();
                                 PersonalRequest request = retrofit.create(PersonalRequest.class);
@@ -155,7 +156,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                                     @Override
                                     public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
                                         HttpMessage data=response.body();
-                                        if (data.getCode()==0){
+                                        if (data.getCode()==200){
                                         }else {
                                         }
                                     }
@@ -180,7 +181,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                             public void onClick(DialogInterface dialog, int which) {
                                 final String msg=items[which];
                                 Retrofit retrofit = new Retrofit.Builder()
-                                        .baseUrl("http://121.36.153.113:8000")
+                                        .baseUrl(HttpUtil.httpUrl)
                                         .addConverterFactory(GsonConverterFactory.create())
                                         .build();
                                 PersonalRequest request = retrofit.create(PersonalRequest.class);
@@ -189,7 +190,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                                     @Override
                                     public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
                                         HttpMessage data=response.body();
-                                        if (data.getCode()==0){
+                                        if (data.getCode()==200){
                                         }else {
                                         }
                                     }
@@ -219,7 +220,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                                     return;
                                 }
                                 Retrofit retrofit = new Retrofit.Builder()
-                                        .baseUrl("http://121.36.153.113:8000")
+                                        .baseUrl(HttpUtil.httpUrl)
                                         .addConverterFactory(GsonConverterFactory.create())
                                         .build();
                                 PersonalRequest request = retrofit.create(PersonalRequest.class);
@@ -228,7 +229,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                                     @Override
                                     public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
                                         HttpMessage data=response.body();
-                                        if (data.getCode()==0){
+                                        if (data.getCode()==200){
                                         }else {
                                         }
                                     }
@@ -260,7 +261,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                                     return;
                                 }
                                 Retrofit retrofit = new Retrofit.Builder()
-                                        .baseUrl("http://121.36.153.113:8000")
+                                        .baseUrl(HttpUtil.httpUrl)
                                         .addConverterFactory(GsonConverterFactory.create())
                                         .build();
                                 PersonalRequest request = retrofit.create(PersonalRequest.class);
@@ -269,7 +270,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                                     @Override
                                     public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
                                         HttpMessage data=response.body();
-                                        if (data.getCode()==0){
+                                        if (data.getCode()==200){
                                         }else {
                                         }
                                     }
@@ -301,7 +302,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                                     return;
                                 }
                                 Retrofit retrofit = new Retrofit.Builder()
-                                        .baseUrl("http://121.36.153.113:8000")
+                                        .baseUrl(HttpUtil.httpUrl)
                                         .addConverterFactory(GsonConverterFactory.create())
                                         .build();
                                 PersonalRequest request = retrofit.create(PersonalRequest.class);
@@ -310,7 +311,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                                     @Override
                                     public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
                                         HttpMessage data=response.body();
-                                        if (data.getCode()==0){
+                                        if (data.getCode()==200){
                                         }else {
                                         }
                                     }
@@ -450,18 +451,8 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
     }
 
     private void updateImg(final byte[] img){
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                try {
-//                    ClubManageUtil.personalManage.changeImage(User.currentLoginUser.getUid(), Base64.encodeToString(img,Base64.DEFAULT));
-//                } catch (BaseException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }.start();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         PersonalRequest request = retrofit.create(PersonalRequest.class);
@@ -470,7 +461,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
             @Override
             public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
                 HttpMessage data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                 }else {
                 }
             }

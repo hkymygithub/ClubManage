@@ -37,11 +37,20 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import clubmanage.httpInterface.ApplicationRequest;
+import clubmanage.httpInterface.AreaRequest;
+import clubmanage.message.HttpMessage;
 import clubmanage.model.Area;
 import clubmanage.model.Create_club;
 import clubmanage.model.User;
 import clubmanage.util.BaseException;
 import clubmanage.util.ClubManageUtil;
+import clubmanage.util.HttpUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CreateClub extends AppCompatActivity implements View.OnClickListener {
     private String exception=null;
@@ -67,17 +76,9 @@ public class CreateClub extends AppCompatActivity implements View.OnClickListene
     private Handler handler=new Handler(){
         public void handleMessage(Message msg){
             exception=(String) msg.obj;
-            if(exception!=null){
-                button.setEnabled(true);
-                Toast.makeText(CreateClub.this, exception, Toast.LENGTH_SHORT).show();
-                return;
-            }else{
-                Toast.makeText(CreateClub.this, "创建成功，请等待审批", Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent();
-                intent.putExtra("data","OK");
-                setResult(RESULT_OK,intent);
-                finish();
-            }
+            button.setEnabled(true);
+            Toast.makeText(CreateClub.this, exception, Toast.LENGTH_SHORT).show();
+            return;
         }
     };
     private Handler handler2=new Handler(){
@@ -116,24 +117,49 @@ public class CreateClub extends AppCompatActivity implements View.OnClickListene
     }
 
     public void getPlace(){
-        new Thread(){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                List<Area> area=null;
+//                try {
+//                    area= ClubManageUtil.areaManage.listUsibleSpe();
+//                } catch (BaseException e) {
+//                    e.printStackTrace();
+//                }
+//                String[] places=new String[area.size()];
+//                for(int i=0;i<area.size();i++){
+//                    places[i]=area.get(i).getArea_name();
+//                }
+//                Message message=new Message();
+//                message.obj=places;
+//                handler2.sendMessage(message);
+//            }
+//        }.start();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(HttpUtil.httpUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        AreaRequest request = retrofit.create(AreaRequest.class);
+        Call<HttpMessage<List<Area>>> call = request.listUsibleSpe();
+        call.enqueue(new Callback<HttpMessage<List<Area>>>() {
             @Override
-            public void run() {
-                List<Area> area=null;
-                try {
-                    area= ClubManageUtil.areaManage.listUsibleSpe();
-                } catch (BaseException e) {
-                    e.printStackTrace();
+            public void onResponse(Call<HttpMessage<List<Area>>> call, Response<HttpMessage<List<Area>>> response) {
+                HttpMessage<List<Area>> data=response.body();
+                if (data.getCode()==200){
+                    List<Area> area=(List<Area>) data.getData();
+                    String[] places=new String[area.size()];
+                    for(int i=0;i<area.size();i++){
+                        places[i]=area.get(i).getArea_name();
+                    }
+                    Message message=new Message();
+                    message.obj=places;
+                    handler2.sendMessage(message);
                 }
-                String[] places=new String[area.size()];
-                for(int i=0;i<area.size();i++){
-                    places[i]=area.get(i).getArea_name();
-                }
-                Message message=new Message();
-                message.obj=places;
-                handler2.sendMessage(message);
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage<List<Area>>> call, Throwable t) {
+            }
+        });
     }
 
     @Override
@@ -232,22 +258,56 @@ public class CreateClub extends AppCompatActivity implements View.OnClickListene
     }
 
     private void createClub() {
-        new Thread() {
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                try {
+//                    ClubManageUtil.applicationManage.addClubAppli(t_create_club_place.getText().toString(), User.currentLoginUser.getUid(),
+//                            User.currentLoginUser.getName(), t_create_club_name.getText().toString(), t_create_club_cat.getText().toString(),
+//                            t_create_club_introduce.getText().toString(), t_create_club_reason.getText().toString());
+//                    Message message = new Message();
+//                    message.obj = null;
+//                    handler.sendMessage(message);
+//                } catch (BaseException e) {
+//                    Message message = new Message();
+//                    message.obj = e.getMessage();
+//                    handler.sendMessage(message);
+//                }
+//            }
+//        }.start();
+        Create_club create_club=new Create_club();
+        create_club.setArea_name(t_create_club_place.getText().toString());
+        create_club.setUid(User.currentLoginUser.getUid());
+        create_club.setApplican_name(User.currentLoginUser.getName());
+        create_club.setClub_name(t_create_club_name.getText().toString());
+        create_club.setClub_category(t_create_club_cat.getText().toString());
+        create_club.setIntroduce(t_create_club_introduce.getText().toString());
+        create_club.setReason(t_create_club_reason.getText().toString());
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(HttpUtil.httpUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApplicationRequest request = retrofit.create(ApplicationRequest.class);
+        Call<HttpMessage> call = request.addClubAppli(create_club);
+        call.enqueue(new Callback<HttpMessage>() {
             @Override
-            public void run() {
-                try {
-                    ClubManageUtil.applicationManage.addClubAppli(t_create_club_place.getText().toString(), User.currentLoginUser.getUid(),
-                            User.currentLoginUser.getName(), t_create_club_name.getText().toString(), t_create_club_cat.getText().toString(),
-                            t_create_club_introduce.getText().toString(), t_create_club_reason.getText().toString());
-                    Message message = new Message();
-                    message.obj = null;
-                    handler.sendMessage(message);
-                } catch (BaseException e) {
-                    Message message = new Message();
-                    message.obj = e.getMessage();
+            public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                HttpMessage data=response.body();
+                if (data.getCode()==200){
+                    Toast.makeText(CreateClub.this, "创建成功，请等待审批", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent();
+                    intent.putExtra("data","OK");
+                    setResult(RESULT_OK,intent);
+                    finish();
+                }else if (data.getCode()==400){
+                    Message message=new Message();
+                    message.obj=data.getMsg();
                     handler.sendMessage(message);
                 }
             }
-        }.start();
+            @Override
+            public void onFailure(Call<HttpMessage> call, Throwable t) {
+            }
+        });
     }
 }

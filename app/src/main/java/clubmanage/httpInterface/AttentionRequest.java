@@ -15,4 +15,8 @@ public interface AttentionRequest {
     Call<HttpMessage<Boolean>> issubscribe(@Query("uid") String uid,@Query("clubid") int clubid);
     @GET("/attention/searchattenbyuser")
     Call<HttpMessage<List<Club>>> searchAttenByUser(@Query("uid") String uid);
+    @GET("/attention/addattention")
+    Call<HttpMessage> addAttention(@Query("uid") String uid,@Query("clubid")int clubid);
+    @GET("/attention/deleteattention")
+    Call<HttpMessage> deleteAttention(@Query("uid") String uid,@Query("clubid")int clubid);
 }

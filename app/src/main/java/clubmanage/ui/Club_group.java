@@ -33,6 +33,7 @@ import clubmanage.ui.adapter.ActivityAdapter;
 import clubmanage.ui.adapter.TopAdapter;
 import clubmanage.util.BaseException;
 import clubmanage.util.ClubManageUtil;
+import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -201,7 +202,7 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
 
     private void issubscribe(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         AttentionRequest request = retrofit.create(AttentionRequest.class);
@@ -210,7 +211,7 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onResponse(Call<HttpMessage<Boolean>> call, Response<HttpMessage<Boolean>> response) {
                 HttpMessage<Boolean> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     Boolean ifatt = (Boolean)data.getData();
                     Message message=new Message();
                     message.obj=ifatt;
@@ -225,7 +226,7 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
 
     private void if_userInClub(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ClubRequest request = retrofit.create(ClubRequest.class);
@@ -234,7 +235,7 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onResponse(Call<HttpMessage<Boolean>> call, Response<HttpMessage<Boolean>> response) {
                 HttpMessage<Boolean> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     Boolean ifinclub = (Boolean)data.getData();
                     Message message=new Message();
                     message.obj=ifinclub;
@@ -249,7 +250,7 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
 
     private void initTops(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ClubRequest request = retrofit.create(ClubRequest.class);
@@ -258,7 +259,7 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onResponse(Call<HttpMessage<List<User>>> call, Response<HttpMessage<List<User>>> response) {
                 HttpMessage<List<User>> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     List<User> ifinclub = (List<User>)data.getData();
                     Message message=new Message();
                     message.obj=ifinclub;
@@ -274,7 +275,7 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
 
     private void initGonggao(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ClubRequest request = retrofit.create(ClubRequest.class);
@@ -283,7 +284,7 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onResponse(Call<HttpMessage<String>> call, Response<HttpMessage<String>> response) {
                 HttpMessage<String> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     String notice = (String)data.getData();
                     Message message=new Message();
                     message.obj=notice;
@@ -298,7 +299,7 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
 
     private void initActs(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ActivityRequest request = retrofit.create(ActivityRequest.class);
@@ -307,7 +308,7 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onResponse(Call<HttpMessage<List<Activity>>> call, Response<HttpMessage<List<Activity>>> response) {
                 HttpMessage<List<Activity>> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     List<Activity> activityList = (List<Activity>)data.getData();
                     Message message=new Message();
                     message.obj=activityList;
@@ -322,7 +323,7 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
 
     private void getClubMsg(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ClubRequest request = retrofit.create(ClubRequest.class);
@@ -331,7 +332,7 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onResponse(Call<HttpMessage<Club>> call, Response<HttpMessage<Club>> response) {
                 HttpMessage<Club> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     Club club = (Club)data.getData();
                     Message message=new Message();
                     message.obj=club;
@@ -349,27 +350,61 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
         switch (v.getId()){
             case R.id.club1_head_btn2:
                 if (atted==false){
-                    new Thread(){
+//                    new Thread(){
+//                        @Override
+//                        public void run() {
+//                            ClubManageUtil.attentionManage.addAttention(User.currentLoginUser.getUid(),clubid);
+//                        }
+//                    }.start();
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(HttpUtil.httpUrl)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+                    AttentionRequest request = retrofit.create(AttentionRequest.class);
+                    Call<HttpMessage> call = request.addAttention(User.currentLoginUser.getUid(),clubid);
+                    call.enqueue(new Callback<HttpMessage>() {
                         @Override
-                        public void run() {
-                            ClubManageUtil.attentionManage.addAttention(User.currentLoginUser.getUid(),clubid);
+                        public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                            HttpMessage data=response.body();
+                            if (data.getCode()==200){
+                            }
                         }
-                    }.start();
+                        @Override
+                        public void onFailure(Call<HttpMessage> call, Throwable t) {
+                        }
+                    });
                     Toast.makeText(this, "关注成功", Toast.LENGTH_SHORT).show();
                     btatt.setBackgroundResource(R.drawable.button_shape_clubbutton2);
                     btatt.setText("已关注");
                     atted=true;
                 }else {
-                    new Thread(){
+//                    new Thread(){
+//                        @Override
+//                        public void run() {
+//                            try {
+//                                ClubManageUtil.attentionManage.deleteAttention(User.currentLoginUser.getUid(),clubid);
+//                            } catch (BaseException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }.start();
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(HttpUtil.httpUrl)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+                    AttentionRequest request = retrofit.create(AttentionRequest.class);
+                    Call<HttpMessage> call = request.deleteAttention(User.currentLoginUser.getUid(),clubid);
+                    call.enqueue(new Callback<HttpMessage>() {
                         @Override
-                        public void run() {
-                            try {
-                                ClubManageUtil.attentionManage.deleteAttention(User.currentLoginUser.getUid(),clubid);
-                            } catch (BaseException e) {
-                                e.printStackTrace();
+                        public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                            HttpMessage data=response.body();
+                            if (data.getCode()==200){
                             }
                         }
-                    }.start();
+                        @Override
+                        public void onFailure(Call<HttpMessage> call, Throwable t) {
+                        }
+                    });
                     Toast.makeText(this, "取消成功", Toast.LENGTH_SHORT).show();
                     btatt.setBackgroundResource(R.drawable.button_shape_clubbutton);
                     btatt.setText("关注");
@@ -384,15 +419,36 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
                     Toast.makeText(Club_group.this, "你不是本社成员，无法查看" , Toast.LENGTH_SHORT).show();
                     break;
                 }
-                new Thread(){
+//                new Thread(){
+//                    @Override
+//                    public void run() {
+//                        boolean ifcap =ClubManageUtil.clubManage.if_userIsCaptain(User.currentLoginUser.getUid(),clubid);
+//                        Message message=new Message();
+//                        message.obj=ifcap;
+//                        handler6.sendMessage(message);
+//                    }
+//                }.start();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(HttpUtil.httpUrl)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                ClubRequest request = retrofit.create(ClubRequest.class);
+                Call<HttpMessage<Boolean>> call = request.if_userIsCaptain(User.currentLoginUser.getUid(),clubid);
+                call.enqueue(new Callback<HttpMessage<Boolean>>() {
                     @Override
-                    public void run() {
-                        boolean ifcap =ClubManageUtil.clubManage.if_userIsCaptain(User.currentLoginUser.getUid(),clubid);
-                        Message message=new Message();
-                        message.obj=ifcap;
-                        handler6.sendMessage(message);
+                    public void onResponse(Call<HttpMessage<Boolean>> call, Response<HttpMessage<Boolean>> response) {
+                        HttpMessage<Boolean> data=response.body();
+                        if (data.getCode()==200){
+                            boolean ifcap =(boolean) data.getData();
+                            Message message=new Message();
+                            message.obj=ifcap;
+                            handler6.sendMessage(message);
+                        }
                     }
-                }.start();
+                    @Override
+                    public void onFailure(Call<HttpMessage<Boolean>> call, Throwable t) {
+                    }
+                });
                 break;
             case R.id.club_join:
                 new AlertDialog.Builder(this)
@@ -400,12 +456,33 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
                         .setIcon(android.R.drawable.ic_menu_edit)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0, int arg1) {
-                                new Thread(){
+//                                new Thread(){
+//                                    @Override
+//                                    public void run() {
+//                                        ClubManageUtil.clubManage.joinClub(User.currentLoginUser.getUid(),clubid);
+//                                    }
+//                                }.start();
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(HttpUtil.httpUrl)
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                ClubRequest request = retrofit.create(ClubRequest.class);
+                                Call<HttpMessage> call = request.joinClub(User.currentLoginUser.getUid(),clubid);
+                                call.enqueue(new Callback<HttpMessage>() {
                                     @Override
-                                    public void run() {
-                                        ClubManageUtil.clubManage.joinClub(User.currentLoginUser.getUid(),clubid);
+                                    public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
+                                        HttpMessage<Boolean> data=response.body();
+                                        if (data.getCode()==200){
+                                            boolean ifcap =(boolean) data.getData();
+                                            Message message=new Message();
+                                            message.obj=ifcap;
+                                            handler6.sendMessage(message);
+                                        }
                                     }
-                                }.start();
+                                    @Override
+                                    public void onFailure(Call<HttpMessage> call, Throwable t) {
+                                    }
+                                });
                                 joined=true;
                                 rel_join.setVisibility(View.GONE);
                                 gonggao.setVisibility(View.VISIBLE);

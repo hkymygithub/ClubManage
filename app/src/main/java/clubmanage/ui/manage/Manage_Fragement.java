@@ -31,6 +31,7 @@ import clubmanage.ui.CreateClub;
 import clubmanage.ui.ManageClub;
 import clubmanage.ui.R;
 import clubmanage.util.ClubManageUtil;
+import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -127,7 +128,7 @@ public class Manage_Fragement extends Fragment implements View.OnClickListener {
 
     private void ifHaveClubAppli(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApplicationRequest request = retrofit.create(ApplicationRequest.class);
@@ -136,7 +137,7 @@ public class Manage_Fragement extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<HttpMessage<Boolean>> call, Response<HttpMessage<Boolean>> response) {
                 HttpMessage<Boolean> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     Boolean haveClubAppli = (Boolean)data.getData();
                     Message message=new Message();
                     message.obj=haveClubAppli;
@@ -151,17 +152,8 @@ public class Manage_Fragement extends Fragment implements View.OnClickListener {
     }
 
     private void searchClub(){
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                Integer clubid= ClubManageUtil.clubManage.searchClubIdByProprieter(User.currentLoginUser.getUid());
-//                Message message=new Message();
-//                message.obj=clubid;
-//                handler.sendMessage(message);
-//            }
-//        }.start();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ClubRequest request = retrofit.create(ClubRequest.class);
@@ -170,7 +162,7 @@ public class Manage_Fragement extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<HttpMessage<Integer>> call, Response<HttpMessage<Integer>> response) {
                 HttpMessage<Integer> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     Integer clubid = (Integer)data.getData();
                     Message message=new Message();
                     message.obj=clubid;

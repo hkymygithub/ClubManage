@@ -25,6 +25,7 @@ import clubmanage.message.HttpMessage;
 import clubmanage.model.Activity;
 import clubmanage.model.User;
 import clubmanage.util.ClubManageUtil;
+import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -145,7 +146,7 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
 
     private void ifSignUp(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ActivityRequest request = retrofit.create(ActivityRequest.class);
@@ -154,7 +155,7 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call<HttpMessage<Boolean>> call, Response<HttpMessage<Boolean>> response) {
                 HttpMessage<Boolean> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     Boolean isSignUp = (Boolean)data.getData();
                     Message message=new Message();
                     message.obj=isSignUp;
@@ -169,7 +170,7 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
 
     private void signUpAvtivity(String uid){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApplicationRequest request = retrofit.create(ApplicationRequest.class);
@@ -178,7 +179,7 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
                 HttpMessage<Boolean> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                 }
             }
             @Override
@@ -189,7 +190,7 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
 
     private void getActivity(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ActivityRequest request = retrofit.create(ActivityRequest.class);
@@ -198,7 +199,7 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call<HttpMessage<Activity>> call, Response<HttpMessage<Activity>> response) {
                 HttpMessage<Activity> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     Activity act = (Activity)data.getData();
                     Message message=new Message();
                     message.obj=act;
@@ -213,7 +214,7 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
 
     private void getClubName(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ActivityRequest request = retrofit.create(ActivityRequest.class);
@@ -222,7 +223,7 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call<HttpMessage<String>> call, Response<HttpMessage<String>> response) {
                 HttpMessage<String> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     String name = (String)data.getData();
                     Message message=new Message();
                     message.obj=name;
@@ -237,7 +238,7 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
 
     private void getOwnname(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ActivityRequest request = retrofit.create(ActivityRequest.class);
@@ -246,7 +247,7 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call<HttpMessage<String>> call, Response<HttpMessage<String>> response) {
                 HttpMessage<String> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     String name = (String)data.getData();
                     Message message=new Message();
                     message.obj=name;

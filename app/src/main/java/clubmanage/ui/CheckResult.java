@@ -22,6 +22,7 @@ import clubmanage.message.HttpMessage;
 import clubmanage.model.Create;
 import clubmanage.model.User;
 import clubmanage.ui.adapter.CheckResultAdapter;
+import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -88,7 +89,7 @@ public class CheckResult extends AppCompatActivity {
 
     public void initData(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApplicationRequest request = retrofit.create(ApplicationRequest.class);
@@ -97,7 +98,7 @@ public class CheckResult extends AppCompatActivity {
             @Override
             public void onResponse(Call<HttpMessage<List<Create>>> call, Response<HttpMessage<List<Create>>> response) {
                 HttpMessage<List<Create>> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     List<Create> createdata = (List<Create>)data.getData();
                     Message message=new Message();
                     message.obj=createdata;

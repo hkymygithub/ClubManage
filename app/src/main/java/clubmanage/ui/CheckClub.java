@@ -18,6 +18,7 @@ import clubmanage.httpInterface.ApplicationRequest;
 import clubmanage.message.HttpMessage;
 import clubmanage.model.Create_club;
 import clubmanage.ui.adapter.CheckClubAdapter;
+import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,7 +66,7 @@ public class CheckClub extends AppCompatActivity {
     }
     private void initClub(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApplicationRequest request = retrofit.create(ApplicationRequest.class);
@@ -74,7 +75,7 @@ public class CheckClub extends AppCompatActivity {
             @Override
             public void onResponse(Call<HttpMessage<List<Create_club>>> call, Response<HttpMessage<List<Create_club>>> response) {
                 HttpMessage<List<Create_club>> data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     List<Create_club> clubList = (List<Create_club>)data.getData();
                     Message message=new Message();
                     message.obj=clubList;

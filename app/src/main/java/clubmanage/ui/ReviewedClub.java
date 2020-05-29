@@ -23,6 +23,7 @@ import clubmanage.model.Activity;
 import clubmanage.model.Create_club;
 import clubmanage.model.User;
 import clubmanage.util.ClubManageUtil;
+import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -86,7 +87,7 @@ public class ReviewedClub extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.button_return_audit_club:
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://121.36.153.113:8000")
+                        .baseUrl(HttpUtil.httpUrl)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 ApplicationRequest request = retrofit.create(ApplicationRequest.class);
@@ -95,7 +96,7 @@ public class ReviewedClub extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
                         HttpMessage data=response.body();
-                        if (data.getCode()==0){
+                        if (data.getCode()==200){
                         }
                     }
                     @Override
@@ -107,7 +108,7 @@ public class ReviewedClub extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button_pass_audit_club:
                 Retrofit retrofit2 = new Retrofit.Builder()
-                        .baseUrl("http://121.36.153.113:8000")
+                        .baseUrl(HttpUtil.httpUrl)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 ApplicationRequest request2 = retrofit2.create(ApplicationRequest.class);
@@ -116,7 +117,7 @@ public class ReviewedClub extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
                         HttpMessage data=response.body();
-                        if (data.getCode()==0){
+                        if (data.getCode()==200){
                         }
                     }
                     @Override
@@ -129,12 +130,8 @@ public class ReviewedClub extends AppCompatActivity implements View.OnClickListe
         }
     }
     private void getClub(){
-//        Create_club club=ClubManageUtil.applicationManage.searchCreateClubAppliByID(clubid);
-//        Message message=new Message();
-//        message.obj=club;
-//        handler.sendMessage(message);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApplicationRequest request = retrofit.create(ApplicationRequest.class);
@@ -143,7 +140,7 @@ public class ReviewedClub extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call<HttpMessage<Create_club>> call, Response<HttpMessage<Create_club>> response) {
                 HttpMessage data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     Message message=new Message();
                     message.obj=data.getData();
                     handler.sendMessage(message);

@@ -22,6 +22,7 @@ import clubmanage.message.HttpMessage;
 import clubmanage.model.Activity;
 import clubmanage.util.BaseException;
 import clubmanage.util.ClubManageUtil;
+import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -88,7 +89,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://121.36.153.113:8000")
+                .baseUrl(HttpUtil.httpUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         UserRequest request = retrofit.create(UserRequest.class);
@@ -99,7 +100,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
             @Override
             public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
                 HttpMessage data=response.body();
-                if (data.getCode()==0){
+                if (data.getCode()==200){
                     Message message=new Message();
                     message.obj=null;
                     handler.sendMessage(message);

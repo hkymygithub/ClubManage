@@ -2,7 +2,6 @@ package clubmanage.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,12 +14,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
-import clubmanage.control.Tools;
 import clubmanage.httpInterface.PersonalRequest;
 import clubmanage.message.HttpMessage;
 import clubmanage.model.User;
-import clubmanage.util.BaseException;
-import clubmanage.util.ClubManageUtil;
+import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -87,7 +84,7 @@ public class ChangPwdActivity extends AppCompatActivity implements View.OnClickL
                     return;
                 }
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://121.36.153.113:8000")
+                        .baseUrl(HttpUtil.httpUrl)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 PersonalRequest request = retrofit.create(PersonalRequest.class);
@@ -97,7 +94,7 @@ public class ChangPwdActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
                         HttpMessage<Integer> data=response.body();
-                        if (data.getCode()==0){
+                        if (data.getCode()==200){
                             Message message=new Message();
                             message.obj=null;
                             handler.sendMessage(message);
