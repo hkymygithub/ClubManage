@@ -2,7 +2,11 @@ package clubmanage.httpInterface;
 
 import clubmanage.message.HttpMessage;
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface PersonalRequest {
@@ -18,6 +22,7 @@ public interface PersonalRequest {
     Call<HttpMessage> changeMail(@Query("uid") String uid,@Query("msg") String msg);
     @GET("/personal/changemajor")
     Call<HttpMessage> changeMajor(@Query("uid") String uid,@Query("msg") String msg);
-    @GET("/personal/changeimage")
-    Call<HttpMessage> changeImage(@Query("uid") String uid,@Query("msg") String msg);
+    @FormUrlEncoded
+    @POST("/personal/changeimage")
+    Call<HttpMessage> changeImage(@Field("uid") String uid, @Field("msg") String msg);
 }

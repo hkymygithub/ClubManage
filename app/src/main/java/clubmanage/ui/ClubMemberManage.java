@@ -68,7 +68,7 @@ public class ClubMemberManage extends AppCompatActivity {
         recyclerView.addItemDecoration(new SpaceItemDecoration(10));
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new ClubMemberAdapter(userList,iscap,clubid);
+        adapter = new ClubMemberAdapter(userList,iscap,clubid,this);
         recyclerView.setAdapter(adapter);
     }
 

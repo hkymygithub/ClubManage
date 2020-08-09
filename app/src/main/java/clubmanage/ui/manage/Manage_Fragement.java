@@ -22,12 +22,15 @@ import clubmanage.httpInterface.ClubRequest;
 import clubmanage.message.HttpMessage;
 import clubmanage.model.Club;
 import clubmanage.model.User;
+import clubmanage.ui.AbolishActivity;
 import clubmanage.ui.CheckActivity;
 import clubmanage.ui.CheckClub;
 import clubmanage.ui.CheckResult;
 import clubmanage.ui.ClubMemberManage;
 import clubmanage.ui.CreateActivity;
 import clubmanage.ui.CreateClub;
+import clubmanage.ui.DismissClub;
+import clubmanage.ui.EditActivity;
 import clubmanage.ui.ManageClub;
 import clubmanage.ui.R;
 import clubmanage.util.ClubManageUtil;
@@ -47,7 +50,7 @@ public class Manage_Fragement extends Fragment implements View.OnClickListener {
     private LinearLayout club_audit;
     private LinearLayout activity_audit;
     private Integer clubid = null;
-    private boolean haveCLubAppli;
+    private boolean haveCLubAppli=false;
     private Handler handler=new Handler(){
         public void handleMessage(Message msg){
             clubid=(Integer) msg.obj;
@@ -59,6 +62,9 @@ public class Manage_Fragement extends Fragment implements View.OnClickListener {
                 if (clubid!=null){
                     result.setVisibility(View.VISIBLE);
                     my_club_manage.setVisibility(View.VISIBLE);
+                    create.setVisibility(View.INVISIBLE);
+                }else {
+                    create.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -67,10 +73,10 @@ public class Manage_Fragement extends Fragment implements View.OnClickListener {
     private Handler handler2=new Handler(){
         public void handleMessage(Message msg){
             haveCLubAppli=(boolean)msg.obj;
-            if (haveCLubAppli==true||User.currentLoginUser.getUser_category().equals("社团管理员")){
-                create.setVisibility(View.INVISIBLE);
-            }else if(haveCLubAppli==false||clubid==null){
-                create.setVisibility(View.VISIBLE);
+            if (haveCLubAppli==true){
+                result.setVisibility(View.VISIBLE);
+            }else if(haveCLubAppli==false){
+                result.setVisibility(View.INVISIBLE);
             }
         }
     };
@@ -191,6 +197,9 @@ public class Manage_Fragement extends Fragment implements View.OnClickListener {
                 startActivity(intent2);
                 break;
             case R.id.edit_activity:
+                Intent intent3=new Intent(getContext(), EditActivity.class);
+                intent3.putExtra ( "clubid", clubid);
+                startActivity(intent3);
                 break;
             case R.id.club_manage:
                 Intent intent4=new Intent(getContext(), ManageClub.class);
@@ -202,12 +211,16 @@ public class Manage_Fragement extends Fragment implements View.OnClickListener {
                 startActivity(intent5);
                 break;
             case R.id.club_destroy_audit:
+                Intent intent6=new Intent(getContext(), DismissClub.class);
+                startActivity(intent6);
                 break;
             case R.id.activity_apply_audit:
                 Intent intent7=new Intent(getContext(), CheckActivity.class);
                 startActivity(intent7);
                 break;
             case R.id.activity_destroy_audit:
+                Intent intent8=new Intent(getContext(), AbolishActivity.class);
+                startActivity(intent8);
                 break;
             case R.id.manage_btn1:
                 Intent intent9=new Intent(getContext(), CreateClub.class);

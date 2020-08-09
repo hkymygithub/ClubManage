@@ -106,8 +106,9 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
         t_person_major.setText(User.currentLoginUser.getMajor());
         img=findViewById(R.id.per_cen_head);
         img.setOnClickListener(this);
-        byte[] bt=Base64.decode(User.currentLoginUser.getImage(),Base64.DEFAULT);
-        if(bt!=null){
+        byte[] bt=null;
+        if (User.currentLoginUser.getImage()!=null) {
+            bt=Base64.decode(User.currentLoginUser.getImage(),Base64.DEFAULT);
             img.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
         }
     }
@@ -131,6 +132,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                 } else {
                     openAlbum();
                 }
+                break;
             case R.id.person_name:
                 final EditText edt1 = new EditText(this);
                 edt1.setMinLines(1);

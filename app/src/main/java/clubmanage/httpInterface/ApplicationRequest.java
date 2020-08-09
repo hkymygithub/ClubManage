@@ -36,5 +36,10 @@ public interface ApplicationRequest {
     Call<HttpMessage> addActivityAppli(@Body Create_activity create_activity);
     @POST("/application/addclubappli")
     Call<HttpMessage> addClubAppli(@Body Create_club create_club);
+    @POST("/application/editactivityqppli")
+    Call<HttpMessage> editActivityAppli(@Body Create_activity create_activity);
+
+    @GET("/application/searchcreateactivityapplibyclub")
+    Call<HttpMessage<List<Create_activity>>> searchCreateActivityAppliByClub(@Query("clubid") int clubid);
 
 }

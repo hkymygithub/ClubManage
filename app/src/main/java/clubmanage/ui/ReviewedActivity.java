@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,11 +53,10 @@ public class ReviewedActivity extends AppCompatActivity implements View.OnClickL
     private Handler handler=new Handler(){
         public void handleMessage(Message msg){
             activity=(Create_activity) msg.obj;
-            byte[] bt= Base64.decode(activity.getPoster(),Base64.DEFAULT);
-            if(bt!=null){
+            if (activity.getPoster()==null) poster.setImageResource(R.drawable.enrollment);
+            else {
+                byte[] bt= Base64.decode(activity.getPoster(),Base64.DEFAULT);
                 poster.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
-            }else {
-                poster.setImageResource(R.drawable.enrollment);
             }
             t_create_name.setText(activity.getActivity_name());
             t_create_cat.setText(activity.getActivity_category());
@@ -163,9 +165,10 @@ public class ReviewedActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void getActivaty(){
+        Gson gson=new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(HttpUtil.httpUrl)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         ApplicationRequest request = retrofit.create(ApplicationRequest.class);
         Call<HttpMessage<Create_activity>> call = request.searchCreateActivityAppliByID(activityid);

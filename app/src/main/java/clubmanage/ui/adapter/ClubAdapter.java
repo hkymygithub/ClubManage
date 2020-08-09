@@ -1,6 +1,5 @@
 package clubmanage.ui.adapter;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Base64;
@@ -12,13 +11,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 import clubmanage.Tools.BitmapAndBytes;
 import clubmanage.model.Club;
-import clubmanage.ui.Club_group;
+import clubmanage.ui.ClubGroup;
 import clubmanage.ui.R;
 
 public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ViewHolder> {
@@ -68,7 +65,7 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ViewHolder> {
                 int position = holder.getAdapterPosition();
                 if(position<0) return;
                 int clubid=mClubList.get(position).getClub_id();
-                Intent intent=new Intent(mContext, Club_group.class);
+                Intent intent=new Intent(mContext, ClubGroup.class);
                 intent.putExtra("clubid",clubid);
                 mContext.startActivity(intent);
             }
@@ -79,7 +76,8 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder,int position){
         Club club = mClubList.get(position);
-        if (club.getClub_icon()==null)Glide.with(mContext).load(R.drawable.photo1).into(holder.actImage);
+//        Glide.with(mContext).load(R.drawable.photo1).into(holder.actImage);
+        if (club.getClub_icon()==null) holder.actImage.setImageResource(R.drawable.photo1);
         else holder.actImage.setImageBitmap(BitmapAndBytes.bytesToBitmap(Base64.decode(club.getClub_icon(),Base64.DEFAULT)));
         holder.actText1.setText(club.getClub_name());
         holder.actText2.setText("热门社团");

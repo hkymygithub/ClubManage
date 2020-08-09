@@ -8,8 +8,8 @@ public class Activity implements Serializable {
 	private int club_id;
 	private String activity_name;
 	private String poster;
-	private Timestamp activity_start_time;
-	private Timestamp activity_end_time;
+	private String activity_start_time;
+	private String activity_end_time;
 	private String activity_introduce;
 	private String activity_place;
 	private String activity_attention;
@@ -33,16 +33,16 @@ public class Activity implements Serializable {
 	public void setActivity_name(String activity_name) {
 		this.activity_name = activity_name;
 	}
-	public Timestamp getActivity_start_time() {
+	public String getActivity_start_time() {
 		return activity_start_time;
 	}
-	public void setActivity_start_time(Timestamp activity_start_time) {
+	public void setActivity_start_time(String activity_start_time) {
 		this.activity_start_time = activity_start_time;
 	}
-	public Timestamp getActivity_end_time() {
+	public String getActivity_end_time() {
 		return activity_end_time;
 	}
-	public void setActivity_end_time(Timestamp activity_end_time) {
+	public void setActivity_end_time(String activity_end_time) {
 		this.activity_end_time = activity_end_time;
 	}
 	public String getActivity_introduce() {

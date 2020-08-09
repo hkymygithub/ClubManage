@@ -29,7 +29,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class My_attention extends AppCompatActivity {
+public class MyAttention extends AppCompatActivity {
     private List<Club> clubList = new ArrayList<>();
     private ClubAdapter adapter;
     private RecyclerView recyclerView;

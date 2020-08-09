@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import clubmanage.httpInterface.ActivityRequest;
 import clubmanage.httpInterface.ApplicationRequest;
@@ -72,7 +73,7 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
                 poster.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
             }
             Timestamp now = new Timestamp(System.currentTimeMillis());
-            if(activity.getActivity_end_time().before(now)){
+            if(new Timestamp(Long.parseLong(activity.getActivity_end_time())).before(now)){
                 join.setEnabled(false);
                 join.setText("活动已结束");
                 join.setBackgroundResource(R.drawable.button_shape_gray);
@@ -82,10 +83,11 @@ public class ActivityItem extends AppCompatActivity implements View.OnClickListe
                 join.setText("我要报名");
                 join.setBackgroundResource(R.drawable.button_shape);
             }
+            SimpleDateFormat sdFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             name.setText(name.getText().toString()+" "+activity.getActivity_name());
             address.setText(address.getText().toString()+" "+activity.getActivity_place());
-            time.setText(time.getText().toString()+" "+activity.getActivity_start_time().toString());
-            time2.setText(time2.getText().toString()+""+activity.getActivity_end_time().toString());
+            time.setText(time.getText().toString()+" "+sdFormat.format(Long.parseLong(activity.getActivity_start_time())));
+            time2.setText(time2.getText().toString()+""+sdFormat.format(Long.parseLong(activity.getActivity_end_time())));
             intruduction.setText(intruduction.getText().toString()+" "+activity.getActivity_introduce());
             notice.setText(notice.getText().toString()+" "+activity.getActivity_attention());
         }

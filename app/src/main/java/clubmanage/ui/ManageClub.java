@@ -78,11 +78,12 @@ public class ManageClub extends AppCompatActivity implements View.OnClickListene
     private Handler handler=new Handler(){
         public void handleMessage(Message msg){
             club=(Club) msg.obj;
-            byte[] bt= Base64.decode(club.getClub_icon(),Base64.DEFAULT);
-            if(bt!=null){
-                c_club_logo.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
-            }else {
+            byte[] bt =null;
+            if (club.getClub_icon()==null) {
                 c_club_logo.setImageResource(R.drawable.enrollment);
+            }else {
+                bt= Base64.decode(club.getClub_icon(),Base64.DEFAULT);
+                c_club_logo.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
             }
             t_club_poster.setText("");
             t_club_name.setText(club.getClub_name());

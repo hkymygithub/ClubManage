@@ -3,6 +3,7 @@ package clubmanage.ui;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +60,7 @@ public class CheckClub extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-        initClub();
+//        initClub();
         recyclerView=(RecyclerView)findViewById(R.id.recycler_club_check);
         recyclerView.addItemDecoration(new SpaceItemDecoration(10));
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
@@ -65,9 +69,10 @@ public class CheckClub extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
     private void initClub(){
+        Gson gson=new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(HttpUtil.httpUrl)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         ApplicationRequest request = retrofit.create(ApplicationRequest.class);
         Call<HttpMessage<List<Create_club>>> call = request.searchCreateClubAppli();
@@ -84,6 +89,7 @@ public class CheckClub extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<HttpMessage<List<Create_club>>> call, Throwable t) {
+               Log.i("CheckClub","错了");
             }
         });
     }
@@ -97,6 +103,14 @@ public class CheckClub extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initClub();
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();

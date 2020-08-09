@@ -26,7 +26,9 @@ import clubmanage.message.HttpMessage;
 import clubmanage.model.User;
 import clubmanage.ui.CircleImageView;
 import clubmanage.ui.LoginActivity;
-import clubmanage.ui.My_attention;
+import clubmanage.ui.MyActivity;
+import clubmanage.ui.MyAttention;
+import clubmanage.ui.MyClub;
 import clubmanage.ui.PersonalCenterActivity;
 import clubmanage.ui.R;
 import clubmanage.ui.Register;
@@ -200,7 +202,7 @@ public class My_Fragement extends Fragment implements View.OnClickListener {
         switch (v.getId()){
             case R.id.my_btn1:
                 Intent intent1=new Intent(getActivity(), LoginActivity.class);
-                getActivity().startActivity(intent1);
+                startActivityForResult(intent1,1);
                 break;
             case R.id.my_btn2:
                 new AlertDialog.Builder(getActivity())
@@ -223,22 +225,32 @@ public class My_Fragement extends Fragment implements View.OnClickListener {
                 startActivity(intent3);
                 break;
             case R.id.club_num:
-                break;
-            case R.id.activity_num:
-                break;
-            case R.id.focus_num:
-                Intent intent4 = new Intent(getActivity(), My_attention.class);
+                Intent intent4 = new Intent(getActivity(), MyClub.class);
                 getActivity().startActivity(intent4);
                 break;
+            case R.id.activity_num:
+                Intent intent5 = new Intent(getActivity(), MyActivity.class);
+                getActivity().startActivity(intent5);
+                break;
+            case R.id.focus_num:
+                Intent intent6 = new Intent(getActivity(), MyAttention.class);
+                getActivity().startActivity(intent6);
+                break;
             case R.id.my_club:
+                Intent intent7 = new Intent(getActivity(), MyClub.class);
+                getActivity().startActivity(intent7);
                 break;
             case R.id.my_activity:
+                Intent intent8 = new Intent(getActivity(), MyActivity.class);
+                getActivity().startActivity(intent8);
                 break;
             case R.id.my_focus:
+                Intent intent9 = new Intent(getActivity(), MyAttention.class);
+                getActivity().startActivity(intent9);
                 break;
             case R.id.personal_center:
-                Intent intent8 = new Intent(getActivity(), PersonalCenterActivity.class);
-                getActivity().startActivity(intent8);
+                Intent intent10 = new Intent(getActivity(), PersonalCenterActivity.class);
+                getActivity().startActivity(intent10);
                 break;
         }
     }

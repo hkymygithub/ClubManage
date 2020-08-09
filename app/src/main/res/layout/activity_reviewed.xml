@@ -124,7 +124,6 @@
                     android:gravity="right"
                     android:layout_centerVertical="true"
                     android:textColor="#999999"
-                    android:layout_toLeftOf="@+id/activity_img2"
                     android:textSize="14.5dp"
                     android:maxLines="5"
                     android:layout_marginRight="7.3dp"></TextView>
@@ -153,7 +152,6 @@
                     android:gravity="right"
                     android:layout_centerVertical="true"
                     android:textColor="#999999"
-                    android:layout_toLeftOf="@+id/activity_img3"
                     android:textSize="14.5dp"
                     android:maxLines="5"
                     android:layout_marginRight="7.3dp"></TextView>
@@ -182,7 +180,6 @@
                     android:gravity="right"
                     android:layout_centerVertical="true"
                     android:textColor="#999999"
-                    android:layout_toLeftOf="@+id/activity_img4"
                     android:textSize="14.5dp"
                     android:maxLines="5"
                     android:layout_marginRight="7.3dp"></TextView>
@@ -211,7 +208,6 @@
                     android:gravity="right"
                     android:layout_centerVertical="true"
                     android:textColor="#999999"
-                    android:layout_toLeftOf="@+id/activity_img5"
                     android:textSize="14.5dp"
                     android:maxLines="5"
                     android:layout_marginRight="7.3dp"></TextView>
@@ -240,7 +236,6 @@
                     android:gravity="right"
                     android:layout_centerVertical="true"
                     android:textColor="#999999"
-                    android:layout_toLeftOf="@+id/activity_img6"
                     android:textSize="14.5dp"
                     android:maxLines="5"
                     android:layout_marginRight="7.3dp"></TextView>
@@ -269,7 +264,6 @@
                     android:gravity="right"
                     android:layout_centerVertical="true"
                     android:textColor="#999999"
-                    android:layout_toLeftOf="@+id/activity_img7"
                     android:textSize="14.5dp"
                     android:maxLines="5"
                     android:layout_marginRight="7.3dp"></TextView>
@@ -298,7 +292,6 @@
                     android:gravity="right"
                     android:layout_centerVertical="true"
                     android:textColor="#999999"
-                    android:layout_toLeftOf="@+id/activity_img8"
                     android:textSize="14.5dp"
                     android:maxLines="5"></TextView>
             </RelativeLayout>
@@ -326,7 +319,6 @@
                     android:gravity="right"
                     android:layout_centerVertical="true"
                     android:textColor="#999999"
-                    android:layout_toLeftOf="@+id/activity_img9"
                     android:textSize="14.5dp"
                     android:maxLines="5"></TextView>
             </RelativeLayout>

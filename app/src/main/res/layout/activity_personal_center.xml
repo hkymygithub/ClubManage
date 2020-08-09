@@ -231,7 +231,7 @@
             android:layout_centerVertical="true"
             android:textSize="16sp"
             android:layout_marginLeft="18dp"
-            android:text="性别"></TextView>
+            android:text="专业"></TextView>
         <TextView
             android:id="@+id/t_person_major"
             android:layout_width="wrap_content"

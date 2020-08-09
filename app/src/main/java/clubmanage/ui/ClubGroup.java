@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -31,8 +32,6 @@ import clubmanage.model.Club;
 import clubmanage.model.User;
 import clubmanage.ui.adapter.ActivityAdapter;
 import clubmanage.ui.adapter.TopAdapter;
-import clubmanage.util.BaseException;
-import clubmanage.util.ClubManageUtil;
 import clubmanage.util.HttpUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +39,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Club_group extends AppCompatActivity implements View.OnClickListener {
+public class ClubGroup extends AppCompatActivity implements View.OnClickListener {
     private List<User> topList = new ArrayList<>();
     private List<Activity> actList = new ArrayList<>();
     private int clubid;
@@ -129,7 +128,7 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
     private Handler handler6=new Handler(){
         public void handleMessage(Message msg){
             iscap=(boolean)msg.obj;
-            Intent intent=new Intent(Club_group.this,ClubMemberManage.class);
+            Intent intent=new Intent(ClubGroup.this,ClubMemberManage.class);
             intent.putExtra("clubid",clubid);
             intent.putExtra("iscap",iscap);
             startActivity(intent);
@@ -350,12 +349,6 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
         switch (v.getId()){
             case R.id.club1_head_btn2:
                 if (atted==false){
-//                    new Thread(){
-//                        @Override
-//                        public void run() {
-//                            ClubManageUtil.attentionManage.addAttention(User.currentLoginUser.getUid(),clubid);
-//                        }
-//                    }.start();
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl(HttpUtil.httpUrl)
                             .addConverterFactory(GsonConverterFactory.create())
@@ -378,16 +371,6 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
                     btatt.setText("已关注");
                     atted=true;
                 }else {
-//                    new Thread(){
-//                        @Override
-//                        public void run() {
-//                            try {
-//                                ClubManageUtil.attentionManage.deleteAttention(User.currentLoginUser.getUid(),clubid);
-//                            } catch (BaseException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }.start();
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl(HttpUtil.httpUrl)
                             .addConverterFactory(GsonConverterFactory.create())
@@ -416,18 +399,9 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.club1_body2_btn1:
                 if (joined==false){
-                    Toast.makeText(Club_group.this, "你不是本社成员，无法查看" , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ClubGroup.this, "你不是本社成员，无法查看" , Toast.LENGTH_SHORT).show();
                     break;
                 }
-//                new Thread(){
-//                    @Override
-//                    public void run() {
-//                        boolean ifcap =ClubManageUtil.clubManage.if_userIsCaptain(User.currentLoginUser.getUid(),clubid);
-//                        Message message=new Message();
-//                        message.obj=ifcap;
-//                        handler6.sendMessage(message);
-//                    }
-//                }.start();
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(HttpUtil.httpUrl)
                         .addConverterFactory(GsonConverterFactory.create())
@@ -456,12 +430,6 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
                         .setIcon(android.R.drawable.ic_menu_edit)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0, int arg1) {
-//                                new Thread(){
-//                                    @Override
-//                                    public void run() {
-//                                        ClubManageUtil.clubManage.joinClub(User.currentLoginUser.getUid(),clubid);
-//                                    }
-//                                }.start();
                                 Retrofit retrofit = new Retrofit.Builder()
                                         .baseUrl(HttpUtil.httpUrl)
                                         .addConverterFactory(GsonConverterFactory.create())
@@ -473,20 +441,21 @@ public class Club_group extends AppCompatActivity implements View.OnClickListene
                                     public void onResponse(Call<HttpMessage> call, Response<HttpMessage> response) {
                                         HttpMessage<Boolean> data=response.body();
                                         if (data.getCode()==200){
-                                            boolean ifcap =(boolean) data.getData();
-                                            Message message=new Message();
-                                            message.obj=ifcap;
-                                            handler6.sendMessage(message);
+//                                            boolean ifcap =(boolean) data.getData();
+//                                            Message message=new Message();
+//                                            message.obj=ifcap;
+//                                            handler6.sendMessage(message);
                                         }
                                     }
                                     @Override
                                     public void onFailure(Call<HttpMessage> call, Throwable t) {
+                                        Log.i("加入社团","错了");
                                     }
                                 });
                                 joined=true;
                                 rel_join.setVisibility(View.GONE);
                                 gonggao.setVisibility(View.VISIBLE);
-                                Toast.makeText(Club_group.this, "加入成功！" , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ClubGroup.this, "加入成功！" , Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton("取消", null)

@@ -261,7 +261,7 @@
                 android:textColor="#212121"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="我管理的社团:"/>
+                android:text="活动审核:"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"

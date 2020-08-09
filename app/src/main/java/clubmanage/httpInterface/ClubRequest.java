@@ -6,7 +6,9 @@ import clubmanage.message.HttpMessage;
 import clubmanage.model.Club;
 import clubmanage.model.User;
 import retrofit2.Call;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ClubRequest {
@@ -28,7 +30,7 @@ public interface ClubRequest {
     Call<HttpMessage<String>> searchNotice(@Query("clubid") int clubid);
     @GET("/club/searchclubbyclubid")
     Call<HttpMessage<Club>> searchClubByClubid(@Query("clubid") int clubid);
-    @GET("/club/searchallclub")
+    @GET("/club/searchallclubbyname")
     Call<HttpMessage<List<Club>>> searchAllClub(@Query("clubname") String clubname,@Query("ifdismiss") boolean ifdismiss);
 
     @GET("/club/searchclubbyproprieter")
@@ -41,10 +43,10 @@ public interface ClubRequest {
     Call<HttpMessage> editIntroduction(@Query("clubid") int club_id,@Query("introduction") String introduction);
     @GET("/club/editnotice")
     Call<HttpMessage> editNotice(@Query("clubid") int club_id,@Query("notice") String notice);
-    @GET("/club/editlogo")
-    Call<HttpMessage> editLogo(@Query("clubid") int club_id,@Query("club_icon") String club_icon);
-    @GET("/club/editcover")
-    Call<HttpMessage> editCover(@Query("clubid") int club_id,@Query("club_cover") String club_cover);
+    @POST("/club/editlogo")
+    Call<HttpMessage> editLogo(@Field("clubid") int club_id, @Field("club_icon") String club_icon);
+    @POST("/club/editcover")
+    Call<HttpMessage> editCover(@Field("clubid") int club_id,@Field("club_cover") String club_cover);
     @GET("/club/ifuseriscaptain")
     Call<HttpMessage<Boolean>>if_userIsCaptain(@Query("uid") String uid,@Query("clubid") int club_id);
     @GET("/club/joinclub")
@@ -53,4 +55,6 @@ public interface ClubRequest {
     Call<HttpMessage> transferPresident(@Query("tuid") String tuid,@Query("fuid") String fuid,@Query("clubid") int club_id);
     @GET("/club/deletemember")
     Call<HttpMessage> deleteMember(@Query("uid") String uid,@Query("clubid") int club_id);
+    @GET("/club/deleteclub")
+    Call<HttpMessage> deleteClub(@Query("club_id") int club_id);
 }

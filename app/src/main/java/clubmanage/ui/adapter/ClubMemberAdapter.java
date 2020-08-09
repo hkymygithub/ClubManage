@@ -23,6 +23,7 @@ import java.util.List;
 import clubmanage.httpInterface.ClubRequest;
 import clubmanage.message.HttpMessage;
 import clubmanage.model.User;
+import clubmanage.ui.ClubMemberManage;
 import clubmanage.ui.R;
 import clubmanage.util.ClubManageUtil;
 import clubmanage.util.HttpUtil;
@@ -40,11 +41,13 @@ public class ClubMemberAdapter extends RecyclerView.Adapter<ClubMemberAdapter.Vi
     private AlertDialog.Builder builder=null;
     private int clubid;
     private int index;
+    private ClubMemberManage activity;
 
-    public ClubMemberAdapter(List<User> user,boolean cap,int clubid){
+    public ClubMemberAdapter(List<User> user,boolean cap,int clubid,ClubMemberManage act){
         userList=user;
         iscap=cap;
         this.clubid=clubid;
+        activity=act;
     }
 
     @NonNull
@@ -72,12 +75,6 @@ public class ClubMemberAdapter extends RecyclerView.Adapter<ClubMemberAdapter.Vi
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         if (fruits[index].equals("转让社长")){
-//                                            new Thread(){
-//                                                @Override
-//                                                public void run() {
-//                                                    ClubManageUtil.clubManage.transferPresident(user.getUid(),User.currentLoginUser.getUid(),clubid);
-//                                                }
-//                                            }.start();
                                             Retrofit retrofit = new Retrofit.Builder()
                                                     .baseUrl(HttpUtil.httpUrl)
                                                     .addConverterFactory(GsonConverterFactory.create())
@@ -96,15 +93,10 @@ public class ClubMemberAdapter extends RecyclerView.Adapter<ClubMemberAdapter.Vi
                                                 }
                                             });
                                             iscap=false;
+//                                            activity.initUsers();
                                             Toast.makeText(mContext, "转让成功", Toast.LENGTH_SHORT).show();
                                         }
                                         else if (fruits[index].equals("删除社员")){
-//                                            new Thread(){
-//                                                @Override
-//                                                public void run() {
-//                                                    ClubManageUtil.clubManage.deleteMember(user.getUid(),clubid);
-//                                                }
-//                                            }.start();
                                             Retrofit retrofit = new Retrofit.Builder()
                                                     .baseUrl(HttpUtil.httpUrl)
                                                     .addConverterFactory(GsonConverterFactory.create())
@@ -122,6 +114,7 @@ public class ClubMemberAdapter extends RecyclerView.Adapter<ClubMemberAdapter.Vi
                                                 public void onFailure(Call<HttpMessage> call, Throwable t) {
                                                 }
                                             });
+                                            activity.initUsers();
                                             Toast.makeText(mContext, "删除成功", Toast.LENGTH_SHORT).show();
                                         }
                                     }
@@ -150,8 +143,9 @@ public class ClubMemberAdapter extends RecyclerView.Adapter<ClubMemberAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         User user=userList.get(position);
-        byte[] bt= Base64.decode(user.getImage(),Base64.DEFAULT);
-        if(bt!=null){
+        byte[] bt=null;
+        if (user.getImage()!=null){
+            bt= Base64.decode(user.getImage(),Base64.DEFAULT);
             holder.head.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
         }
         else

@@ -3,6 +3,7 @@ package clubmanage.ui;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -12,6 +13,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +65,7 @@ public class CheckActivity extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-        initActivity();
+//        initActivity();
         recyclerView=(RecyclerView)findViewById(R.id.recycler_acticity);
         recyclerView.addItemDecoration(new SpaceItemDecoration(10));
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
@@ -70,9 +74,10 @@ public class CheckActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
     public void initActivity(){
+        Gson gson=new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(HttpUtil.httpUrl)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         ApplicationRequest request = retrofit.create(ApplicationRequest.class);
         Call<HttpMessage<List<Create_activity>>> call = request.searchCreateActivityAppli();
@@ -89,6 +94,7 @@ public class CheckActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<HttpMessage<List<Create_activity>>> call, Throwable t) {
+                Log.i("CheckActivity","错了");
             }
         });
     }
@@ -102,6 +108,13 @@ public class CheckActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initActivity();
+    }
+
 
     @Override
     protected void onResume() {

@@ -11,10 +11,10 @@ public interface UserRequest {
     Call<HttpMessage<User>> login(@Query("uid") String uid, @Query("pwd") String pwd);
     @GET("/user/register")
     Call<HttpMessage> reg(@Query("uid") String uid,
-                          @Query("uid") String pwd1,
-                          @Query("uid") String pwd2,
-                          @Query("uid") String name,
-                          @Query("uid") String mail,
-                          @Query("uid") String phone);
+                          @Query("pwd1") String pwd1,
+                          @Query("pwd2") String pwd2,
+                          @Query("name") String name,
+                          @Query("mail") String mail,
+                          @Query("phone") String phone);
 
 }

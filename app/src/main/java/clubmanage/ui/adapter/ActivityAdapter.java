@@ -82,7 +82,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         holder.homeText2.setText(home.getActivity_place());
         holder.homeText3.setText(home.getActivity_start_time().toString());
         Timestamp now = new Timestamp(System.currentTimeMillis());
-        if(home.getActivity_end_time().before(now))
+        if(new Timestamp(Long.parseLong(home.getActivity_end_time())).before(now))
             holder.homeText4.setText("已结束");
         else holder.homeText4.setText("火热报名中");
     }

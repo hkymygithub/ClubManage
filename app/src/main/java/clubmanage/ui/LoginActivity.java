@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -74,17 +75,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void login(String uid,String pwd){
-        //创建Retrofit对象
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(HttpUtil.httpUrl) //基础url,其他部分在GetRequestInterface里
-                .addConverterFactory(GsonConverterFactory.create()) //Gson数据转换器
+                .baseUrl(HttpUtil.httpUrl)
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-        //创建网络请求接口实例
         UserRequest request = retrofit.create(UserRequest.class);
         Call<HttpMessage<User>> call = request.login(uid,pwd);
-
-        //发送网络请求(异步)
         call.enqueue(new Callback<HttpMessage<User>>() {
             @Override
             public void onResponse(Call<HttpMessage<User>> call, Response<HttpMessage<User>> response) {

@@ -38,9 +38,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -342,31 +346,11 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
         byte p=0;
         if (t_create_public.equals("是"))p=1;
         else if (t_create_public.equals("否")) p=0;
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                boolean p=true;
-//                if (t_create_public.equals("是"))p=true;
-//                else if (t_create_public.equals("否")) p=false;
-//                try {
-//                    ClubManageUtil.applicationManage.addActivityAppli(clubid, Base64.encodeToString(mbyteArray,Base64.DEFAULT),
-//                            t_create_name.getText().toString(),t_create_place.getText().toString(),User.currentLoginUser.getUid(),
-//                            User.currentLoginUser.getName(),t_create_start_time.getText().toString()+" 00:00:00",
-//                            t_create_finish_time.getText().toString()+" 00:00:00", t_create_introduce.getText().toString(),
-//                            t_create_attention.getText().toString(),t_create_cat.getText().toString(),p,t_create_reason.getText().toString());
-//                    Message message=new Message();
-//                    message.obj=null;
-//                    handler2.sendMessage(message);
-//                } catch (BaseException e) {
-//                    Message message=new Message();
-//                    message.obj=e.getMessage();
-//                    handler2.sendMessage(message);
-//                }
-//            }
-//        }.start();
         Create_activity create_activity=new Create_activity();
         create_activity.setClub_id(clubid);
-        create_activity.setPoster(Base64.encodeToString(mbyteArray,Base64.DEFAULT));
+        if (mbyteArray!=null){
+            create_activity.setPoster(Base64.encodeToString(mbyteArray,Base64.DEFAULT));
+        }
         create_activity.setActivity_name(t_create_name.getText().toString());
         create_activity.setArea_name(t_create_place.getText().toString());
         create_activity.setActivity_owner_id(User.currentLoginUser.getUid());
@@ -378,9 +362,10 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
         create_activity.setActivity_category(t_create_cat.getText().toString());
         create_activity.setIf_public_activity(p);
         create_activity.setReason(t_create_reason.getText().toString());
+        Gson gson=new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(HttpUtil.httpUrl)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         ApplicationRequest request = retrofit.create(ApplicationRequest.class);
         Call<HttpMessage> call = request.addActivityAppli(create_activity);

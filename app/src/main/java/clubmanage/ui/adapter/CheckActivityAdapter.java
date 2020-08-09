@@ -55,11 +55,10 @@ public class CheckActivityAdapter extends RecyclerView.Adapter<CheckActivityAdap
         int eday=act.getActivity_end_time().getDay();
         holder.acttime.setText(syear+"-"+smonth+"-"+sday+"至"+eyear+"-"+emonth+"-"+eday);
         holder.actposition.setText(act.getArea_name());
-        byte[] bt= Base64.decode(act.getPoster(),Base64.DEFAULT);
-        if(bt!=null){
+        if (act.getPoster()==null) holder.actImage.setImageResource(R.drawable.enrollment);
+        else {
+            byte[] bt= Base64.decode(act.getPoster(),Base64.DEFAULT);
             holder.actImage.setImageBitmap(BitmapFactory.decodeByteArray(bt, 0, bt.length));
-        }else {
-            holder.actImage.setImageResource(R.drawable.enrollment);
         }
         holder.array.setImageResource(R.drawable.arrow_right);
         holder.clock.setImageResource(R.drawable.clock);

@@ -19,7 +19,7 @@
             android:layout_height="48dp"
             android:layout_marginLeft="15dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/logo"
+            android:src="@drawable/mainlogo"
             />
         <!--        <clubmanage.ui.CircleImageView-->
         <!--            android:id="@+id/home_head_text1"-->

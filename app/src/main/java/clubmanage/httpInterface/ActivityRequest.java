@@ -3,6 +3,7 @@ package clubmanage.httpInterface;
 import java.util.List;
 
 import clubmanage.message.HttpMessage;
+import clubmanage.model.AbolishAct;
 import clubmanage.model.Activity;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -28,4 +29,8 @@ public interface ActivityRequest {
     Call<HttpMessage<List<Activity>>> searchActivityByClubId(@Query("clubid")int clubid);
     @GET("/activity/searchactivitybyname")
     Call<HttpMessage<List<Activity>>> searchActivityByName(@Query("actname")String actname);
+    @GET("/activity/searchcanabolishact")
+    Call<HttpMessage<List<AbolishAct>>> searchCanAbolishAct();
+    @GET("/activity/deleteactivity")
+    Call<HttpMessage> deleteActivity(@Query("activityid")int activityid);
 }
